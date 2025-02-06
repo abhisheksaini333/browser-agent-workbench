@@ -34,3 +34,20 @@ class Store:
             row=db.execute('SELECT * FROM resources WHERE sku=?',(sku,)).fetchone()
             if row is None:raise ValueError('unknown sku')
             return dict(row)
+    @staticmethod
+    def public(row):
+        result=dict(row)
+        for key in ('args','precondition','receipt'):
+            result[key]=json.loads(result[key]) if result[key] is not None else None
+        result.pop('approval',None);result.pop('dispatch',None)
+        return result
+    def get(self,action_id,owner):
+        with self.connection() as db:
+            row=db.execute('SELECT * FROM actions WHERE id=? AND owner=?',(action_id,owner)).fetchone()
+            if row is None:raise Forbidden('action not found')
+            return self.public(row)
+    def propose(self,owner,kind,args):
+        args=validate_arguments(kind,args);snapshot=self.snapshot(args['sku']);action_id=uuid.uuid4().hex
+        with self.connection() as db:
+            db.execute('INSERT INTO actions(id,owner,kind,args,precondition,status,created) VALUES(?,?,?,?,?,?,?)',(action_id,owner,kind,canonical(args),canonical(snapshot),'proposed',time.time()))
+        return self.get(action_id,owner)
