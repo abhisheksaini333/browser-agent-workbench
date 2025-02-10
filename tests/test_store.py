@@ -16,3 +16,16 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(action['status'],'proposed')
         self.assertEqual(self.store.get(action['id'],'alice'),action)
         with self.assertRaises(ValueError):self.store.get(action['id'],'bob')
+    def test_approval_rejects_changed_arguments_and_expires(self):
+        action=self.store.propose('alice','purchase',{'sku':'WIDGET','quantity':2})
+        with self.assertRaises(ValueError):self.store.approve(action['id'],'alice',{'sku':'WIDGET','quantity':3},action['precondition'])
+        approved=self.store.approve(action['id'],'alice',action['args'],action['precondition'],ttl=0)
+        self.assertEqual(approved['status'],'approved')
+        with self.assertRaises(ValueError):self.store.dispatch(action['id'],'alice')
+    def test_dispatch_requires_exact_approval_once(self):
+        action=self.store.propose('alice','purchase',{'sku':'WIDGET','quantity':2})
+        with self.assertRaises(ValueError):self.store.dispatch(action['id'],'alice')
+        self.store.approve(action['id'],'alice',action['args'],action['precondition'])
+        token=self.store.dispatch(action['id'],'alice')
+        self.assertGreater(len(token),30)
+        with self.assertRaises(ValueError):self.store.dispatch(action['id'],'alice')

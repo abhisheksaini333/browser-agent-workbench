@@ -51,3 +51,34 @@ class Store:
         with self.connection() as db:
             db.execute('INSERT INTO actions(id,owner,kind,args,precondition,status,created) VALUES(?,?,?,?,?,?,?)',(action_id,owner,kind,canonical(args),canonical(snapshot),'proposed',time.time()))
         return self.get(action_id,owner)
+    @staticmethod
+    def binding(action):
+        return digest({k:action[k] for k in ('id','owner','kind','args','precondition')})
+    @staticmethod
+    def event(db,action_id,event):
+        db.execute('INSERT INTO events(action_id,event,created) VALUES(?,?,?)',(action_id,event,time.time()))
+    def approve(self,action_id,owner,args,precondition,ttl=300):
+        action=self.get(action_id,owner)
+        if action['args']!=args or action['precondition']!=precondition:
+            raise Conflict('approval must match exact arguments and page state')
+        if self.snapshot(args['sku'])!=precondition:raise Conflict('page state changed')
+        with self.connection() as db:
+            db.execute('BEGIN IMMEDIATE')
+            changed=db.execute("UPDATE actions SET status='approved',approval=?,expires=? WHERE id=? AND owner=? AND status='proposed'",(self.binding(action),time.time()+min(ttl,300),action_id,owner)).rowcount
+            if not changed:db.rollback();raise Conflict('action cannot be approved')
+            self.event(db,action_id,'approved');db.commit()
+        return self.get(action_id,owner)
+    def dispatch(self,action_id,owner):
+        with self.connection() as db:
+            db.execute('BEGIN IMMEDIATE')
+            row=db.execute('SELECT * FROM actions WHERE id=? AND owner=?',(action_id,owner)).fetchone()
+            if row is None:raise Forbidden('action not found')
+            action=self.public(row)
+            if row['status']!='approved' or row['expires']<time.time() or row['approval']!=self.binding(action):
+                raise Conflict('fresh exact approval required')
+            snapshot=dict(db.execute('SELECT * FROM resources WHERE sku=?',(action['args']['sku'],)).fetchone())
+            if snapshot!=action['precondition']:raise Conflict('page state changed')
+            token=secrets.token_urlsafe(32)
+            db.execute("UPDATE actions SET status='dispatched',dispatch=? WHERE id=?",(digest(token),action_id))
+            self.event(db,action_id,'dispatched');db.commit()
+            return token
