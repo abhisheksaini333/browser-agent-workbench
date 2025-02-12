@@ -82,3 +82,24 @@ class Store:
             db.execute("UPDATE actions SET status='dispatched',dispatch=? WHERE id=?",(digest(token),action_id))
             self.event(db,action_id,'dispatched');db.commit()
             return token
+    def execute(self,action_id,token,args):
+        with self.connection() as db:
+            db.execute('BEGIN IMMEDIATE')
+            row=db.execute('SELECT * FROM actions WHERE id=?',(action_id,)).fetchone()
+            if row is None or not secrets.compare_digest(row['dispatch'] or '',digest(token)):
+                raise Forbidden('invalid dispatch capability')
+            action=self.public(row)
+            if action['args']!=args:raise Conflict('submitted arguments changed')
+            if action['receipt'] is not None:return action['receipt']
+            if row['status']!='dispatched':raise Conflict('action is not dispatched')
+            snapshot=dict(db.execute('SELECT * FROM resources WHERE sku=?',(args['sku'],)).fetchone())
+            if snapshot!=action['precondition']:raise Conflict('page state changed before submission')
+            delta=-args['quantity']
+            if snapshot['available']+delta<0:raise Conflict('insufficient availability')
+            db.execute('UPDATE resources SET available=available+?,version=version+1 WHERE sku=?',(delta,args['sku']))
+            created=time.time()
+            receipt={'action_id':action_id,'kind':action['kind'],'args':args,'created':created,'resource_version':snapshot['version']+1}
+            db.execute('INSERT INTO receipts VALUES(?,?,?,?)',(action_id,action['kind'],canonical(args),created))
+            db.execute("UPDATE actions SET status='completed',receipt=? WHERE id=?",(canonical(receipt),action_id))
+            self.event(db,action_id,'receipt_recorded');db.commit()
+            return receipt

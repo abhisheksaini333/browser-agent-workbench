@@ -29,3 +29,15 @@ class StoreTests(unittest.TestCase):
         token=self.store.dispatch(action['id'],'alice')
         self.assertGreater(len(token),30)
         with self.assertRaises(ValueError):self.store.dispatch(action['id'],'alice')
+    def ready(self,kind='purchase',quantity=2):
+        action=self.store.propose('alice',kind,{'sku':'WIDGET','quantity':quantity})
+        self.store.approve(action['id'],'alice',action['args'],action['precondition'])
+        return action,self.store.dispatch(action['id'],'alice')
+    def test_receipt_and_effect_are_atomic_and_idempotent(self):
+        a,token=self.ready()
+        receipt=self.store.execute(a['id'],token,a['args'])
+        self.assertEqual(self.store.snapshot('WIDGET')['available'],18)
+        self.assertEqual(self.store.execute(a['id'],token,a['args']),receipt)
+        self.assertEqual(self.store.snapshot('WIDGET')['available'],18)
+        with self.assertRaises(ValueError):self.store.execute(a['id'],'wrong',a['args'])
+        with self.assertRaises(ValueError):self.store.execute(a['id'],token,{'sku':'WIDGET','quantity':3})
