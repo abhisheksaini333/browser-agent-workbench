@@ -41,3 +41,13 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(self.store.snapshot('WIDGET')['available'],18)
         with self.assertRaises(ValueError):self.store.execute(a['id'],'wrong',a['args'])
         with self.assertRaises(ValueError):self.store.execute(a['id'],token,{'sku':'WIDGET','quantity':3})
+    def test_reservation_consumes_capacity_and_inventory_adds_stock(self):
+        a,token=self.ready('reservation',3);self.store.execute(a['id'],token,a['args'])
+        self.assertEqual(self.store.snapshot('WIDGET')['available'],17)
+        a,token=self.ready('inventory',5);self.store.execute(a['id'],token,a['args'])
+        self.assertEqual(self.store.snapshot('WIDGET')['available'],22)
+    def test_precondition_rechecked_at_transaction_boundary(self):
+        a,token=self.ready();b,other=self.ready()
+        self.store.execute(b['id'],other,b['args'])
+        with self.assertRaises(ValueError):self.store.execute(a['id'],token,a['args'])
+        self.assertEqual(self.store.get(a['id'],'alice')['receipt'],None)

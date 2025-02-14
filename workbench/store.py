@@ -94,7 +94,7 @@ class Store:
             if row['status']!='dispatched':raise Conflict('action is not dispatched')
             snapshot=dict(db.execute('SELECT * FROM resources WHERE sku=?',(args['sku'],)).fetchone())
             if snapshot!=action['precondition']:raise Conflict('page state changed before submission')
-            delta=-args['quantity']
+            delta=args['quantity'] if action['kind']=='inventory' else -args['quantity']
             if snapshot['available']+delta<0:raise Conflict('insufficient availability')
             db.execute('UPDATE resources SET available=available+?,version=version+1 WHERE sku=?',(delta,args['sku']))
             created=time.time()
