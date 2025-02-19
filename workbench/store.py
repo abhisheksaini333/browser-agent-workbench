@@ -103,3 +103,16 @@ class Store:
             db.execute("UPDATE actions SET status='completed',receipt=? WHERE id=?",(canonical(receipt),action_id))
             self.event(db,action_id,'receipt_recorded');db.commit()
             return receipt
+    def reconcile(self,action_id,owner):
+        self.get(action_id,owner)
+        with self.connection() as db:
+            db.execute('BEGIN IMMEDIATE')
+            row=db.execute('SELECT status,receipt FROM actions WHERE id=?',(action_id,)).fetchone()
+            if row['receipt'] is not None:
+                db.execute("UPDATE actions SET status='completed' WHERE id=?",(action_id,))
+                self.event(db,action_id,'receipt_reconciled')
+            elif row['status'] in ('dispatched','outcome_unknown'):
+                db.execute("UPDATE actions SET status='outcome_unknown' WHERE id=?",(action_id,))
+                self.event(db,action_id,'reconciliation_unresolved')
+            db.commit()
+        return self.get(action_id,owner)

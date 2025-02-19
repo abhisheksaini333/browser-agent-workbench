@@ -51,3 +51,13 @@ class StoreTests(unittest.TestCase):
         self.store.execute(b['id'],other,b['args'])
         with self.assertRaises(ValueError):self.store.execute(a['id'],token,a['args'])
         self.assertEqual(self.store.get(a['id'],'alice')['receipt'],None)
+    def test_recovery_finds_committed_receipt_after_restart(self):
+        a,token=self.ready();receipt=self.store.execute(a['id'],token,a['args'])
+        reopened=Store(str(self.path))
+        self.assertEqual(reopened.reconcile(a['id'],'alice')['receipt'],receipt)
+        self.assertEqual(reopened.snapshot('WIDGET')['available'],18)
+    def test_missing_receipt_becomes_unknown_and_never_blind_retries(self):
+        a,token=self.ready()
+        self.assertEqual(self.store.reconcile(a['id'],'alice')['status'],'outcome_unknown')
+        with self.assertRaises(ValueError):self.store.dispatch(a['id'],'alice')
+        with self.assertRaises(ValueError):self.store.execute(a['id'],token,a['args'])
