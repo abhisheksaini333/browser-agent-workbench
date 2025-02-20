@@ -61,3 +61,14 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(self.store.reconcile(a['id'],'alice')['status'],'outcome_unknown')
         with self.assertRaises(ValueError):self.store.dispatch(a['id'],'alice')
         with self.assertRaises(ValueError):self.store.execute(a['id'],token,a['args'])
+    def test_cancel_before_dispatch_blocks_effect_and_records_history(self):
+        a=self.store.propose('alice','purchase',{'sku':'WIDGET','quantity':2})
+        self.store.cancel(a['id'],'alice')
+        self.assertEqual(self.store.get(a['id'],'alice')['status'],'cancelled')
+        self.assertIn('cancelled',[e['event'] for e in self.store.history(a['id'],'alice')])
+        with self.assertRaises(ValueError):self.store.approve(a['id'],'alice',a['args'],a['precondition'])
+        self.assertEqual(len(self.store.list_actions('alice')),1)
+        self.assertEqual(self.store.list_actions('bob'),[])
+    def test_cancel_after_dispatch_does_not_claim_rollback(self):
+        a,token=self.ready()
+        self.assertEqual(self.store.cancel(a['id'],'alice')['status'],'outcome_unknown')

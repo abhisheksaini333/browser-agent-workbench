@@ -116,3 +116,20 @@ class Store:
                 self.event(db,action_id,'reconciliation_unresolved')
             db.commit()
         return self.get(action_id,owner)
+    def cancel(self,action_id,owner):
+        self.get(action_id,owner)
+        with self.connection() as db:
+            db.execute('BEGIN IMMEDIATE')
+            status=db.execute('SELECT status FROM actions WHERE id=?',(action_id,)).fetchone()['status']
+            target='cancelled' if status in ('proposed','approved') else 'outcome_unknown' if status=='dispatched' else status
+            db.execute('UPDATE actions SET status=? WHERE id=?',(target,action_id))
+            self.event(db,action_id,'cancelled' if target=='cancelled' else 'cancellation_requested')
+            db.commit()
+        return self.get(action_id,owner)
+    def history(self,action_id,owner):
+        self.get(action_id,owner)
+        with self.connection() as db:
+            return [dict(x) for x in db.execute('SELECT event,created FROM events WHERE action_id=? ORDER BY id',(action_id,)).fetchall()]
+    def list_actions(self,owner):
+        with self.connection() as db:
+            return [self.public(x) for x in db.execute('SELECT * FROM actions WHERE owner=? ORDER BY created DESC LIMIT 200',(owner,)).fetchall()]
