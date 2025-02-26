@@ -32,6 +32,16 @@ def create_server(host,port,database,key):
         def handle_request(self,method):
             path=urlparse(self.path).path
             if path=='/health':return self.reply(200,{'status':'ok'})
+            if path.startswith('/portal/action/'):
+                try:
+                    action_id=path.rsplit('/',1)[-1];token=self.headers.get('X-Dispatch-Token','')
+                    action=store.portal_action(action_id,token)
+                    if method=='GET':return self.reply(200,action)
+                    data=self.body();receipt=store.execute(action_id,token,data['args'])
+                    return self.reply(200,receipt)
+                except Forbidden as exc:return self.reply(403,{'error':str(exc)})
+                except Conflict as exc:return self.reply(409,{'error':str(exc)})
+                except (ValueError,KeyError,TypeError):return self.reply(400,{'error':'invalid submission'})
             if not self.authenticated():return self.reply(401,{'error':'authentication required'})
             try:
                 if method=='GET' and path=='/api/actions':return self.reply(200,store.list_actions('operator'))

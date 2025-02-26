@@ -133,3 +133,9 @@ class Store:
     def list_actions(self,owner):
         with self.connection() as db:
             return [self.public(x) for x in db.execute('SELECT * FROM actions WHERE owner=? ORDER BY created DESC LIMIT 200',(owner,)).fetchall()]
+    def portal_action(self,action_id,token):
+        with self.connection() as db:
+            row=db.execute('SELECT * FROM actions WHERE id=?',(action_id,)).fetchone()
+            if row is None or not secrets.compare_digest(row['dispatch'] or '',digest(token)) or row['expires']<time.time():
+                raise Forbidden('expired or invalid browser session')
+            return self.public(row)

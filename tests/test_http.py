@@ -20,3 +20,12 @@ class HTTPTests(unittest.TestCase):
         a=self.request('/api/actions',{'kind':'purchase','args':{'sku':'WIDGET','quantity':2}})
         self.assertEqual(self.request('/api/actions')[0]['id'],a['id'])
         self.assertNotIn('dispatch',a)
+    def test_portal_capability_scoped_to_one_action(self):
+        a=self.server.store.propose('operator','purchase',{'sku':'WIDGET','quantity':2})
+        self.server.store.approve(a['id'],'operator',a['args'],a['precondition'])
+        token=self.server.store.dispatch(a['id'],'operator')
+        req=urllib.request.Request(self.url+'/portal/action/'+a['id'],headers={'X-Dispatch-Token':token})
+        with urllib.request.urlopen(req) as r:self.assertEqual(json.load(r)['args'],a['args'])
+        req=urllib.request.Request(self.url+'/portal/action/'+a['id'],headers={'X-Dispatch-Token':'bad'})
+        with self.assertRaises(urllib.error.HTTPError) as err:urllib.request.urlopen(req)
+        self.assertEqual(err.exception.code,403)
