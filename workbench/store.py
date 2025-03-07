@@ -24,9 +24,13 @@ class Store:
                 db.execute('INSERT OR IGNORE INTO resources VALUES(?,?,1)',(sku,available))
     @contextlib.contextmanager
     def connection(self):
-        db=sqlite3.connect(self.path,timeout=10,isolation_level=None)
-        db.row_factory=sqlite3.Row
-        db.execute('PRAGMA journal_mode=WAL');db.execute('PRAGMA foreign_keys=ON')
+        if self.path.startswith(('postgresql://','postgres://')):
+            from .postgres import PostgresConnection
+            db=PostgresConnection(self.path)
+        else:
+            db=sqlite3.connect(self.path,timeout=10,isolation_level=None)
+            db.row_factory=sqlite3.Row
+            db.execute('PRAGMA journal_mode=WAL');db.execute('PRAGMA foreign_keys=ON')
         try:yield db
         finally:db.close()
     def snapshot(self,sku):
