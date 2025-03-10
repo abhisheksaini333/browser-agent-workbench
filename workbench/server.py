@@ -32,6 +32,9 @@ def create_server(host,port,database,key):
         def handle_request(self,method):
             path=urlparse(self.path).path
             if path=='/health':return self.reply(200,{'status':'ok'})
+            if method=='GET' and path in ('/portal/','/portal/app.js'):
+                name='index.html' if path=='/portal/' else 'app.js'
+                return self.reply(200,(ROOT/'portal'/name).read_text(),'text/html' if name=='index.html' else 'text/javascript')
             if path.startswith('/portal/action/'):
                 try:
                     action_id=path.rsplit('/',1)[-1];token=self.headers.get('X-Dispatch-Token','')
