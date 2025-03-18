@@ -17,7 +17,7 @@ def exact_origin(url):
 
 async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
     from playwright.async_api import async_playwright
-    allowed=exact_origin(origin);blocked=[]
+    allowed=exact_origin(origin);blocked=[];injected=False
     async with async_playwright() as playwright:
         executable=os.environ.get('CHROMIUM_PATH') or ('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' if pathlib.Path('/Applications/Google Chrome.app').exists() else playwright.chromium.executable_path)
         with tempfile.TemporaryDirectory(prefix='workbench-browser-') as profile:
@@ -34,9 +34,16 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
                 context=await browser.new_context(service_workers='block')
                 await context.set_extra_http_headers({'X-Dispatch-Token':token})
                 async def route_request(route):
+                    nonlocal injected
                     try:valid=exact_origin(route.request.url)==allowed
                     except ValueError:valid=False
                     if not valid:blocked.append(route.request.url);await route.abort();return
+                    if fault=='kill_after_commit' and route.request.method=='POST' and '/portal/action/' in route.request.url:
+                        response=await route.fetch()
+                        if response.status!=200:raise RuntimeError('fault requires a committed transaction')
+                        injected=True
+                        process.kill()
+                        return
                     await route.continue_()
                 await context.route('**/*',route_request)
                 page=await context.new_page();page.set_default_timeout(5000)
@@ -48,6 +55,9 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
                 receipt=json.loads(await page.locator('#receipt').inner_text())
                 await context.close()
                 return {'status':'completed','receipt':receipt,'blocked_requests':blocked,'adapter':adapter}
+            except Exception:
+                if injected:return {'status':'outcome_unknown','fault':'SIGKILL after committed POST before browser response','blocked_requests':blocked,'adapter':adapter}
+                raise
             finally:
                 if process.poll() is None:process.kill()
                 process.wait(timeout=5)

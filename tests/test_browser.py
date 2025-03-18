@@ -16,3 +16,11 @@ class BrowserTests(unittest.TestCase):
     def test_real_browser_submits_and_observes_receipt(self):
         a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token))
         self.assertEqual(r['status'],'completed');self.assertEqual(r['receipt']['action_id'],a['id']);self.assertEqual(self.server.store.snapshot('WIDGET')['available'],18)
+    def test_sigkill_after_server_commit_recovers_without_duplicate(self):
+        a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token,fault='kill_after_commit'))
+        self.assertEqual(r['status'],'outcome_unknown');self.assertEqual(r['fault'],'SIGKILL after committed POST before browser response')
+        self.assertEqual(self.server.store.snapshot('WIDGET')['available'],18)
+        recovered=self.server.store.reconcile(a['id'],'operator')
+        self.assertEqual(recovered['status'],'completed')
+        self.assertEqual(recovered['receipt']['action_id'],a['id'])
+        self.assertEqual(self.server.store.snapshot('WIDGET')['available'],18)
