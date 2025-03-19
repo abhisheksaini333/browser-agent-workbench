@@ -49,15 +49,18 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
                 page=await context.new_page();page.set_default_timeout(5000)
                 await page.goto(origin+'/portal/?action='+action['id'])
                 await page.locator('form[data-ready=true]').wait_for()
+                isolated=await page.evaluate("localStorage.getItem('workbench-session') === null")
+                await page.evaluate("localStorage.setItem('workbench-session','present')")
+                if fault=='changed_layout':await page.locator('label[for=quantity]').evaluate("e => e.textContent = 'Unexpected field'")
                 await page.get_by_label('Quantity',exact=True).fill(str(action['args']['quantity']))
                 await page.get_by_role('button',name='Submit approved operation',exact=True).click()
                 await page.get_by_text('Receipt confirmed',exact=True).wait_for()
                 receipt=json.loads(await page.locator('#receipt').inner_text())
                 await context.close()
-                return {'status':'completed','receipt':receipt,'blocked_requests':blocked,'adapter':adapter}
-            except Exception:
+                return {'status':'completed','receipt':receipt,'blocked_requests':blocked,'adapter':adapter,'isolated':isolated}
+            except Exception as exc:
                 if injected:return {'status':'outcome_unknown','fault':'SIGKILL after committed POST before browser response','blocked_requests':blocked,'adapter':adapter}
-                raise
+                return {'status':'outcome_unknown','reason':type(exc).__name__,'blocked_requests':blocked,'adapter':adapter}
             finally:
                 if process.poll() is None:process.kill()
                 process.wait(timeout=5)

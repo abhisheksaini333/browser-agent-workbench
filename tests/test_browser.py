@@ -24,3 +24,9 @@ class BrowserTests(unittest.TestCase):
         self.assertEqual(recovered['status'],'completed')
         self.assertEqual(recovered['receipt']['action_id'],a['id'])
         self.assertEqual(self.server.store.snapshot('WIDGET')['available'],18)
+    def test_changed_layout_stops_instead_of_guessing(self):
+        a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token,fault='changed_layout'))
+        self.assertEqual(r['status'],'outcome_unknown');self.assertIsNone(self.server.store.get(a['id'],'operator')['receipt'])
+    def test_isolated_sessions_do_not_share_previous_storage(self):
+        a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token))
+        self.assertTrue(r['isolated']);a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token));self.assertTrue(r['isolated'])
