@@ -1,5 +1,6 @@
 """Loopback HTTP server for the workbench and owned transaction portal."""
 import argparse
+import asyncio
 import hmac
 import json
 import os
@@ -31,6 +32,8 @@ def create_server(host,port,database,key):
             return data
         def handle_request(self,method):
             path=urlparse(self.path).path
+            expected_origin='http://'+self.headers.get('Host','')
+            if self.headers.get('Origin') not in (None,expected_origin):return self.reply(403,{'error':'origin denied'})
             if path=='/health':return self.reply(200,{'status':'ok'})
             if method=='GET' and path in ('/portal/','/portal/app.js'):
                 name='index.html' if path=='/portal/' else 'app.js'
@@ -48,6 +51,14 @@ def create_server(host,port,database,key):
             if not self.authenticated():return self.reply(401,{'error':'authentication required'})
             try:
                 if method=='GET' and path=='/api/actions':return self.reply(200,store.list_actions('operator'))
+                if method=='POST' and path=='/api/tasks':
+                    from .model import baseline,select_action
+                    data=self.body()
+                    if data.get('mode')=='baseline':decision={'selection':baseline(data['task']),'model':'deterministic baseline'}
+                    elif data.get('mode')=='model':decision=select_action(data['task'],os.environ.get('MODEL_ENDPOINT','http://127.0.0.1:18100'))
+                    else:raise ValueError('select baseline or model mode')
+                    choice=decision['selection'];action=store.propose('operator',choice['kind'],choice['args'])
+                    return self.reply(201,{'action':action,'decision':decision})
                 if method=='GET' and path.startswith('/api/resources/'):
                     return self.reply(200,store.snapshot(path.rsplit('/',1)[-1]))
                 if method=='POST' and path=='/api/actions':
@@ -62,6 +73,14 @@ def create_server(host,port,database,key):
                         if verb=='approve':return self.reply(200,store.approve(action_id,'operator',data['args'],data['precondition']))
                         if verb=='cancel':return self.reply(200,store.cancel(action_id,'operator'))
                         if verb=='reconcile':return self.reply(200,store.reconcile(action_id,'operator'))
+                        if verb=='run':
+                            from .browser import run_browser
+                            adapter=data.get('adapter','playwright')
+                            if adapter not in ('playwright','browser-use'):raise ValueError('unknown adapter')
+                            action=store.get(action_id,'operator');token=store.dispatch(action_id,'operator')
+                            result=asyncio.run(run_browser('http://127.0.0.1:'+str(self.server.server_port),action,token,adapter=adapter))
+                            current=store.reconcile(action_id,'operator')
+                            return self.reply(200,{'action':current,'browser':result})
                 return self.reply(404,{'error':'not found'})
             except Forbidden as exc:return self.reply(403,{'error':str(exc)})
             except Conflict as exc:return self.reply(409,{'error':str(exc)})

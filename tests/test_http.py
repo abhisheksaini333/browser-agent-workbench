@@ -29,3 +29,10 @@ class HTTPTests(unittest.TestCase):
         req=urllib.request.Request(self.url+'/portal/action/'+a['id'],headers={'X-Dispatch-Token':'bad'})
         with self.assertRaises(urllib.error.HTTPError) as err:urllib.request.urlopen(req)
         self.assertEqual(err.exception.code,403)
+    def test_baseline_task_creates_unapproved_action(self):
+        a=self.request('/api/tasks',{'task':'reservation 1 ROOM','mode':'baseline'})
+        self.assertEqual(a['action']['kind'],'reservation');self.assertEqual(a['action']['status'],'proposed')
+    def test_cross_origin_request_is_rejected(self):
+        req=urllib.request.Request(self.url+'/api/actions',data=b'{}',headers={'Authorization':'Bearer test-key','Origin':'https://evil.example'})
+        with self.assertRaises(urllib.error.HTTPError) as err:urllib.request.urlopen(req)
+        self.assertEqual(err.exception.code,403)
