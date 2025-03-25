@@ -31,7 +31,13 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
                 if not active.exists():raise RuntimeError('Chromium startup timed out')
                 port=active.read_text().splitlines()[0]
                 browser=await playwright.chromium.connect_over_cdp('http://127.0.0.1:'+port)
-                context=await browser.new_context(service_workers='block')
+                framework_context=None;framework_wrapper=None;framework_actions=[]
+                if adapter=='browser-use':
+                    from .browser_use_adapter import create_context
+                    framework_wrapper,framework_context,context,page=await create_context(browser)
+                else:
+                    context=await browser.new_context(service_workers='block')
+                    page=await context.new_page()
                 await context.set_extra_http_headers({'X-Dispatch-Token':token})
                 async def route_request(route):
                     nonlocal injected
@@ -46,19 +52,26 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
                         return
                     await route.continue_()
                 await context.route('**/*',route_request)
-                page=await context.new_page();page.set_default_timeout(5000)
+                page.set_default_timeout(5000)
                 await page.goto(origin+'/portal/?action='+action['id'])
                 await page.locator('form[data-ready=true]').wait_for()
                 isolated=await page.evaluate("localStorage.getItem('workbench-session') === null")
                 await page.evaluate("localStorage.setItem('workbench-session','present')")
                 if fault=='changed_layout':await page.locator('label[for=quantity]').evaluate("e => e.textContent = 'Unexpected field'")
-                await page.get_by_label('Quantity',exact=True).fill(str(action['args']['quantity']))
-                await page.get_by_role('button',name='Submit approved operation',exact=True).click()
+                if framework_context:
+                    from .browser_use_adapter import submit
+                    framework_actions=await submit(framework_context,action['args']['quantity'])
+                else:
+                    await page.get_by_label('Quantity',exact=True).fill(str(action['args']['quantity']))
+                    await page.get_by_role('button',name='Submit approved operation',exact=True).click()
                 await page.get_by_text('Receipt confirmed',exact=True).wait_for()
                 receipt=json.loads(await page.locator('#receipt').inner_text())
                 await context.close()
-                return {'status':'completed','receipt':receipt,'blocked_requests':blocked,'adapter':adapter,'isolated':isolated}
+                return {'status':'completed','receipt':receipt,'blocked_requests':blocked,'adapter':adapter,'isolated':isolated,'framework_actions':framework_actions}
             except Exception as exc:
+                if os.environ.get('WORKBENCH_DEBUG'):
+                    import traceback
+                    traceback.print_exc()
                 if injected:return {'status':'outcome_unknown','fault':'SIGKILL after committed POST before browser response','blocked_requests':blocked,'adapter':adapter}
                 return {'status':'outcome_unknown','reason':type(exc).__name__,'blocked_requests':blocked,'adapter':adapter}
             finally:

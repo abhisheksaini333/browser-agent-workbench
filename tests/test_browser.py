@@ -30,3 +30,7 @@ class BrowserTests(unittest.TestCase):
     def test_isolated_sessions_do_not_share_previous_storage(self):
         a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token))
         self.assertTrue(r['isolated']);a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token));self.assertTrue(r['isolated'])
+    @unittest.skipUnless(os.environ.get('RUN_BROWSER_USE_TESTS'),'requires Browser Use integration profile')
+    def test_browser_use_controller_executes_approved_flow(self):
+        a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token,adapter='browser-use'))
+        self.assertEqual(r['status'],'completed');self.assertEqual(r['framework_actions'],['fill_quantity','submit_approved'])
