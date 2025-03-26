@@ -19,7 +19,13 @@ def baseline(task):
     if not match:raise ValueError('baseline requires KIND QUANTITY SKU')
     return validate_selection({'kind':match[1],'args':{'sku':match[3],'quantity':int(match[2])}})
 
-def select_action(task,endpoint,model='local',page_text=''):
+def parse_output(content):
+    content=re.sub(r'^\s*<think>\s*</think>\s*','',content).strip()
+    fenced=re.fullmatch(r'```(?:json)?\s*([\s\S]*?)\s*```',content)
+    if fenced:content=fenced[1]
+    return validate_selection(json.loads(content))
+
+def select_action(task,endpoint,model='default_model',page_text=''):
     if not isinstance(task,str) or not 1<=len(task)<=1000:raise ValueError('task must contain 1 to 1000 characters')
     exact_origin(endpoint)
     payload={'model':model,'temperature':0,'max_tokens':180,'messages':[{'role':'system','content':SYSTEM},{'role':'user','content':json.dumps({'task':task,'untrusted_page_text':page_text[:4000]})}]}
@@ -29,5 +35,5 @@ def select_action(task,endpoint,model='local',page_text=''):
         data=json.loads(response.read(1000000))
     content=data['choices'][0]['message']['content']
     # Preserve strict JSON; malformed output is a measured model failure.
-    selected=validate_selection(json.loads(content))
+    selected=parse_output(content)
     return {'selection':selected,'latency_ms':round((time.monotonic()-start)*1000,2),'model':data.get('model',model),'usage':data.get('usage',{}),'raw_output':content}
