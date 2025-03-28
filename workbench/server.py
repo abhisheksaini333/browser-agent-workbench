@@ -35,6 +35,12 @@ def create_server(host,port,database,key):
             expected_origin='http://'+self.headers.get('Host','')
             if self.headers.get('Origin') not in (None,expected_origin):return self.reply(403,{'error':'origin denied'})
             if path=='/health':return self.reply(200,{'status':'ok'})
+            if method=='GET' and (path=='/' or path.startswith('/assets/')):
+                dist=(ROOT/'frontend'/'dist').resolve()
+                target=(dist/('index.html' if path=='/' else path.lstrip('/'))).resolve()
+                if not target.is_relative_to(dist) or not target.is_file():return self.reply(404,{'error':'Build the frontend first'})
+                content_type={'.html':'text/html','.js':'text/javascript','.css':'text/css'}.get(target.suffix,'text/plain')
+                return self.reply(200,target.read_text(),content_type)
             if method=='GET' and path in ('/portal/','/portal/app.js'):
                 name='index.html' if path=='/portal/' else 'app.js'
                 return self.reply(200,(ROOT/'portal'/name).read_text(),'text/html' if name=='index.html' else 'text/javascript')

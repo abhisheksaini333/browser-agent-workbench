@@ -1,2 +1,30 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Owned operations portal</title></head><body>
-<main><h1>Operations portal</h1><p id="operation">Loading approved operation</p><form id="transaction"><label for="sku">Item</label><input id="sku" name="sku" readonly><label for="quantity">Quantity</label><input id="quantity" name="quantity" type="number" min="1" max="100" required><button type="submit">Submit approved operation</button></form><p id="status" role="status">Waiting for submission</p><pre id="receipt"></pre></main><script src="/portal/app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Owned operations portal</title>
+  </head>
+  <body>
+    <main>
+      <h1>Operations portal</h1>
+      <p id="operation">Loading approved operation</p>
+      <form id="transaction">
+        <label for="sku">Item</label
+        ><input id="sku" name="sku" readonly /><label for="quantity"
+          >Quantity</label
+        ><input
+          id="quantity"
+          name="quantity"
+          type="number"
+          min="1"
+          max="100"
+          required
+        /><button type="submit">Submit approved operation</button>
+      </form>
+      <p id="status" role="status">Waiting for submission</p>
+      <pre id="receipt"></pre>
+    </main>
+    <script src="/portal/app.js"></script>
+  </body>
+</html>

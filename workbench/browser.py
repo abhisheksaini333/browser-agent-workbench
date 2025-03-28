@@ -3,6 +3,7 @@ import asyncio
 import json
 import os
 import pathlib
+import signal
 import subprocess
 import tempfile
 from urllib.parse import urlsplit
@@ -20,8 +21,8 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
     allowed=exact_origin(origin);blocked=[];injected=False
     async with async_playwright() as playwright:
         executable=os.environ.get('CHROMIUM_PATH') or ('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' if pathlib.Path('/Applications/Google Chrome.app').exists() else playwright.chromium.executable_path)
-        with tempfile.TemporaryDirectory(prefix='workbench-browser-') as profile:
-            process=subprocess.Popen([executable,'--headless=new','--remote-debugging-port=0','--user-data-dir='+profile,'--no-first-run','--no-default-browser-check','--disable-background-networking','--no-sandbox'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+        with tempfile.TemporaryDirectory(prefix='workbench-browser-',ignore_cleanup_errors=True) as profile:
+            process=subprocess.Popen([executable,'--headless=new','--remote-debugging-port=0','--user-data-dir='+profile,'--no-first-run','--no-default-browser-check','--disable-background-networking','--no-sandbox'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
             try:
                 active=pathlib.Path(profile)/'DevToolsActivePort'
                 for _ in range(200):
@@ -48,7 +49,7 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
                         response=await route.fetch()
                         if response.status!=200:raise RuntimeError('fault requires a committed transaction')
                         injected=True
-                        process.kill()
+                        os.killpg(process.pid,signal.SIGKILL)
                         return
                     await route.continue_()
                 await context.route('**/*',route_request)
@@ -67,6 +68,7 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
                 await page.get_by_text('Receipt confirmed',exact=True).wait_for()
                 receipt=json.loads(await page.locator('#receipt').inner_text())
                 await context.close()
+                await browser.close()
                 return {'status':'completed','receipt':receipt,'blocked_requests':blocked,'adapter':adapter,'isolated':isolated,'framework_actions':framework_actions}
             except Exception as exc:
                 if os.environ.get('WORKBENCH_DEBUG'):
@@ -75,5 +77,5 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
                 if injected:return {'status':'outcome_unknown','fault':'SIGKILL after committed POST before browser response','blocked_requests':blocked,'adapter':adapter}
                 return {'status':'outcome_unknown','reason':type(exc).__name__,'blocked_requests':blocked,'adapter':adapter}
             finally:
-                if process.poll() is None:process.kill()
+                if process.poll() is None:os.killpg(process.pid,signal.SIGKILL)
                 process.wait(timeout=5)
