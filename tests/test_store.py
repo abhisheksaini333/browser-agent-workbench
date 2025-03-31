@@ -72,3 +72,8 @@ class StoreTests(unittest.TestCase):
     def test_cancel_after_dispatch_does_not_claim_rollback(self):
         a,token=self.ready()
         self.assertEqual(self.store.cancel(a['id'],'alice')['status'],'outcome_unknown')
+    def test_expired_dispatch_cannot_submit_new_effect(self):
+        a,token=self.ready()
+        with self.store.connection() as db:db.execute('UPDATE actions SET expires=0 WHERE id=?',(a['id'],))
+        with self.assertRaises(ValueError):self.store.execute(a['id'],token,a['args'])
+        self.assertEqual(self.store.snapshot('WIDGET')['available'],20)

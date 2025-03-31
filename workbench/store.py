@@ -96,6 +96,7 @@ class Store:
             if action['args']!=args:raise Conflict('submitted arguments changed')
             if action['receipt'] is not None:return action['receipt']
             if row['status']!='dispatched':raise Conflict('action is not dispatched')
+            if row['expires']<time.time():raise Forbidden('browser session expired')
             snapshot=dict(db.execute('SELECT * FROM resources WHERE sku=?',(args['sku'],)).fetchone())
             if snapshot!=action['precondition']:raise Conflict('page state changed before submission')
             delta=args['quantity'] if action['kind']=='inventory' else -args['quantity']
