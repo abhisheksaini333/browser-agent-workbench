@@ -36,3 +36,12 @@ class HTTPTests(unittest.TestCase):
         req=urllib.request.Request(self.url+'/api/actions',data=b'{}',headers={'Authorization':'Bearer test-key','Origin':'https://evil.example'})
         with self.assertRaises(urllib.error.HTTPError) as err:urllib.request.urlopen(req)
         self.assertEqual(err.exception.code,403)
+    def test_busy_browser_lane_rejects_before_consuming_approval(self):
+        a=self.request('/api/actions',{'kind':'purchase','args':{'sku':'WIDGET','quantity':1}})
+        self.request('/api/actions/'+a['id']+'/approve',{'args':a['args'],'precondition':a['precondition']})
+        self.server.browser_slots.acquire()
+        try:
+            with self.assertRaises(urllib.error.HTTPError) as err:self.request('/api/actions/'+a['id']+'/run',{})
+            self.assertEqual(err.exception.code,409)
+            self.assertEqual(self.server.store.get(a['id'],'operator')['status'],'approved')
+        finally:self.server.browser_slots.release()

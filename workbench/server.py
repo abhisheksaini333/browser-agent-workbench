@@ -6,6 +6,8 @@ import json
 import os
 import pathlib
 import secrets
+import threading
+import urllib.error
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse
 from .store import Store, Conflict, Forbidden
@@ -83,17 +85,21 @@ def create_server(host,port,database,key):
                             from .browser import run_browser
                             adapter=data.get('adapter','playwright')
                             if adapter not in ('playwright','browser-use'):raise ValueError('unknown adapter')
-                            action=store.get(action_id,'operator');token=store.dispatch(action_id,'operator')
-                            result=asyncio.run(run_browser('http://127.0.0.1:'+str(self.server.server_port),action,token,adapter=adapter))
-                            current=store.reconcile(action_id,'operator')
-                            return self.reply(200,{'action':current,'browser':result})
+                            if not self.server.browser_slots.acquire(blocking=False):raise Conflict('browser lane is busy; approval retained')
+                            try:
+                                action=store.get(action_id,'operator');token=store.dispatch(action_id,'operator')
+                                result=asyncio.run(run_browser('http://127.0.0.1:'+str(self.server.server_port),action,token,adapter=adapter))
+                                current=store.reconcile(action_id,'operator')
+                                return self.reply(200,{'action':current,'browser':result})
+                            finally:self.server.browser_slots.release()
                 return self.reply(404,{'error':'not found'})
+            except (urllib.error.URLError,TimeoutError):return self.reply(502,{'error':'local model unavailable; no action was authorized'})
             except Forbidden as exc:return self.reply(403,{'error':str(exc)})
             except Conflict as exc:return self.reply(409,{'error':str(exc)})
             except (ValueError,KeyError,TypeError) as exc:return self.reply(400,{'error':'invalid request: '+str(exc)})
         def do_GET(self):self.handle_request('GET')
         def do_POST(self):self.handle_request('POST')
-    server=ThreadingHTTPServer((host,port),Handler);server.store=store
+    server=ThreadingHTTPServer((host,port),Handler);server.store=store;server.browser_slots=threading.BoundedSemaphore(1)
     return server
 
 def main():
