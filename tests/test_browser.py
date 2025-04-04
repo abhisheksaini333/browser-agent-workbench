@@ -34,3 +34,7 @@ class BrowserTests(unittest.TestCase):
     def test_browser_use_controller_executes_approved_flow(self):
         a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token,adapter='browser-use'))
         self.assertEqual(r['status'],'completed');self.assertEqual(r['framework_actions'],['fill_quantity','submit_approved'])
+    @unittest.skipUnless(os.environ.get('RUN_MCP_TESTS'),'requires Playwright MCP profile')
+    def test_mcp_adapter_uses_real_protocol_tools(self):
+        a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token,adapter='playwright-mcp'))
+        self.assertEqual(r['status'],'completed');self.assertIn('browser_click',r['framework_actions']);self.assertEqual(r['receipt']['action_id'],a['id'])

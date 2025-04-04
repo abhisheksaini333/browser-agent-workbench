@@ -202,6 +202,7 @@ function App() {
                     >
                       <option value="playwright">Playwright</option>
                       <option value="browser-use">Browser Use</option>
+                  <option value="playwright-mcp">Playwright MCP</option>
                     </select>
                   </label>
                   <button disabled={busy}>

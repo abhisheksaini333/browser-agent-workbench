@@ -17,6 +17,9 @@ def exact_origin(url):
     return parsed.scheme,parsed.hostname,parsed.port or (443 if parsed.scheme=='https' else 80)
 
 async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
+    if adapter=='playwright-mcp':
+        from .mcp_adapter import run_mcp
+        return await run_mcp(origin,action,token)
     from playwright.async_api import async_playwright
     allowed=exact_origin(origin);blocked=[];injected=False
     async with async_playwright() as playwright:

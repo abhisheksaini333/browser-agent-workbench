@@ -84,7 +84,7 @@ def create_server(host,port,database,key):
                         if verb=='run':
                             from .browser import run_browser
                             adapter=data.get('adapter','playwright')
-                            if adapter not in ('playwright','browser-use'):raise ValueError('unknown adapter')
+                            if adapter not in ('playwright','browser-use','playwright-mcp'):raise ValueError('unknown adapter')
                             if not self.server.browser_slots.acquire(blocking=False):raise Conflict('browser lane is busy; approval retained')
                             try:
                                 action=store.get(action_id,'operator');token=store.dispatch(action_id,'operator')
