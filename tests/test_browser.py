@@ -38,3 +38,11 @@ class BrowserTests(unittest.TestCase):
     def test_mcp_adapter_uses_real_protocol_tools(self):
         a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token,adapter='playwright-mcp'))
         self.assertEqual(r['status'],'completed');self.assertIn('browser_click',r['framework_actions']);self.assertEqual(r['receipt']['action_id'],a['id'])
+    def test_page_script_cannot_approve_or_change_authorized_arguments(self):
+        a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token,fault='page_injection'))
+        self.assertEqual(r['unauthorized_status'],401);self.assertEqual(r['status'],'outcome_unknown')
+        self.assertIsNone(self.server.store.get(a['id'],'operator')['receipt']);self.assertEqual(self.server.store.snapshot('WIDGET')['available'],20)
+    def test_expired_browser_session_has_no_effect(self):
+        a,token=self.ready()
+        with self.server.store.connection() as db:db.execute('UPDATE actions SET expires=0 WHERE id=?',(a['id'],))
+        r=asyncio.run(run_browser(self.url,a,token));self.assertEqual(r['status'],'outcome_unknown');self.assertIsNone(self.server.store.get(a['id'],'operator')['receipt'])

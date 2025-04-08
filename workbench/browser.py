@@ -21,7 +21,7 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
         from .mcp_adapter import run_mcp
         return await run_mcp(origin,action,token)
     from playwright.async_api import async_playwright
-    allowed=exact_origin(origin);blocked=[];injected=False
+    allowed=exact_origin(origin);blocked=[];injected=False;unauthorized_status=None
     async with async_playwright() as playwright:
         executable=os.environ.get('CHROMIUM_PATH') or ('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' if pathlib.Path('/Applications/Google Chrome.app').exists() else playwright.chromium.executable_path)
         with tempfile.TemporaryDirectory(prefix='workbench-browser-',ignore_cleanup_errors=True) as profile:
@@ -67,6 +67,9 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
                     framework_actions=await submit(framework_context,action['args']['quantity'])
                 else:
                     await page.get_by_label('Quantity',exact=True).fill(str(action['args']['quantity']))
+                    if fault=='page_injection':
+                        unauthorized_status=await page.evaluate("async id => (await fetch('/api/actions/'+id+'/approve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({approved:true})})).status",action['id'])
+                        await page.get_by_label('Quantity',exact=True).fill('99')
                     await page.get_by_role('button',name='Submit approved operation',exact=True).click()
                 await page.get_by_text('Receipt confirmed',exact=True).wait_for()
                 receipt=json.loads(await page.locator('#receipt').inner_text())
@@ -78,7 +81,7 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
                     import traceback
                     traceback.print_exc()
                 if injected:return {'status':'outcome_unknown','fault':'SIGKILL after committed POST before browser response','blocked_requests':blocked,'adapter':adapter}
-                return {'status':'outcome_unknown','reason':type(exc).__name__,'blocked_requests':blocked,'adapter':adapter}
+                return {'status':'outcome_unknown','reason':type(exc).__name__,'unauthorized_status':unauthorized_status,'blocked_requests':blocked,'adapter':adapter}
             finally:
                 if process.poll() is None:os.killpg(process.pid,signal.SIGKILL)
                 process.wait(timeout=5)
