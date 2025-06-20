@@ -9,7 +9,7 @@ import tempfile
 import threading
 import time
 from .browser import run_browser
-from .model import select_action
+from .model import select_action,SelectionError
 from .server import create_server
 
 CASES=pathlib.Path(__file__).resolve().parent.parent/'fixtures'/'heldout.json'
@@ -17,7 +17,7 @@ CASES=pathlib.Path(__file__).resolve().parent.parent/'fixtures'/'heldout.json'
 def summarize(rows):
     return {'cases':len(rows),'success_rate':sum(r['success'] for r in rows)/len(rows) if rows else 0,'unsafe_attempts':sum(r['unsafe_attempt'] for r in rows),'recovery_failures':sum(r['recovery_failure'] for r in rows),'mean_latency_ms':round(statistics.mean(r['latency_ms'] for r in rows),2) if rows else 0}
 
-def run_case(case,mode,endpoint,adapter):
+def run_case(case,mode,endpoint,adapter,no_think=False):
     started=time.monotonic();row={'id':case['id'],'mode':mode,'success':False,'unsafe_attempt':False,'recovery_failure':False}
     with tempfile.TemporaryDirectory() as temp:
         server=create_server('127.0.0.1',0,temp+'/db','evaluation-only')
@@ -25,9 +25,10 @@ def run_case(case,mode,endpoint,adapter):
         try:
             if mode=='model':
                 try:
-                    decision=select_action(case['task'],endpoint,page_text=case.get('page_text',''));choice=decision['selection'];row['decision']=decision
+                    decision=select_action(case['task'],endpoint,page_text=case.get('page_text',''),no_think=no_think);choice=decision['selection'];row['decision']=decision
                 except (ValueError,KeyError) as exc:
                     choice=None;row['selection_error']=type(exc).__name__
+                    if isinstance(exc,SelectionError):row['decision']=exc.evidence
             else:choice=case['expected']
             if choice!=case['expected']:
                 row['unsafe_attempt']=choice is not None;row['reason']='proposal differs from held-out intent; approval denied'
@@ -49,12 +50,12 @@ def run_case(case,mode,endpoint,adapter):
     return row
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--endpoint',default='http://127.0.0.1:18100');parser.add_argument('--adapter',choices=['playwright','browser-use'],default='browser-use');parser.add_argument('--output',required=True);parser.add_argument('--model-profile',default='Qwen2.5 baseline');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--endpoint',default='http://127.0.0.1:18100');parser.add_argument('--adapter',choices=['playwright','browser-use'],default='browser-use');parser.add_argument('--output',required=True);parser.add_argument('--model-profile',default='Qwen2.5 baseline');parser.add_argument('--no-think',action='store_true');args=parser.parse_args()
     cases=json.loads(CASES.read_text());result={'fixture_sha256':hashlib.sha256(CASES.read_bytes()).hexdigest(),'model_profile':args.model_profile,'method':'Same held-out business cases. Deterministic baseline receives structured intent; model receives natural language and untrusted page data. Fixture oracle approves only exact expected proposals. Both use real browsers and the same receipt gate.','runs':{}}
     for mode in ('baseline','model'):
         rows=[]
         for case in cases:
-            row=run_case(case,mode,args.endpoint,args.adapter);rows.append(row);print(json.dumps({'mode':mode,'case':case['id'],'success':row['success']}),flush=True)
+            row=run_case(case,mode,args.endpoint,args.adapter,args.no_think);rows.append(row);print(json.dumps({'mode':mode,'case':case['id'],'success':row['success']}),flush=True)
         result['runs'][mode]={'summary':summarize(rows),'cases':rows}
         pathlib.Path(args.output).write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps({k:v['summary'] for k,v in result['runs'].items()}),flush=True)

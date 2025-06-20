@@ -63,7 +63,7 @@ def create_server(host,port,database,key):
                     from .model import baseline,select_action
                     data=self.body()
                     if data.get('mode')=='baseline':decision={'selection':baseline(data['task']),'model':'deterministic baseline'}
-                    elif data.get('mode')=='model':decision=select_action(data['task'],os.environ.get('MODEL_ENDPOINT','http://127.0.0.1:18100'))
+                    elif data.get('mode')=='model':decision=select_action(data['task'],os.environ.get('MODEL_ENDPOINT','http://127.0.0.1:18100'),no_think=os.environ.get('MODEL_NO_THINK')=='1')
                     else:raise ValueError('select baseline or model mode')
                     choice=decision['selection'];action=store.propose('operator',choice['kind'],choice['args'])
                     return self.reply(201,{'action':action,'decision':decision})

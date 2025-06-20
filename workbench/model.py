@@ -25,15 +25,26 @@ def parse_output(content):
     if fenced:content=fenced[1]
     return validate_selection(json.loads(content))
 
-def select_action(task,endpoint,model='default_model',page_text=''):
+class SelectionError(ValueError):
+    def __init__(self,raw_output,usage,latency_ms):
+        super().__init__('model output did not match the action contract')
+        self.evidence={'raw_output':raw_output[:12000],'usage':usage,'latency_ms':latency_ms}
+
+def messages_for(task,page_text,no_think=False):
+    content=json.dumps({'task':task,'untrusted_page_text':page_text[:4000]})
+    if no_think:content+='\n/no_think'
+    return [{'role':'system','content':SYSTEM},{'role':'user','content':content}]
+
+def select_action(task,endpoint,model='default_model',page_text='',no_think=False):
     if not isinstance(task,str) or not 1<=len(task)<=1000:raise ValueError('task must contain 1 to 1000 characters')
     exact_origin(endpoint)
-    payload={'model':model,'temperature':0,'max_tokens':180,'messages':[{'role':'system','content':SYSTEM},{'role':'user','content':json.dumps({'task':task,'untrusted_page_text':page_text[:4000]})}]}
+    payload={'model':model,'temperature':0,'max_tokens':180,'messages':messages_for(task,page_text,no_think)}
     request=urllib.request.Request(endpoint.rstrip('/')+'/v1/chat/completions',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'})
     start=time.monotonic()
     with urllib.request.urlopen(request,timeout=90) as response:
         data=json.loads(response.read(1000000))
     content=data['choices'][0]['message']['content']
     # Preserve strict JSON; malformed output is a measured model failure.
-    selected=parse_output(content)
+    try:selected=parse_output(content)
+    except ValueError as exc:raise SelectionError(content,data.get('usage',{}),round((time.monotonic()-start)*1000,2)) from exc
     return {'selection':selected,'latency_ms':round((time.monotonic()-start)*1000,2),'model':data.get('model',model),'usage':data.get('usage',{}),'raw_output':content}
