@@ -144,3 +144,6 @@ class Store:
             if row is None or not secrets.compare_digest(row['dispatch'] or '',digest(token)) or row['expires']<time.time():
                 raise Forbidden('expired or invalid browser session')
             return self.public(row)
+    def export_evidence(self,action_id,owner):
+        record={'action':self.get(action_id,owner),'events':self.history(action_id,owner)}
+        return {'schema':'workbench.evidence.v1','record':record,'sha256':digest(record)}

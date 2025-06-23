@@ -77,3 +77,10 @@ class StoreTests(unittest.TestCase):
         with self.store.connection() as db:db.execute('UPDATE actions SET expires=0 WHERE id=?',(a['id'],))
         with self.assertRaises(ValueError):self.store.execute(a['id'],token,a['args'])
         self.assertEqual(self.store.snapshot('WIDGET')['available'],20)
+    def test_export_is_verifiable_and_contains_no_capabilities(self):
+        from workbench.domain import digest
+        a,token=self.ready();self.store.execute(a['id'],token,a['args'])
+        evidence=self.store.export_evidence(a['id'],'alice')
+        self.assertEqual(evidence['sha256'],digest(evidence['record']))
+        self.assertNotIn(token,str(evidence));self.assertNotIn('dispatch',evidence['record']['action'])
+        with self.assertRaises(ValueError):self.store.export_evidence(a['id'],'bob')

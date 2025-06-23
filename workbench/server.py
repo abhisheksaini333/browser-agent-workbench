@@ -76,6 +76,7 @@ def create_server(host,port,database,key):
                     action_id=parts[2]
                     if method=='GET' and len(parts)==3:return self.reply(200,store.get(action_id,'operator'))
                     if method=='GET' and parts[-1]=='events':return self.reply(200,store.history(action_id,'operator'))
+                    if method=='GET' and parts[-1]=='evidence':return self.reply(200,store.export_evidence(action_id,'operator'))
                     if method=='POST' and len(parts)==4:
                         data=self.body();verb=parts[-1]
                         if verb=='approve':return self.reply(200,store.approve(action_id,'operator',data['args'],data['precondition']))
