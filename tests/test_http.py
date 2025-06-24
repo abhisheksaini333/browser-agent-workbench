@@ -45,3 +45,14 @@ class HTTPTests(unittest.TestCase):
             self.assertEqual(err.exception.code,409)
             self.assertEqual(self.server.store.get(a['id'],'operator')['status'],'approved')
         finally:self.server.browser_slots.release()
+    def test_forged_host_is_rejected_even_with_matching_origin(self):
+        req=urllib.request.Request(self.url+'/api/actions',headers={'Authorization':'Bearer test-key','Host':'attacker.example','Origin':'http://attacker.example'})
+        with self.assertRaises(urllib.error.HTTPError) as err:urllib.request.urlopen(req)
+        self.assertEqual(err.exception.code,403)
+    def test_slow_partial_body_hits_bounded_read_deadline(self):
+        import socket,time
+        self.server.read_timeout=.2
+        sock=socket.create_connection(('127.0.0.1',self.server.server_port),timeout=2);start=time.monotonic()
+        sock.sendall(('POST /api/actions HTTP/1.1\r\nHost: 127.0.0.1:'+str(self.server.server_port)+'\r\nAuthorization: Bearer test-key\r\nContent-Length: 100\r\n\r\n{').encode())
+        response=sock.recv(4096);sock.close()
+        self.assertIn(b'408',response);self.assertLess(time.monotonic()-start,2)

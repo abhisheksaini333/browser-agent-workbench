@@ -14,6 +14,33 @@ from .store import Store, Conflict, Forbidden
 
 ROOT=pathlib.Path(__file__).resolve().parent.parent
 
+class RequestDeadline(ValueError):pass
+
+class BoundedServer(ThreadingHTTPServer):
+    daemon_threads=True
+    request_queue_size=16
+    read_timeout=3
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.request_slots=threading.BoundedSemaphore(16)
+    def get_request(self):
+        connection,address=super().get_request()
+        connection.settimeout(self.read_timeout)
+        return connection,address
+    def process_request(self,request,address):
+        if not self.request_slots.acquire(blocking=False):
+            try:request.sendall(b'HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\nConnection: close\r\n\r\n')
+            finally:self.shutdown_request(request)
+            return
+        try:super().process_request(request,address)
+        except Exception:
+            self.request_slots.release()
+            raise
+    def process_request_thread(self,request,address):
+        try:super().process_request_thread(request,address)
+        finally:self.request_slots.release()
+
+
 def create_server(host,port,database,key):
     store=Store(database)
     class Handler(BaseHTTPRequestHandler):
@@ -29,13 +56,17 @@ def create_server(host,port,database,key):
         def body(self):
             size=int(self.headers.get('Content-Length','0'))
             if size<0 or size>16384:raise ValueError('request too large')
-            data=json.loads(self.rfile.read(size) or b'{}')
+            try:raw=self.rfile.read(size)
+            except TimeoutError as exc:raise RequestDeadline('request body deadline exceeded') from exc
+            data=json.loads(raw or b'{}')
             if not isinstance(data,dict):raise ValueError('object required')
             return data
         def handle_request(self,method):
             path=urlparse(self.path).path
-            expected_origin='http://'+self.headers.get('Host','')
-            if self.headers.get('Origin') not in (None,expected_origin):return self.reply(403,{'error':'origin denied'})
+            authorities={'127.0.0.1:'+str(self.server.server_port),'localhost:'+str(self.server.server_port)}
+            authority=self.headers.get('Host','')
+            if authority not in authorities:return self.reply(403,{'error':'host denied'})
+            if self.headers.get('Origin') not in (None,'http://'+authority):return self.reply(403,{'error':'origin denied'})
             if path=='/health':return self.reply(200,{'status':'ok'})
             if method=='GET' and (path=='/' or path.startswith('/assets/')):
                 dist=(ROOT/'frontend'/'dist').resolve()
@@ -53,6 +84,7 @@ def create_server(host,port,database,key):
                     if method=='GET':return self.reply(200,action)
                     data=self.body();receipt=store.execute(action_id,token,data['args'])
                     return self.reply(200,receipt)
+                except RequestDeadline as exc:return self.reply(408,{'error':str(exc)})
                 except Forbidden as exc:return self.reply(403,{'error':str(exc)})
                 except Conflict as exc:return self.reply(409,{'error':str(exc)})
                 except (ValueError,KeyError,TypeError):return self.reply(400,{'error':'invalid submission'})
@@ -94,13 +126,14 @@ def create_server(host,port,database,key):
                                 return self.reply(200,{'action':current,'browser':result})
                             finally:self.server.browser_slots.release()
                 return self.reply(404,{'error':'not found'})
+            except RequestDeadline as exc:return self.reply(408,{'error':str(exc)})
             except (urllib.error.URLError,TimeoutError):return self.reply(502,{'error':'local model unavailable; no action was authorized'})
             except Forbidden as exc:return self.reply(403,{'error':str(exc)})
             except Conflict as exc:return self.reply(409,{'error':str(exc)})
             except (ValueError,KeyError,TypeError) as exc:return self.reply(400,{'error':'invalid request: '+str(exc)})
         def do_GET(self):self.handle_request('GET')
         def do_POST(self):self.handle_request('POST')
-    server=ThreadingHTTPServer((host,port),Handler);server.store=store;server.browser_slots=threading.BoundedSemaphore(1)
+    server=BoundedServer((host,port),Handler);server.store=store;server.browser_slots=threading.BoundedSemaphore(1)
     return server
 
 def main():
