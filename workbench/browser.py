@@ -21,11 +21,11 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
         from .mcp_adapter import run_mcp
         return await run_mcp(origin,action,token)
     from playwright.async_api import async_playwright
-    allowed=exact_origin(origin);blocked=[];injected=False;unauthorized_status=None
+    allowed=exact_origin(origin);blocked=[];blocked_websockets=[];injected=False;unauthorized_status=None
     async with async_playwright() as playwright:
         executable=os.environ.get('CHROMIUM_PATH') or ('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' if pathlib.Path('/Applications/Google Chrome.app').exists() else playwright.chromium.executable_path)
         with tempfile.TemporaryDirectory(prefix='workbench-browser-',ignore_cleanup_errors=True) as profile:
-            process=subprocess.Popen([executable,'--headless=new','--remote-debugging-port=0','--user-data-dir='+profile,'--no-first-run','--no-default-browser-check','--disable-background-networking','--no-sandbox'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
+            process=subprocess.Popen([executable,'--headless=new','--remote-debugging-port=0','--user-data-dir='+profile,'--no-first-run','--no-default-browser-check','--disable-background-networking']+(['--no-sandbox'] if os.environ.get('WORKBENCH_UNSANDBOXED_CONTAINER')=='1' else []),stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
             try:
                 active=pathlib.Path(profile)/'DevToolsActivePort'
                 for _ in range(200):
@@ -43,6 +43,10 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
                     context=await browser.new_context(service_workers='block')
                     page=await context.new_page()
                 await context.set_extra_http_headers({'X-Dispatch-Token':token})
+                async def block_websocket(socket):
+                    blocked_websockets.append(socket.url)
+                    await socket.close(code=1008,reason='No websocket capability')
+                await context.route_web_socket('**/*',block_websocket)
                 async def route_request(route):
                     nonlocal injected
                     try:valid=exact_origin(route.request.url)==allowed
@@ -59,6 +63,8 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
                 page.set_default_timeout(5000)
                 await page.goto(origin+'/portal/?action='+action['id'])
                 await page.locator('form[data-ready=true]').wait_for()
+                if fault=='websocket_probe':
+                    await page.evaluate("() => new Promise(resolve => { const s = new WebSocket('ws://127.0.0.1:9/'); s.onclose = resolve; s.onerror = resolve; })")
                 isolated=await page.evaluate("localStorage.getItem('workbench-session') === null")
                 await page.evaluate("localStorage.setItem('workbench-session','present')")
                 if fault=='changed_layout':await page.locator('label[for=quantity]').evaluate("e => e.textContent = 'Unexpected field'")
@@ -75,13 +81,13 @@ async def run_browser(origin,action,token,*,adapter='playwright',fault=None):
                 receipt=json.loads(await page.locator('#receipt').inner_text())
                 await context.close()
                 await browser.close()
-                return {'status':'completed','receipt':receipt,'blocked_requests':blocked,'adapter':adapter,'isolated':isolated,'framework_actions':framework_actions}
+                return {'status':'completed','receipt':receipt,'blocked_requests':blocked,'blocked_websockets':blocked_websockets,'adapter':adapter,'isolated':isolated,'framework_actions':framework_actions}
             except Exception as exc:
                 if os.environ.get('WORKBENCH_DEBUG'):
                     import traceback
                     traceback.print_exc()
-                if injected:return {'status':'outcome_unknown','fault':'SIGKILL after committed POST before browser response','blocked_requests':blocked,'adapter':adapter}
-                return {'status':'outcome_unknown','reason':type(exc).__name__,'unauthorized_status':unauthorized_status,'blocked_requests':blocked,'adapter':adapter}
+                if injected:return {'status':'outcome_unknown','fault':'SIGKILL after committed POST before browser response','blocked_requests':blocked,'blocked_websockets':blocked_websockets,'adapter':adapter}
+                return {'status':'outcome_unknown','reason':type(exc).__name__,'unauthorized_status':unauthorized_status,'blocked_requests':blocked,'blocked_websockets':blocked_websockets,'adapter':adapter}
             finally:
                 if process.poll() is None:os.killpg(process.pid,signal.SIGKILL)
                 process.wait(timeout=5)

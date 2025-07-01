@@ -4,10 +4,13 @@ os.environ.setdefault('ANONYMIZED_TELEMETRY','false')
 
 async def create_context(playwright_browser):
     from browser_use.browser.browser import Browser, BrowserConfig
-    from browser_use.browser.context import BrowserContextConfig
+    from browser_use.browser.context import BrowserContextConfig,BrowserContext
     wrapper=Browser(config=BrowserConfig(headless=True,disable_security=False))
     wrapper.playwright_browser=playwright_browser
-    context=await wrapper.new_context(BrowserContextConfig(disable_security=False))
+    class OwnedContext(BrowserContext):
+        async def _create_context(self,browser):
+            return await browser.new_context(service_workers='block',bypass_csp=False,ignore_https_errors=False)
+    context=OwnedContext(browser=wrapper,config=BrowserContextConfig(disable_security=False))
     session=await context.get_session()
     return wrapper,context,session.context,session.current_page
 

@@ -46,3 +46,6 @@ class BrowserTests(unittest.TestCase):
         a,token=self.ready()
         with self.server.store.connection() as db:db.execute('UPDATE actions SET expires=0 WHERE id=?',(a['id'],))
         r=asyncio.run(run_browser(self.url,a,token));self.assertEqual(r['status'],'outcome_unknown');self.assertIsNone(self.server.store.get(a['id'],'operator')['receipt'])
+    def test_unapproved_websocket_egress_is_blocked(self):
+        a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token,fault='websocket_probe'))
+        self.assertEqual(r['status'],'completed');self.assertEqual(r['blocked_websockets'],['ws://127.0.0.1:9/'])
