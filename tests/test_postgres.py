@@ -20,3 +20,13 @@ class PostgresTests(unittest.TestCase):
             results=list(pool.map(transact,[payload,payload]))
         self.assertEqual(results[0],results[1])
         self.assertEqual(Store(dsn).snapshot('WIDGET')['available'],before+2)
+    def test_uncommitted_worker_crash_rolls_back_inventory(self):
+        dsn=os.environ['TEST_POSTGRES_DSN'];store=Store(dsn);before=store.snapshot('WIDGET')
+        process=multiprocessing.get_context('spawn').Process(target=crash_mid_transaction,args=(dsn,));process.start();process.join(10)
+        self.assertEqual(process.exitcode,9)
+        self.assertEqual(Store(dsn).snapshot('WIDGET'),before)
+
+def crash_mid_transaction(dsn):
+    store=Store(dsn)
+    with store.connection() as db:
+        db.execute('BEGIN IMMEDIATE');db.execute('UPDATE resources SET available=available+7 WHERE sku=?',('WIDGET',));os._exit(9)
