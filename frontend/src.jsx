@@ -74,6 +74,16 @@ function App() {
       await refresh(selected.id);
     });
   }
+  async function downloadEvidence() {
+    await work(async () => {
+      const evidence = await api('/actions/' + selected.id + '/evidence');
+      const blob = new Blob([JSON.stringify(evidence, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url; link.download = 'action-' + selected.id + '.json';
+      link.click(); URL.revokeObjectURL(url);
+    });
+  }
   const pending = actions.filter((a) => a.status === "proposed").length,
     completed = actions.filter((a) => a.status === "completed").length;
   return (
@@ -300,6 +310,7 @@ function App() {
                       version. Changed data requires a fresh proposal.
                     </p>
                     <div className="actions">
+                    <button className="secondary" disabled={busy} onClick={downloadEvidence}>Download evidence</button>
                       {selected.status === "proposed" && (
                         <button
                           disabled={busy}

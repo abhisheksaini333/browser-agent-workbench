@@ -20,6 +20,9 @@ class UITests(unittest.TestCase):
                     page.get_by_role('button',name='Run approved action',exact=True).click()
                     page.get_by_label('Action detail').get_by_text('Receipt confirmed',exact=True).wait_for(timeout=20000)
                     self.assertEqual(server.store.snapshot('WIDGET')['available'],18)
+                    with page.expect_download(timeout=5000) as download:
+                        page.get_by_role('button',name='Download evidence',exact=True).click(timeout=3000)
+                    self.assertTrue(download.value.suggested_filename.endswith('.json'))
                     page.set_viewport_size({'width':390,'height':844})
                     self.assertTrue(page.evaluate('document.documentElement.scrollWidth <= innerWidth'))
                     browser.close()
