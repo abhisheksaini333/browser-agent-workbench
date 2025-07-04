@@ -6,46 +6,102 @@ import unittest
 from workbench.server import create_server
 from workbench.browser import run_browser
 
-@unittest.skipUnless(os.environ.get('RUN_BROWSER_TESTS'),'requires Chromium')
+
+@unittest.skipUnless(os.environ.get("RUN_BROWSER_TESTS"), "requires Chromium")
 class BrowserTests(unittest.TestCase):
     def setUp(self):
-        self.tmp=tempfile.TemporaryDirectory();self.server=create_server('127.0.0.1',0,self.tmp.name+'/db','browser-test');self.thread=threading.Thread(target=self.server.serve_forever,daemon=True);self.thread.start();self.url='http://127.0.0.1:'+str(self.server.server_port)
-    def tearDown(self):self.server.shutdown();self.server.server_close();self.thread.join();self.tmp.cleanup()
+        self.tmp = tempfile.TemporaryDirectory()
+        self.server = create_server(
+            "127.0.0.1", 0, self.tmp.name + "/db", "browser-test"
+        )
+        self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
+        self.thread.start()
+        self.url = "http://127.0.0.1:" + str(self.server.server_port)
+
+    def tearDown(self):
+        self.server.shutdown()
+        self.server.server_close()
+        self.thread.join()
+        self.tmp.cleanup()
+
     def ready(self):
-        s=self.server.store;a=s.propose('operator','purchase',{'sku':'WIDGET','quantity':2});s.approve(a['id'],'operator',a['args'],a['precondition']);return a,s.dispatch(a['id'],'operator')
+        s = self.server.store
+        a = s.propose("operator", "purchase", {"sku": "WIDGET", "quantity": 2})
+        s.approve(a["id"], "operator", a["args"], a["precondition"])
+        return a, s.dispatch(a["id"], "operator")
+
     def test_real_browser_submits_and_observes_receipt(self):
-        a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token))
-        self.assertEqual(r['status'],'completed');self.assertEqual(r['receipt']['action_id'],a['id']);self.assertEqual(self.server.store.snapshot('WIDGET')['available'],18)
+        a, token = self.ready()
+        r = asyncio.run(run_browser(self.url, a, token))
+        self.assertEqual(r["status"], "completed")
+        self.assertEqual(r["receipt"]["action_id"], a["id"])
+        self.assertEqual(self.server.store.snapshot("WIDGET")["available"], 18)
+
     def test_sigkill_after_server_commit_recovers_without_duplicate(self):
-        a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token,fault='kill_after_commit'))
-        self.assertEqual(r['status'],'outcome_unknown');self.assertEqual(r['fault'],'SIGKILL after committed POST before browser response')
-        self.assertEqual(self.server.store.snapshot('WIDGET')['available'],18)
-        recovered=self.server.store.reconcile(a['id'],'operator')
-        self.assertEqual(recovered['status'],'completed')
-        self.assertEqual(recovered['receipt']['action_id'],a['id'])
-        self.assertEqual(self.server.store.snapshot('WIDGET')['available'],18)
+        a, token = self.ready()
+        r = asyncio.run(run_browser(self.url, a, token, fault="kill_after_commit"))
+        self.assertEqual(r["status"], "outcome_unknown")
+        self.assertEqual(
+            r["fault"], "SIGKILL after committed POST before browser response"
+        )
+        self.assertEqual(self.server.store.snapshot("WIDGET")["available"], 18)
+        recovered = self.server.store.reconcile(a["id"], "operator")
+        self.assertEqual(recovered["status"], "completed")
+        self.assertEqual(recovered["receipt"]["action_id"], a["id"])
+        self.assertEqual(self.server.store.snapshot("WIDGET")["available"], 18)
+
     def test_changed_layout_stops_instead_of_guessing(self):
-        a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token,fault='changed_layout'))
-        self.assertEqual(r['status'],'outcome_unknown');self.assertIsNone(self.server.store.get(a['id'],'operator')['receipt'])
+        a, token = self.ready()
+        r = asyncio.run(run_browser(self.url, a, token, fault="changed_layout"))
+        self.assertEqual(r["status"], "outcome_unknown")
+        self.assertIsNone(self.server.store.get(a["id"], "operator")["receipt"])
+
     def test_isolated_sessions_do_not_share_previous_storage(self):
-        a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token))
-        self.assertTrue(r['isolated']);a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token));self.assertTrue(r['isolated'])
-    @unittest.skipUnless(os.environ.get('RUN_BROWSER_USE_TESTS'),'requires Browser Use integration profile')
+        a, token = self.ready()
+        r = asyncio.run(run_browser(self.url, a, token))
+        self.assertTrue(r["isolated"])
+        a, token = self.ready()
+        r = asyncio.run(run_browser(self.url, a, token))
+        self.assertTrue(r["isolated"])
+
+    @unittest.skipUnless(
+        os.environ.get("RUN_BROWSER_USE_TESTS"),
+        "requires Browser Use integration profile",
+    )
     def test_browser_use_controller_executes_approved_flow(self):
-        a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token,adapter='browser-use'))
-        self.assertEqual(r['status'],'completed');self.assertEqual(r['framework_actions'],['fill_quantity','submit_approved'])
-    @unittest.skipUnless(os.environ.get('RUN_MCP_TESTS'),'requires Playwright MCP profile')
+        a, token = self.ready()
+        r = asyncio.run(run_browser(self.url, a, token, adapter="browser-use"))
+        self.assertEqual(r["status"], "completed")
+        self.assertEqual(r["framework_actions"], ["fill_quantity", "submit_approved"])
+
+    @unittest.skipUnless(
+        os.environ.get("RUN_MCP_TESTS"), "requires Playwright MCP profile"
+    )
     def test_mcp_adapter_uses_real_protocol_tools(self):
-        a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token,adapter='playwright-mcp'))
-        self.assertEqual(r['status'],'completed');self.assertIn('browser_click',r['framework_actions']);self.assertEqual(r['receipt']['action_id'],a['id'])
+        a, token = self.ready()
+        r = asyncio.run(run_browser(self.url, a, token, adapter="playwright-mcp"))
+        self.assertEqual(r["status"], "completed")
+        self.assertIn("browser_click", r["framework_actions"])
+        self.assertEqual(r["receipt"]["action_id"], a["id"])
+
     def test_page_script_cannot_approve_or_change_authorized_arguments(self):
-        a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token,fault='page_injection'))
-        self.assertEqual(r['unauthorized_status'],401);self.assertEqual(r['status'],'outcome_unknown')
-        self.assertIsNone(self.server.store.get(a['id'],'operator')['receipt']);self.assertEqual(self.server.store.snapshot('WIDGET')['available'],20)
+        a, token = self.ready()
+        r = asyncio.run(run_browser(self.url, a, token, fault="page_injection"))
+        self.assertEqual(r["unauthorized_status"], 401)
+        self.assertEqual(r["status"], "outcome_unknown")
+        self.assertIsNone(self.server.store.get(a["id"], "operator")["receipt"])
+        self.assertEqual(self.server.store.snapshot("WIDGET")["available"], 20)
+
     def test_expired_browser_session_has_no_effect(self):
-        a,token=self.ready()
-        with self.server.store.connection() as db:db.execute('UPDATE actions SET expires=0 WHERE id=?',(a['id'],))
-        r=asyncio.run(run_browser(self.url,a,token));self.assertEqual(r['status'],'outcome_unknown');self.assertIsNone(self.server.store.get(a['id'],'operator')['receipt'])
+        a, token = self.ready()
+        with self.server.store.connection() as db:
+            db.execute("UPDATE actions SET expires=0 WHERE id=?", (a["id"],))
+        r = asyncio.run(run_browser(self.url, a, token))
+        self.assertEqual(r["status"], "outcome_unknown")
+        self.assertIsNone(self.server.store.get(a["id"], "operator")["receipt"])
+
     def test_unapproved_websocket_egress_is_blocked(self):
-        a,token=self.ready();r=asyncio.run(run_browser(self.url,a,token,fault='websocket_probe'))
-        self.assertEqual(r['status'],'completed');self.assertEqual(r['blocked_websockets'],['ws://127.0.0.1:9/'])
+        a, token = self.ready()
+        r = asyncio.run(run_browser(self.url, a, token, fault="websocket_probe"))
+        self.assertEqual(r["status"], "completed")
+        self.assertEqual(r["blocked_websockets"], ["ws://127.0.0.1:9/"])
