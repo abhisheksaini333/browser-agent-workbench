@@ -151,3 +151,22 @@ class StoreTests(unittest.TestCase):
         self.assertNotIn("dispatch", evidence["record"]["action"])
         with self.assertRaises(ValueError):
             self.store.export_evidence(a["id"], "bob")
+
+    def test_numeric_type_changes_do_not_reuse_exact_approval(self):
+        a = self.store.propose("alice", "purchase", {"sku": "WIDGET", "quantity": 1})
+        for quantity in (True, 1.0):
+            with self.assertRaises(ValueError):
+                self.store.approve(
+                    a["id"],
+                    "alice",
+                    {"sku": "WIDGET", "quantity": quantity},
+                    a["precondition"],
+                )
+        with self.assertRaises(ValueError):
+            self.store.approve(
+                a["id"], "alice", a["args"], {**a["precondition"], "version": True}
+            )
+        self.store.approve(a["id"], "alice", a["args"], a["precondition"])
+        token = self.store.dispatch(a["id"], "alice")
+        with self.assertRaises(ValueError):
+            self.store.execute(a["id"], token, {"sku": "WIDGET", "quantity": True})

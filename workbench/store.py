@@ -109,7 +109,10 @@ class Store:
 
     def approve(self, action_id, owner, args, precondition, ttl=300):
         action = self.get(action_id, owner)
-        if action["args"] != args or action["precondition"] != precondition:
+        validate_arguments(action["kind"], args)
+        if canonical(action["args"]) != canonical(args) or canonical(
+            action["precondition"]
+        ) != canonical(precondition):
             raise Conflict("approval must match exact arguments and page state")
         if self.snapshot(args["sku"]) != precondition:
             raise Conflict("page state changed")
@@ -168,7 +171,8 @@ class Store:
             ):
                 raise Forbidden("invalid dispatch capability")
             action = self.public(row)
-            if action["args"] != args:
+            validate_arguments(action["kind"], args)
+            if canonical(action["args"]) != canonical(args):
                 raise Conflict("submitted arguments changed")
             if action["receipt"] is not None:
                 return action["receipt"]
