@@ -134,3 +134,21 @@ class HTTPTests(unittest.TestCase):
         sock.close()
         self.assertIn(b"408", response)
         self.assertLess(time.monotonic() - start, 2)
+
+    def test_request_admission_rejects_seventeenth_partial_connection(self):
+        import socket
+
+        sockets = []
+        self.server.read_timeout = 5
+        try:
+            for _ in range(17):
+                connection = socket.create_connection(
+                    ("127.0.0.1", self.server.server_port), timeout=2
+                )
+                connection.sendall(b"GET /health HTTP/1.1\r\n")
+                sockets.append(connection)
+            response = sockets[-1].recv(4096)
+            self.assertIn(b"503 Service Unavailable", response)
+        finally:
+            for connection in sockets:
+                connection.close()

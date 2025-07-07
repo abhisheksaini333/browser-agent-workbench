@@ -60,6 +60,13 @@ def create_server(host, port, database, key):
     store = Store(database)
 
     class Handler(BaseHTTPRequestHandler):
+        def handle(self):
+            try:
+                super().handle()
+            except (BrokenPipeError, ConnectionResetError):
+                # Client cancellation is expected while admission deadlines are enforced.
+                return
+
         def log_message(self, *args):
             pass
 
