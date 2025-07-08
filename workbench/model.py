@@ -55,6 +55,11 @@ def messages_for(task, page_text, no_think=False):
     return [{"role": "system", "content": SYSTEM}, {"role": "user", "content": content}]
 
 
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, request, fp, code, message, headers, new_url):
+        return None
+
+
 def select_action(task, endpoint, model="default_model", page_text="", no_think=False):
     if not isinstance(task, str) or not 1 <= len(task) <= 1000:
         raise ValueError("task must contain 1 to 1000 characters")
@@ -71,7 +76,9 @@ def select_action(task, endpoint, model="default_model", page_text="", no_think=
         headers={"Content-Type": "application/json"},
     )
     start = time.monotonic()
-    with urllib.request.urlopen(request, timeout=90) as response:
+    with urllib.request.build_opener(NoRedirect()).open(
+        request, timeout=90
+    ) as response:
         data = json.loads(response.read(1000000))
     content = data["choices"][0]["message"]["content"]
     # Preserve strict JSON; malformed output is a measured model failure.
