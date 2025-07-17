@@ -63,6 +63,8 @@ async def run_browser(origin, action, token, *, adapter="playwright", fault=None
                 stderr=subprocess.DEVNULL,
                 start_new_session=True,
             )
+            framework_context = None
+            framework_wrapper = None
             try:
                 active = pathlib.Path(profile) / "DevToolsActivePort"
                 for _ in range(200):
@@ -192,6 +194,10 @@ async def run_browser(origin, action, token, *, adapter="playwright", fault=None
                     "adapter": adapter,
                 }
             finally:
+                if framework_context is not None:
+                    await framework_context.close()
+                if framework_wrapper is not None:
+                    await framework_wrapper.close()
                 if process.poll() is None:
                     os.killpg(process.pid, signal.SIGKILL)
                 process.wait(timeout=5)
