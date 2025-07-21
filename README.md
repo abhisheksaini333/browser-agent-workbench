@@ -6,6 +6,8 @@ Turn a task into a purchase requisition, reservation, or inventory adjustment in
 
 The reference environment operates on local fixtures. It never purchases goods or signs into third-party accounts.
 
+![Operator workspace with a confirmed receipt](docs/workspace.png)
+
 ## Run locally
 
 Use Python 3.11+ and Node 20+. The full integration profile includes Browser Use 0.1.18 and its pinned dependencies; the smaller `requirements.txt` supports the native Playwright and PostgreSQL paths.

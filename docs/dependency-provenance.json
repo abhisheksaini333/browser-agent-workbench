@@ -1,0 +1,1665 @@
+{
+  "browser_use": {
+    "earliest_date": "2025-01-09",
+    "selected_native_artifacts": [
+      {
+        "name": "browser-use",
+        "version": "0.1.18",
+        "filename": "browser_use-0.1.18-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/73/3d/08801c1f963b7776fae786e7ad32ca4efca71b7d24271c864c7e1c6dec21/browser_use-0.1.18-py3-none-any.whl",
+        "sha256": "c5e1dfdc47040bd7519e8bf63ab972a6543c6f3a39520b8fa0e50a90aa7d1b6b",
+        "uploaded": "2025-01-07T18:08:01.926639Z"
+      },
+      {
+        "name": "playwright",
+        "version": "1.49.1",
+        "filename": "playwright-1.49.1-py3-none-macosx_11_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/79/25/ef1010a42cc7d576282015d983c5451d73e369b198b6eb32a177fae281f8/playwright-1.49.1-py3-none-macosx_11_0_arm64.whl",
+        "sha256": "9f38ed3d0c1f4e0a6d1c92e73dd9a61f8855133249d6f0cec28648d38a7137be",
+        "uploaded": "2024-12-10T17:32:22.516580Z"
+      },
+      {
+        "name": "psycopg",
+        "version": "3.2.3",
+        "filename": "psycopg-3.2.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ce/21/534b8f5bd9734b7a2fcd3a16b1ee82ef6cad81a4796e95ebf4e0c6a24119/psycopg-3.2.3-py3-none-any.whl",
+        "sha256": "644d3973fe26908c73d4be746074f6e5224b03c1101d302d9a53bf565ad64907",
+        "uploaded": "2024-09-29T21:21:19.623136Z"
+      },
+      {
+        "name": "greenlet",
+        "version": "3.1.1",
+        "filename": "greenlet-3.1.1-cp311-cp311-macosx_11_0_universal2.whl",
+        "url": "https://files.pythonhosted.org/packages/28/62/1c2665558618553c42922ed47a4e6d6527e2fa3516a8256c2f431c5d0441/greenlet-3.1.1-cp311-cp311-macosx_11_0_universal2.whl",
+        "sha256": "e4d333e558953648ca09d64f13e6d8f0523fa705f51cae3f03b5983489958c70",
+        "uploaded": "2024-09-20T17:07:22.332047Z"
+      },
+      {
+        "name": "psycopg-binary",
+        "version": "3.2.3",
+        "filename": "psycopg_binary-3.2.3-cp311-cp311-macosx_14_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/36/7f/04eed0c415d158a0fb1c196957b9c7faec43c7b50d20db05c62e5bd22c93/psycopg_binary-3.2.3-cp311-cp311-macosx_14_0_arm64.whl",
+        "sha256": "94253be2b57ef2fea7ffe08996067aabf56a1eb9648342c9e3bad9e10c46e045",
+        "uploaded": "2024-09-29T21:22:34.989301Z"
+      },
+      {
+        "name": "pyee",
+        "version": "12.0.0",
+        "filename": "pyee-12.0.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/1d/0d/95993c08c721ec68892547f2117e8f9dfbcef2ca71e098533541b4a54d5f/pyee-12.0.0-py3-none-any.whl",
+        "sha256": "7b14b74320600049ccc7d0e0b1becd3b4bd0a03c745758225e31a59f4095c990",
+        "uploaded": "2024-08-30T19:40:42.132142Z"
+      },
+      {
+        "name": "beautifulsoup4",
+        "version": "4.12.3",
+        "filename": "beautifulsoup4-4.12.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/b1/fe/e8c672695b37eecc5cbf43e1d0638d88d66ba3a44c4d321c796f4e59167f/beautifulsoup4-4.12.3-py3-none-any.whl",
+        "sha256": "b80878c9f40111313e55da8ba20bdba06d8fa3969fc68304167741bbf9e082ed",
+        "uploaded": "2024-01-17T16:53:12.779164Z"
+      },
+      {
+        "name": "httpx",
+        "version": "0.28.1",
+        "filename": "httpx-0.28.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/2a/39/e50c7c3a983047577ee07d2a9e53faf5a69493943ec3f6a384bdc792deb2/httpx-0.28.1-py3-none-any.whl",
+        "sha256": "d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad",
+        "uploaded": "2024-12-06T15:37:21.509172Z"
+      },
+      {
+        "name": "httpcore",
+        "version": "1.0.7",
+        "filename": "httpcore-1.0.7-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/87/f5/72347bc88306acb359581ac4d52f23c0ef445b57157adedb9aee0cd689d2/httpcore-1.0.7-py3-none-any.whl",
+        "sha256": "a3fff8f43dc260d5bd363d9f9cf1830fa3a458b332856f34282de498ed420edd",
+        "uploaded": "2024-11-15T12:30:45.782162Z"
+      },
+      {
+        "name": "langchain",
+        "version": "0.3.14",
+        "filename": "langchain-0.3.14-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/d0/a8/0a8f868615b7a30636b1d15b718e3ea9875bf0dccced03583477c2372495/langchain-0.3.14-py3-none-any.whl",
+        "sha256": "5df9031702f7fe6c956e84256b4639a46d5d03a75be1ca4c1bc9479b358061a2",
+        "uploaded": "2025-01-03T20:22:36.997994Z"
+      },
+      {
+        "name": "langchain-anthropic",
+        "version": "0.3.1",
+        "filename": "langchain_anthropic-0.3.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/89/73/af53ffcb5262e8d16ca0b0d8b319b542f1cff78ba5ad1049e680bbcc16c8/langchain_anthropic-0.3.1-py3-none-any.whl",
+        "sha256": "c95ca2e381798babdb8e55e5ed241342e0ea9bc2f15721cdbace87d23992d29e",
+        "uploaded": "2024-12-19T16:08:28.811925Z"
+      },
+      {
+        "name": "langchain-fireworks",
+        "version": "0.2.6",
+        "filename": "langchain_fireworks-0.2.6-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/96/cf/f775fc2536825c05621c6a853d538794c2714725dc8ee5a4c6fc19faef65/langchain_fireworks-0.2.6-py3-none-any.whl",
+        "sha256": "e6a917ec2337ec7ae5b497ec78afe8a66bf6868b5f4ca13e0c898adb44630078",
+        "uploaded": "2024-12-19T16:06:17.504909Z"
+      },
+      {
+        "name": "langchain-google-genai",
+        "version": "2.0.8",
+        "filename": "langchain_google_genai-2.0.8-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/b7/1a/ab73671bd7c8a026e828ced2e2984ed1199602303f0784db3d0dfc5aaa65/langchain_google_genai-2.0.8-py3-none-any.whl",
+        "sha256": "546f5bf4429fe322feb25b60111135477f9af027226be35b95e9ebcf265259fd",
+        "uploaded": "2025-01-06T21:07:30.810013Z"
+      },
+      {
+        "name": "langchain-openai",
+        "version": "0.2.14",
+        "filename": "langchain_openai-0.2.14-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ed/54/63c8264d7dbc3bf31ba61bf97740fdd76386b2d4f9a58f58afd3961ce7d7/langchain_openai-0.2.14-py3-none-any.whl",
+        "sha256": "d232496662f79ece9a11caf7d798ba863e559c771bc366814f7688e0fe664fe8",
+        "uploaded": "2024-12-19T21:51:39.300486Z"
+      },
+      {
+        "name": "MainContentExtractor",
+        "version": "0.0.4",
+        "filename": "MainContentExtractor-0.0.4-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/76/62/32c33101b179d373d753d7c892b19f2ec22978b6c3c36d17a4a61d2169b6/MainContentExtractor-0.0.4-py3-none-any.whl",
+        "sha256": "77684179436e28eb2e19be26657cb2bbd7c1f9213a2c3ee163a8f9dfbca64107",
+        "uploaded": "2023-12-10T08:05:00.086883Z"
+      },
+      {
+        "name": "posthog",
+        "version": "3.7.5",
+        "filename": "posthog-3.7.5-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/76/bd/2d550ac79443cdbb6a5a4193c37820f04df0499e1ecbe8e41c5462cf0c2d/posthog-3.7.5-py2.py3-none-any.whl",
+        "sha256": "022132c17069dde03c5c5904e2ae1b9bd68d5059cbc5a8dffc5c1537a1b71cb5",
+        "uploaded": "2025-01-03T21:01:31.894905Z"
+      },
+      {
+        "name": "pydantic",
+        "version": "2.10.4",
+        "filename": "pydantic-2.10.4-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/f3/26/3e1bbe954fde7ee22a6e7d31582c642aad9e84ffe4b5fb61e63b87cd326f/pydantic-2.10.4-py3-none-any.whl",
+        "sha256": "597e135ea68be3a37552fb524bc7d0d66dcf93d395acd93a00682f1efcb8ee3d",
+        "uploaded": "2024-12-18T17:09:21.953973Z"
+      },
+      {
+        "name": "pydantic_core",
+        "version": "2.27.2",
+        "filename": "pydantic_core-2.27.2-cp311-cp311-macosx_11_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/9e/e3/71fe85af2021f3f386da42d291412e5baf6ce7716bd7101ea49c810eda90/pydantic_core-2.27.2-cp311-cp311-macosx_11_0_arm64.whl",
+        "sha256": "26f32e0adf166a84d0cb63be85c562ca8a6fa8de28e5f0d92250c6b7e9e2aff7",
+        "uploaded": "2024-12-18T11:27:57.252683Z"
+      },
+      {
+        "name": "python-dotenv",
+        "version": "1.0.1",
+        "filename": "python_dotenv-1.0.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl",
+        "sha256": "f7b63ef50f1b690dddf550d03497b66d609393b40b564ed0d674909a68ebf16a",
+        "uploaded": "2024-01-23T06:32:58.246675Z"
+      },
+      {
+        "name": "requests",
+        "version": "2.32.3",
+        "filename": "requests-2.32.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/f9/9b/335f9764261e915ed497fcdeb11df5dfd6f7bf257d4a6a2a686d80da4d54/requests-2.32.3-py3-none-any.whl",
+        "sha256": "70761cfe03c773ceb22aa2f671b4757976145175cdfca038c02654d061d6dcc6",
+        "uploaded": "2024-05-29T15:37:47.027275Z"
+      },
+      {
+        "name": "typing_extensions",
+        "version": "4.12.2",
+        "filename": "typing_extensions-4.12.2-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/26/9f/ad63fc0248c5379346306f8668cda6e2e2e9c95e01216d2b8ffd9ff037d0/typing_extensions-4.12.2-py3-none-any.whl",
+        "sha256": "04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d",
+        "uploaded": "2024-06-07T18:52:13.582461Z"
+      },
+      {
+        "name": "aiohttp",
+        "version": "3.11.11",
+        "filename": "aiohttp-3.11.11-cp311-cp311-macosx_11_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/a9/60/03455476bf1f467e5b4a32a465c450548b2ce724eec39d69f737191f936a/aiohttp-3.11.11-cp311-cp311-macosx_11_0_arm64.whl",
+        "sha256": "ffa336210cf9cd8ed117011085817d00abe4c08f99968deef0013ea283547204",
+        "uploaded": "2024-12-18T21:18:15.506309Z"
+      },
+      {
+        "name": "annotated-types",
+        "version": "0.7.0",
+        "filename": "annotated_types-0.7.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/78/b6/6307fbef88d9b5ee7421e68d78a9f162e0da4900bc5f5793f6d3d0e34fb8/annotated_types-0.7.0-py3-none-any.whl",
+        "sha256": "1f02e8b43a8fbbc3f3e0d4f0f4bfc8131bcb4eebe8849b8e5c773f3a1c582a53",
+        "uploaded": "2024-05-20T21:33:24.100469Z"
+      },
+      {
+        "name": "anthropic",
+        "version": "0.42.0",
+        "filename": "anthropic-0.42.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ba/33/b907a6d27dd0d8d3adb4edb5c9e9c85a189719ec6855051cce3814c8ef13/anthropic-0.42.0-py3-none-any.whl",
+        "sha256": "46775f65b723c078a2ac9e9de44a46db5c6a4fabeacfd165e5ea78e6817f4eff",
+        "uploaded": "2024-12-17T20:41:57.361461Z"
+      },
+      {
+        "name": "anyio",
+        "version": "4.8.0",
+        "filename": "anyio-4.8.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/46/eb/e7f063ad1fec6b3178a3cd82d1a3c4de82cccf283fc42746168188e1cdd5/anyio-4.8.0-py3-none-any.whl",
+        "sha256": "b5011f270ab5eb0abf13385f851315585cc37ef330dd88e27ec3d34d651fd47a",
+        "uploaded": "2025-01-05T13:13:07.985272Z"
+      },
+      {
+        "name": "backoff",
+        "version": "2.2.1",
+        "filename": "backoff-2.2.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/df/73/b6e24bd22e6720ca8ee9a85a0c4a2971af8497d8f3193fa05390cbd46e09/backoff-2.2.1-py3-none-any.whl",
+        "sha256": "63579f9a0628e06278f7e47b7d7d5b6ce20dc65c5e96a6f3ca99a6adca0396e8",
+        "uploaded": "2022-10-05T19:19:30.546686Z"
+      },
+      {
+        "name": "certifi",
+        "version": "2024.12.14",
+        "filename": "certifi-2024.12.14-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/a5/32/8f6669fc4798494966bf446c8c4a162e0b5d893dff088afddf76414f70e1/certifi-2024.12.14-py3-none-any.whl",
+        "sha256": "1275f7a45be9464efc1173084eaa30f866fe2e47d389406136d332ed4967ec56",
+        "uploaded": "2024-12-14T13:52:36.114786Z"
+      },
+      {
+        "name": "charset-normalizer",
+        "version": "3.4.1",
+        "filename": "charset_normalizer-3.4.1-cp311-cp311-macosx_10_9_universal2.whl",
+        "url": "https://files.pythonhosted.org/packages/72/80/41ef5d5a7935d2d3a773e3eaebf0a9350542f2cab4eac59a7a4741fbbbbe/charset_normalizer-3.4.1-cp311-cp311-macosx_10_9_universal2.whl",
+        "sha256": "8bfa33f4f2672964266e940dd22a195989ba31669bd84629f05fab3ef4e2d125",
+        "uploaded": "2024-12-24T18:10:12.838245Z"
+      },
+      {
+        "name": "defusedxml",
+        "version": "0.7.1",
+        "filename": "defusedxml-0.7.1-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/07/6c/aa3f2f849e01cb6a001cd8554a88d4c77c5c1a31c95bdf1cf9301e6d9ef4/defusedxml-0.7.1-py2.py3-none-any.whl",
+        "sha256": "a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61",
+        "uploaded": "2021-03-08T10:59:24.450195Z"
+      },
+      {
+        "name": "filetype",
+        "version": "1.2.0",
+        "filename": "filetype-1.2.0-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/18/79/1b8fa1bb3568781e84c9200f951c735f3f157429f44be0495da55894d620/filetype-1.2.0-py2.py3-none-any.whl",
+        "sha256": "7ce71b6880181241cf7ac8697a2f1eb6a8bd9b429f7ad6d27b8db9ba5f1c2d25",
+        "uploaded": "2022-11-02T17:34:01.425061Z"
+      },
+      {
+        "name": "fireworks-ai",
+        "version": "0.15.11",
+        "filename": "fireworks_ai-0.15.11-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/38/03/11b603d1ca6d437e70457dbc8458a832a92d39aa05d88bfe3f7240578270/fireworks_ai-0.15.11-py3-none-any.whl",
+        "sha256": "0c3d4d3ff83c498ae78a03d83e579fc9bb73d471152f05aae6fd5dfd475b59e0",
+        "uploaded": "2025-01-02T16:23:00.212905Z"
+      },
+      {
+        "name": "google-generativeai",
+        "version": "0.8.3",
+        "filename": "google_generativeai-0.8.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/e9/2f/b5c1d62e94409ed98d5425e83b8e6d3dd475b611be272f561b1a545d273a/google_generativeai-0.8.3-py3-none-any.whl",
+        "sha256": "1108ff89d5b8e59f51e63d1a8bf84701cd84656e17ca28d73aeed745e736d9b7",
+        "uploaded": "2024-10-07T15:46:08.699989Z"
+      },
+      {
+        "name": "google-ai-generativelanguage",
+        "version": "0.6.10",
+        "filename": "google_ai_generativelanguage-0.6.10-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/af/6d/db99a295f9caf027bbdd90c41e6ea650a7468392a0e8713719e7abc5f647/google_ai_generativelanguage-0.6.10-py3-none-any.whl",
+        "sha256": "854a2bf833d18be05ad5ef13c755567b66a4f4a870f099b62c61fe11bddabcf4",
+        "uploaded": "2024-09-23T17:15:51.414256Z"
+      },
+      {
+        "name": "html2text",
+        "version": "2024.2.26",
+        "filename": "html2text-2024.2.26.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/1a/43/e1d53588561e533212117750ee79ad0ba02a41f52a08c1df3396bd466c05/html2text-2024.2.26.tar.gz",
+        "sha256": "05f8e367d15aaabc96415376776cdd11afd5127a77fce6e36afc60c563ca2c32",
+        "uploaded": "2024-02-27T18:49:24.855461Z"
+      },
+      {
+        "name": "idna",
+        "version": "3.10",
+        "filename": "idna-3.10-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/76/c6/c88e154df9c4e1a2a66ccf0005a88dfb2650c1dffb6f5ce603dfbd452ce3/idna-3.10-py3-none-any.whl",
+        "sha256": "946d195a0d259cbba61165e88e65941f16e9b36ea6ddb97f00452bae8b1287d3",
+        "uploaded": "2024-09-15T18:07:37.964349Z"
+      },
+      {
+        "name": "langchain-core",
+        "version": "0.3.29",
+        "filename": "langchain_core-0.3.29-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/95/4f/fe1de63f6fc1ac7af3ba4ae12d420af1a19f7893b5fcb72856b9fc67f650/langchain_core-0.3.29-py3-none-any.whl",
+        "sha256": "817db1474871611a81105594a3e4d11704949661008e455a10e38ca9ff601a1a",
+        "uploaded": "2025-01-03T20:02:10.959169Z"
+      },
+      {
+        "name": "langchain-text-splitters",
+        "version": "0.3.5",
+        "filename": "langchain_text_splitters-0.3.5-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/4b/83/f8081c3bea416bd9d9f0c26af795c74f42c24f9ad3c4fbf361b7d69de134/langchain_text_splitters-0.3.5-py3-none-any.whl",
+        "sha256": "8c9b059827438c5fa8f327b4df857e307828a5ec815163c9b5c9569a3e82c8ee",
+        "uploaded": "2025-01-07T14:57:05.683964Z"
+      },
+      {
+        "name": "langsmith",
+        "version": "0.2.10",
+        "filename": "langsmith-0.2.10-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/12/91/e72d13f6b57a0ea9d884ab1d3388f544d7fe3354dbe1d4dd67678693a9fd/langsmith-0.2.10-py3-none-any.whl",
+        "sha256": "b02f2f174189ff72e54c88b1aa63343defd6f0f676c396a690c63a4b6495dcc2",
+        "uploaded": "2025-01-03T23:17:35.035933Z"
+      },
+      {
+        "name": "monotonic",
+        "version": "1.6",
+        "filename": "monotonic-1.6-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/9a/67/7e8406a29b6c45be7af7740456f7f37025f0506ae2e05fb9009a53946860/monotonic-1.6-py2.py3-none-any.whl",
+        "sha256": "68687e19a14f11f26d140dd5c86f3dba4bf5df58003000ed467e0e2a69bca96c",
+        "uploaded": "2021-04-09T21:58:05.122606Z"
+      },
+      {
+        "name": "numpy",
+        "version": "1.26.4",
+        "filename": "numpy-1.26.4-cp311-cp311-macosx_11_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/1a/2e/151484f49fd03944c4a3ad9c418ed193cfd02724e138ac8a9505d056c582/numpy-1.26.4-cp311-cp311-macosx_11_0_arm64.whl",
+        "sha256": "edd8b5fe47dab091176d21bb6de568acdd906d1887a4584a15a9a96a1dca06ef",
+        "uploaded": "2024-02-05T23:52:15.314050Z"
+      },
+      {
+        "name": "openai",
+        "version": "1.59.5",
+        "filename": "openai-1.59.5-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/4b/a2/a64f495c016234ca4269005b19eb9193a925dcad01af95eb8fea3de4ee9c/openai-1.59.5-py3-none-any.whl",
+        "sha256": "e646b44856b0dda9345d3c43639e056334d792d1690e99690313c0ef7ca4d8cc",
+        "uploaded": "2025-01-08T16:30:32.445056Z"
+      },
+      {
+        "name": "python-dateutil",
+        "version": "2.9.0.post0",
+        "filename": "python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+        "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
+        "uploaded": "2024-03-01T18:36:18.570437Z"
+      },
+      {
+        "name": "PyYAML",
+        "version": "6.0.2",
+        "filename": "PyYAML-6.0.2-cp311-cp311-macosx_11_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/8b/62/b9faa998fd185f65c1371643678e4d58254add437edb764a08c5a98fb986/PyYAML-6.0.2-cp311-cp311-macosx_11_0_arm64.whl",
+        "sha256": "1e2120ef853f59c7419231f3bf4e7021f1b936f6ebd222406c3b60212205d2ee",
+        "uploaded": "2024-08-06T20:32:04.926548Z"
+      },
+      {
+        "name": "six",
+        "version": "1.17.0",
+        "filename": "six-1.17.0-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl",
+        "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+        "uploaded": "2024-12-04T17:35:26.475808Z"
+      },
+      {
+        "name": "soupsieve",
+        "version": "2.6",
+        "filename": "soupsieve-2.6-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/d1/c2/fe97d779f3ef3b15f05c94a2f1e3d21732574ed441687474db9d342a7315/soupsieve-2.6-py3-none-any.whl",
+        "sha256": "e72c4ff06e4fb6e4b5a9f0f55fe6e81514581fca1515028625d0f299c602ccc9",
+        "uploaded": "2024-08-13T13:39:10.986116Z"
+      },
+      {
+        "name": "SQLAlchemy",
+        "version": "2.0.36",
+        "filename": "SQLAlchemy-2.0.36-cp311-cp311-macosx_11_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/b3/24/30e33b6389ebb5a17df2a4243b091bc709fb3dfc9a48c8d72f8e037c943d/SQLAlchemy-2.0.36-cp311-cp311-macosx_11_0_arm64.whl",
+        "sha256": "4f5e9cd989b45b73bd359f693b935364f7e1f79486e29015813c338450aa5a71",
+        "uploaded": "2024-10-16T00:41:30.374065Z"
+      },
+      {
+        "name": "tenacity",
+        "version": "9.0.0",
+        "filename": "tenacity-9.0.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/b6/cb/b86984bed139586d01532a587464b5805f12e397594f19f931c4c2fbfa61/tenacity-9.0.0-py3-none-any.whl",
+        "sha256": "93de0c98785b27fcf659856aa9f54bfbd399e29969b0621bc7f762bd441b4539",
+        "uploaded": "2024-07-29T12:12:25.825498Z"
+      },
+      {
+        "name": "tiktoken",
+        "version": "0.8.0",
+        "filename": "tiktoken-0.8.0-cp311-cp311-macosx_11_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/8c/f8/f0101d98d661b34534769c3818f5af631e59c36ac6d07268fbfc89e539ce/tiktoken-0.8.0-cp311-cp311-macosx_11_0_arm64.whl",
+        "sha256": "2efaf6199717b4485031b4d6edb94075e4d79177a172f38dd934d911b588d54a",
+        "uploaded": "2024-10-03T22:43:29.807074Z"
+      },
+      {
+        "name": "trafilatura",
+        "version": "2.0.0",
+        "filename": "trafilatura-2.0.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/8a/b6/097367f180b6383a3581ca1b86fcae284e52075fa941d1232df35293363c/trafilatura-2.0.0-py3-none-any.whl",
+        "sha256": "77eb5d1e993747f6f20938e1de2d840020719735690c840b9a1024803a4cd51d",
+        "uploaded": "2024-12-03T15:23:21.410731Z"
+      },
+      {
+        "name": "urllib3",
+        "version": "2.3.0",
+        "filename": "urllib3-2.3.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/c8/19/4ec628951a74043532ca2cf5d97b7b14863931476d117c471e8e2b1eb39f/urllib3-2.3.0-py3-none-any.whl",
+        "sha256": "1cee9ad369867bfdbbb48b7dd50374c0967a0bb7710050facf0dd6911440e3df",
+        "uploaded": "2024-12-22T07:47:28.074156Z"
+      },
+      {
+        "name": "aiohappyeyeballs",
+        "version": "2.4.4",
+        "filename": "aiohappyeyeballs-2.4.4-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/b9/74/fbb6559de3607b3300b9be3cc64e97548d55678e44623db17820dbd20002/aiohappyeyeballs-2.4.4-py3-none-any.whl",
+        "sha256": "a980909d50efcd44795c4afeca523296716d50cd756ddca6af8c65b996e27de8",
+        "uploaded": "2024-11-30T18:43:39.849044Z"
+      },
+      {
+        "name": "aiosignal",
+        "version": "1.3.2",
+        "filename": "aiosignal-1.3.2-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ec/6a/bc7e17a3e87a2985d3e8f4da4cd0f481060eb78fb08596c42be62c90a4d9/aiosignal-1.3.2-py2.py3-none-any.whl",
+        "sha256": "45cde58e409a301715980c2b01d0c28bdde3770d8290b5eb2173759d9acb31a5",
+        "uploaded": "2024-12-13T17:10:38.469982Z"
+      },
+      {
+        "name": "attrs",
+        "version": "24.3.0",
+        "filename": "attrs-24.3.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/89/aa/ab0f7891a01eeb2d2e338ae8fecbe57fcebea1a24dbb64d45801bfab481d/attrs-24.3.0-py3-none-any.whl",
+        "sha256": "ac96cd038792094f438ad1f6ff80837353805ac950cd2aa0e0625ef19850c308",
+        "uploaded": "2024-12-16T06:59:26.977525Z"
+      },
+      {
+        "name": "courlan",
+        "version": "1.3.2",
+        "filename": "courlan-1.3.2-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/8e/ca/6a667ccbe649856dcd3458bab80b016681b274399d6211187c6ab969fc50/courlan-1.3.2-py3-none-any.whl",
+        "sha256": "d0dab52cf5b5b1000ee2839fbc2837e93b2514d3cb5bb61ae158a55b7a04c6be",
+        "uploaded": "2024-10-29T16:40:18.325614Z"
+      },
+      {
+        "name": "distro",
+        "version": "1.9.0",
+        "filename": "distro-1.9.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/12/b3/231ffd4ab1fc9d679809f356cebee130ac7daa00d6d6f3206dd4fd137e9e/distro-1.9.0-py3-none-any.whl",
+        "sha256": "7bffd925d65168f85027d8da9af6bddab658135b840670a223589bc0c8ef02b2",
+        "uploaded": "2023-12-24T09:54:30.421191Z"
+      },
+      {
+        "name": "frozenlist",
+        "version": "1.5.0",
+        "filename": "frozenlist-1.5.0-cp311-cp311-macosx_11_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/2c/31/ab01375682f14f7613a1ade30149f684c84f9b8823a4391ed950c8285656/frozenlist-1.5.0-cp311-cp311-macosx_11_0_arm64.whl",
+        "sha256": "f47c9c9028f55a04ac254346e92977bf0f166c483c74b4232bee19a6697e4778",
+        "uploaded": "2024-10-23T09:46:42.451789Z"
+      },
+      {
+        "name": "google-api-core",
+        "version": "2.24.0",
+        "filename": "google_api_core-2.24.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/a1/76/65b8b94e74bf1b6d1cc38d916089670c4da5029d25762441d8c5c19e51dd/google_api_core-2.24.0-py3-none-any.whl",
+        "sha256": "10d82ac0fca69c82a25b3efdeefccf6f28e02ebb97925a8cce8edbfe379929d9",
+        "uploaded": "2024-12-09T20:19:35.905085Z"
+      },
+      {
+        "name": "google-auth",
+        "version": "2.37.0",
+        "filename": "google_auth-2.37.0-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/8d/8d/4d5d5f9f500499f7bd4c93903b43e8d6976f3fc6f064637ded1a85d09b07/google_auth-2.37.0-py2.py3-none-any.whl",
+        "sha256": "42664f18290a6be591be5329a96fe30184be1a1badb7292a7f686a9659de9ca0",
+        "uploaded": "2024-12-11T20:14:32.657304Z"
+      },
+      {
+        "name": "h11",
+        "version": "0.14.0",
+        "filename": "h11-0.14.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/95/04/ff642e65ad6b90db43e668d70ffb6736436c7ce41fcc549f4e9472234127/h11-0.14.0-py3-none-any.whl",
+        "sha256": "e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761",
+        "uploaded": "2022-09-25T15:39:59.680277Z"
+      },
+      {
+        "name": "htmldate",
+        "version": "1.9.3",
+        "filename": "htmldate-1.9.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/05/49/8872130016209c20436ce0c1067de1cf630755d0443d068a5bc17fa95015/htmldate-1.9.3-py3-none-any.whl",
+        "sha256": "3fadc422cf3c10a5cdb5e1b914daf37ec7270400a80a1b37e2673ff84faaaff8",
+        "uploaded": "2024-12-30T12:52:32.145747Z"
+      },
+      {
+        "name": "jiter",
+        "version": "0.8.2",
+        "filename": "jiter-0.8.2-cp311-cp311-macosx_11_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/f5/97/0468bc9eeae43079aaa5feb9267964e496bf13133d469cfdc135498f8dd0/jiter-0.8.2-cp311-cp311-macosx_11_0_arm64.whl",
+        "sha256": "a6c710d657c8d1d2adbbb5c0b0c6bfcec28fd35bd6b5f016395f9ac43e878a15",
+        "uploaded": "2024-12-09T18:09:25.098253Z"
+      },
+      {
+        "name": "jsonpatch",
+        "version": "1.33",
+        "filename": "jsonpatch-1.33-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/73/07/02e16ed01e04a374e644b575638ec7987ae846d25ad97bcc9945a3ee4b0e/jsonpatch-1.33-py2.py3-none-any.whl",
+        "sha256": "0ae28c0cd062bbd8b8ecc26d7d164fbbea9652a1a3693f3b956c1eae5145dade",
+        "uploaded": "2023-06-16T21:01:28.466546Z"
+      },
+      {
+        "name": "jusText",
+        "version": "3.0.1",
+        "filename": "jusText-3.0.1-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/c4/30/2cd44d6cc7541d5a68848250bf2f12c588631f6ff4461421fee34f9b619e/jusText-3.0.1-py2.py3-none-any.whl",
+        "sha256": "e0fb882dd7285415709f4b7466aed23d6b98b7b89404c36e8a2e730facfed02b",
+        "uploaded": "2024-05-09T15:49:54.138020Z"
+      },
+      {
+        "name": "lxml",
+        "version": "5.3.0",
+        "filename": "lxml-5.3.0-cp311-cp311-macosx_10_9_universal2.whl",
+        "url": "https://files.pythonhosted.org/packages/5c/a8/449faa2a3cbe6a99f8d38dcd51a3ee8844c17862841a6f769ea7c2a9cd0f/lxml-5.3.0-cp311-cp311-macosx_10_9_universal2.whl",
+        "sha256": "74bcb423462233bc5d6066e4e98b0264e7c1bed7541fff2f4e34fe6b21563c8b",
+        "uploaded": "2024-08-10T18:10:09.455124Z"
+      },
+      {
+        "name": "multidict",
+        "version": "6.1.0",
+        "filename": "multidict-6.1.0-cp311-cp311-macosx_11_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/70/0f/6dc70ddf5d442702ed74f298d69977f904960b82368532c88e854b79f72b/multidict-6.1.0-cp311-cp311-macosx_11_0_arm64.whl",
+        "sha256": "27e5fc84ccef8dfaabb09d82b7d179c7cf1a3fbc8a966f8274fcb4ab2eb4cadb",
+        "uploaded": "2024-09-09T23:47:44.028704Z"
+      },
+      {
+        "name": "orjson",
+        "version": "3.10.14",
+        "filename": "orjson-3.10.14-cp311-cp311-macosx_10_15_x86_64.macosx_11_0_arm64.macosx_10_15_universal2.whl",
+        "url": "https://files.pythonhosted.org/packages/bf/18/26721760368e12b691fb6811692ed21ae5275ea918db409ba26866cacbe8/orjson-3.10.14-cp311-cp311-macosx_10_15_x86_64.macosx_11_0_arm64.macosx_10_15_universal2.whl",
+        "sha256": "f506fd666dd1ecd15a832bebc66c4df45c1902fd47526292836c339f7ba665a9",
+        "uploaded": "2025-01-08T16:56:51.077650Z"
+      },
+      {
+        "name": "packaging",
+        "version": "24.2",
+        "filename": "packaging-24.2-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/88/ef/eb23f262cca3c0c4eb7ab1933c3b1f03d021f2c48f54763065b6f0e321be/packaging-24.2-py3-none-any.whl",
+        "sha256": "09abb1bccd265c01f4a3aa3f7a7db064b36514d2cba19a2f694fe6150451a759",
+        "uploaded": "2024-11-08T09:47:44.722583Z"
+      },
+      {
+        "name": "propcache",
+        "version": "0.2.1",
+        "filename": "propcache-0.2.1-cp311-cp311-macosx_11_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/3c/09/8386115ba7775ea3b9537730e8cf718d83bbf95bffe30757ccf37ec4e5da/propcache-0.2.1-cp311-cp311-macosx_11_0_arm64.whl",
+        "sha256": "70693319e0b8fd35dd863e3e29513875eb15c51945bf32519ef52927ca883bc3",
+        "uploaded": "2024-12-01T18:27:42.106164Z"
+      },
+      {
+        "name": "protobuf",
+        "version": "5.29.3",
+        "filename": "protobuf-5.29.3-cp38-abi3-macosx_10_9_universal2.whl",
+        "url": "https://files.pythonhosted.org/packages/dd/04/3eaedc2ba17a088961d0e3bd396eac764450f431621b58a04ce898acd126/protobuf-5.29.3-cp38-abi3-macosx_10_9_universal2.whl",
+        "sha256": "a8434404bbf139aa9e1300dbf989667a83d42ddda9153d8ab76e0d5dcaca484e",
+        "uploaded": "2025-01-08T21:38:36.642677Z"
+      },
+      {
+        "name": "regex",
+        "version": "2024.11.6",
+        "filename": "regex-2024.11.6-cp311-cp311-macosx_11_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/c5/1b/f0e4d13e6adf866ce9b069e191f303a30ab1277e037037a365c3aad5cc9c/regex-2024.11.6-cp311-cp311-macosx_11_0_arm64.whl",
+        "sha256": "94d87b689cdd831934fa3ce16cc15cd65748e6d689f5d2b8f4f4df2065c9fa20",
+        "uploaded": "2024-11-06T20:09:35.504935Z"
+      },
+      {
+        "name": "requests-toolbelt",
+        "version": "1.0.0",
+        "filename": "requests_toolbelt-1.0.0-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/3f/51/d4db610ef29373b879047326cbf6fa98b6c1969d6f6dc423279de2b1be2c/requests_toolbelt-1.0.0-py2.py3-none-any.whl",
+        "sha256": "cccfdd665f0a24fcf4726e690f65639d272bb0637b9b92dfd91a5568ccf6bd06",
+        "uploaded": "2023-05-01T04:11:28.427086Z"
+      },
+      {
+        "name": "sniffio",
+        "version": "1.3.1",
+        "filename": "sniffio-1.3.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/e9/44/75a9c9421471a6c4805dbf2356f7c181a29c1879239abab1ea2cc8f38b40/sniffio-1.3.1-py3-none-any.whl",
+        "sha256": "2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2",
+        "uploaded": "2024-02-25T23:20:01.196159Z"
+      },
+      {
+        "name": "tqdm",
+        "version": "4.67.1",
+        "filename": "tqdm-4.67.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/d0/30/dc54f88dd4a2b5dc8a0279bdd7270e735851848b762aeb1c1184ed1f6b14/tqdm-4.67.1-py3-none-any.whl",
+        "sha256": "26445eca388f82e72884e0d580d5464cd801a3ea01e63e5601bdff9ba6a48de2",
+        "uploaded": "2024-11-24T20:12:19.698181Z"
+      },
+      {
+        "name": "yarl",
+        "version": "1.18.3",
+        "filename": "yarl-1.18.3-cp311-cp311-macosx_11_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/5a/a1/205ab51e148fdcedad189ca8dd587794c6f119882437d04c33c01a75dece/yarl-1.18.3-cp311-cp311-macosx_11_0_arm64.whl",
+        "sha256": "67a283dd2882ac98cc6318384f565bffc751ab564605959df4752d42483ad889",
+        "uploaded": "2024-12-01T20:33:12.322416Z"
+      },
+      {
+        "name": "google-api-python-client",
+        "version": "2.157.0",
+        "filename": "google_api_python_client-2.157.0-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/16/33/be58f58b63ffcc6b57e52428b388dbc94fb008baae60e81b205ea64e5baa/google_api_python_client-2.157.0-py2.py3-none-any.whl",
+        "sha256": "0b0231db106324c659bf8b85f390391c00da57a60ebc4271e33def7aac198c75",
+        "uploaded": "2025-01-02T19:55:36.060726Z"
+      },
+      {
+        "name": "httpx-sse",
+        "version": "0.4.0",
+        "filename": "httpx_sse-0.4.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/e1/9b/a181f281f65d776426002f330c31849b86b31fc9d848db62e16f03ff739f/httpx_sse-0.4.0-py3-none-any.whl",
+        "sha256": "f329af6eae57eaa2bdfd962b42524764af68075ea87370a2de920af5341e318f",
+        "uploaded": "2023-12-22T08:01:19.890100Z"
+      },
+      {
+        "name": "httpx-ws",
+        "version": "0.7.1",
+        "filename": "httpx_ws-0.7.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/00/5b/a27d1c8eda1fdce8c0668a3ea7e09bcc43986f5b306703c46b0f42d2165f/httpx_ws-0.7.1-py3-none-any.whl",
+        "sha256": "7970e470840d8e6c17bd45ed4e7af06f9144a4a9decab2ff226f3ff9accb65b4",
+        "uploaded": "2025-01-04T13:33:00.893447Z"
+      },
+      {
+        "name": "pillow",
+        "version": "11.1.0",
+        "filename": "pillow-11.1.0-cp311-cp311-macosx_11_0_arm64.whl",
+        "url": "https://files.pythonhosted.org/packages/d9/45/3fe487010dd9ce0a06adf9b8ff4f273cc0a44536e234b0fad3532a42c15b/pillow-11.1.0-cp311-cp311-macosx_11_0_arm64.whl",
+        "sha256": "96f82000e12f23e4f29346e42702b6ed9a2f2fea34a740dd5ffffcc8c539eb35",
+        "uploaded": "2025-01-02T08:10:50.981006Z"
+      },
+      {
+        "name": "babel",
+        "version": "2.16.0",
+        "filename": "babel-2.16.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ed/20/bc79bc575ba2e2a7f70e8a1155618bb1301eaa5132a8271373a6903f73f8/babel-2.16.0-py3-none-any.whl",
+        "sha256": "368b5b98b37c06b7daf6696391c3240c938b37767d4584413e8438c5c435fa8b",
+        "uploaded": "2024-08-08T14:25:42.686396Z"
+      },
+      {
+        "name": "cachetools",
+        "version": "5.5.0",
+        "filename": "cachetools-5.5.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/a4/07/14f8ad37f2d12a5ce41206c21820d8cb6561b728e51fad4530dff0552a67/cachetools-5.5.0-py3-none-any.whl",
+        "sha256": "02134e8439cdc2ffb62023ce1debca2944c3f289d66bb17ead3ab3dede74b292",
+        "uploaded": "2024-08-18T20:28:43.404531Z"
+      },
+      {
+        "name": "dateparser",
+        "version": "1.2.0",
+        "filename": "dateparser-1.2.0-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/a4/29/db12aa4dda81580be1999824a689bd52aa40061fc12c9ccdc3feab5ea718/dateparser-1.2.0-py2.py3-none-any.whl",
+        "sha256": "0b21ad96534e562920a0083e97fd45fa959882d4162acc358705144520a35830",
+        "uploaded": "2023-11-17T10:47:56.127461Z"
+      },
+      {
+        "name": "google-auth-httplib2",
+        "version": "0.2.0",
+        "filename": "google_auth_httplib2-0.2.0-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/be/8a/fe34d2f3f9470a27b01c9e76226965863f153d5fbe276f83608562e49c04/google_auth_httplib2-0.2.0-py2.py3-none-any.whl",
+        "sha256": "b65a0a2123300dd71281a7bf6e64d65a0759287df52729bdd1ae2e47dc311a3d",
+        "uploaded": "2023-12-12T17:40:13.055900Z"
+      },
+      {
+        "name": "googleapis-common-protos",
+        "version": "1.66.0",
+        "filename": "googleapis_common_protos-1.66.0-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/a0/0f/c0713fb2b3d28af4b2fded3291df1c4d4f79a00d15c2374a9e010870016c/googleapis_common_protos-1.66.0-py2.py3-none-any.whl",
+        "sha256": "d7abcd75fabb2e0ec9f74466401f6c119a0b498e27370e9be4c94cb7e382b8ed",
+        "uploaded": "2024-11-12T17:33:37.067467Z"
+      },
+      {
+        "name": "httplib2",
+        "version": "0.22.0",
+        "filename": "httplib2-0.22.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/a8/6c/d2fbdaaa5959339d53ba38e94c123e4e84b8fbc4b84beb0e70d7c1608486/httplib2-0.22.0-py3-none-any.whl",
+        "sha256": "14ae0a53c1ba8f3d37e9e27cf37eabb0fb9980f435ba405d546948b009dd64dc",
+        "uploaded": "2023-03-21T22:29:35.683092Z"
+      },
+      {
+        "name": "jsonpointer",
+        "version": "3.0.0",
+        "filename": "jsonpointer-3.0.0-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/71/92/5e77f98553e9e75130c78900d000368476aed74276eb8ae8796f65f00918/jsonpointer-3.0.0-py2.py3-none-any.whl",
+        "sha256": "13e088adc14fca8b6aa8177c044e12701e6ad4b28ff10e65f2267a90109c9942",
+        "uploaded": "2024-06-10T19:24:40.698307Z"
+      },
+      {
+        "name": "proto-plus",
+        "version": "1.25.0",
+        "filename": "proto_plus-1.25.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/dd/25/0b7cc838ae3d76d46539020ec39fc92bfc9acc29367e58fe912702c2a79e/proto_plus-1.25.0-py3-none-any.whl",
+        "sha256": "c91fc4a65074ade8e458e95ef8bac34d4008daa7cce4a12d6707066fca648961",
+        "uploaded": "2024-10-23T15:03:38.415792Z"
+      },
+      {
+        "name": "pyasn1_modules",
+        "version": "0.4.1",
+        "filename": "pyasn1_modules-0.4.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/77/89/bc88a6711935ba795a679ea6ebee07e128050d6382eaa35a0a47c8032bdc/pyasn1_modules-0.4.1-py3-none-any.whl",
+        "sha256": "49bfa96b45a292b711e986f222502c1c9a5e1f4e568fc30e2574a6c7d07838fd",
+        "uploaded": "2024-09-11T16:02:10.336487Z"
+      },
+      {
+        "name": "rsa",
+        "version": "4.9",
+        "filename": "rsa-4.9-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/49/97/fa78e3d2f65c02c8e1268b9aba606569fe97f6c8f7c2d74394553347c145/rsa-4.9-py3-none-any.whl",
+        "sha256": "90260d9058e514786967344d0ef75fa8727eed8a7d2e43ce9f4bcf1b536174f7",
+        "uploaded": "2022-07-20T10:28:34.978992Z"
+      },
+      {
+        "name": "tld",
+        "version": "0.13",
+        "filename": "tld-0.13-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ea/75/779ddeaf4d847ba0021ad99d1b615a853f2a5762bd5d118273c7f7673c38/tld-0.13-py2.py3-none-any.whl",
+        "sha256": "f75b2be080f767ed17c2338a339eaa4fab5792586319ca819119da252f9f3749",
+        "uploaded": "2023-02-27T21:06:46.270749Z"
+      },
+      {
+        "name": "uritemplate",
+        "version": "4.1.1",
+        "filename": "uritemplate-4.1.1-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/81/c0/7461b49cd25aeece13766f02ee576d1db528f1c37ce69aee300e075b485b/uritemplate-4.1.1-py2.py3-none-any.whl",
+        "sha256": "830c08b8d99bdd312ea4ead05994a38e8936266f84b9a7878232db50b044e02e",
+        "uploaded": "2021-10-13T11:15:12.316885Z"
+      },
+      {
+        "name": "wsproto",
+        "version": "1.2.0",
+        "filename": "wsproto-1.2.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/78/58/e860788190eba3bcce367f74d29c4675466ce8dddfba85f7827588416f01/wsproto-1.2.0-py3-none-any.whl",
+        "sha256": "b9acddd652b585d75b20477888c56642fdade28bdfd3579aa24a4d2c037dd736",
+        "uploaded": "2022-08-23T19:58:19.960674Z"
+      },
+      {
+        "name": "grpcio",
+        "version": "1.69.0",
+        "filename": "grpcio-1.69.0-cp311-cp311-macosx_10_14_universal2.whl",
+        "url": "https://files.pythonhosted.org/packages/37/3f/10c1e5e0150bf59aa08ea6aebf38f87622f95f7f33f98954b43d1b2a3200/grpcio-1.69.0-cp311-cp311-macosx_10_14_universal2.whl",
+        "sha256": "7e76accf38808f5c5c752b0ab3fd919eb14ff8fafb8db520ad1cc12afff74de6",
+        "uploaded": "2025-01-05T05:45:53.724801Z"
+      },
+      {
+        "name": "grpcio-status",
+        "version": "1.69.0",
+        "filename": "grpcio_status-1.69.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/f6/e2/346a766a4232f74f45f8bc70e636fc3a6677e6bc3893382187829085f12e/grpcio_status-1.69.0-py3-none-any.whl",
+        "sha256": "d6b2a3c9562c03a817c628d7ba9a925e209c228762d6d7677ae5c9401a542853",
+        "uploaded": "2025-01-05T05:50:29.538865Z"
+      },
+      {
+        "name": "pyasn1",
+        "version": "0.6.1",
+        "filename": "pyasn1-0.6.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/c8/f1/d6a797abb14f6283c0ddff96bbdd46937f64122b8c925cab503dd37f8214/pyasn1-0.6.1-py3-none-any.whl",
+        "sha256": "0d632f46f2ba09143da3a8afe9e33fb6f92fa2320ab7e886e2d0f7672af84629",
+        "uploaded": "2024-09-11T16:00:36.122570Z"
+      },
+      {
+        "name": "pyparsing",
+        "version": "3.2.1",
+        "filename": "pyparsing-3.2.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/1c/a7/c8a2d361bf89c0d9577c934ebb7421b25dc84bf3a8e3ac0a40aed9acc547/pyparsing-3.2.1-py3-none-any.whl",
+        "sha256": "506ff4f4386c4cec0590ec19e6302d3aedb992fdc02c761e90416f158dacf8e1",
+        "uploaded": "2024-12-31T20:59:42.738810Z"
+      },
+      {
+        "name": "lxml_html_clean",
+        "version": "0.4.1",
+        "filename": "lxml_html_clean-0.4.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/f7/ba/2af7a60b45bf21375e111c1e2d5d721108d06c80e3d9a3cc1d767afe1731/lxml_html_clean-0.4.1-py3-none-any.whl",
+        "sha256": "b704f2757e61d793b1c08bf5ad69e4c0b68d6696f4c3c1429982caf90050bcaf",
+        "uploaded": "2024-11-15T06:19:27.678460Z"
+      },
+      {
+        "name": "pytz",
+        "version": "2024.2",
+        "filename": "pytz-2024.2-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/11/c3/005fcca25ce078d2cc29fd559379817424e94885510568bc1bc53d7d5846/pytz-2024.2-py2.py3-none-any.whl",
+        "sha256": "31c7c1817eb7fae7ca4b8c7ee50c72f93aa2dd863de768e1ef4245d426aa0725",
+        "uploaded": "2024-09-11T02:24:45.800101Z"
+      },
+      {
+        "name": "tzlocal",
+        "version": "5.2",
+        "filename": "tzlocal-5.2-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/97/3f/c4c51c55ff8487f2e6d0e618dba917e3c3ee2caae6cf0fbb59c9b1876f2e/tzlocal-5.2-py3-none-any.whl",
+        "sha256": "49816ef2fe65ea8ac19d19aa7a1ae0551c834303d5014c6d5a62e4cbda8047b8",
+        "uploaded": "2023-10-22T17:41:36.511688Z"
+      }
+    ]
+  },
+  "frontend": {
+    "earliest_date": "2025-01-08",
+    "packages": [
+      {
+        "name": "@esbuild/aix-ppc64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:32.742Z",
+        "integrity": "sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ=="
+      },
+      {
+        "name": "@esbuild/android-arm",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:01.003Z",
+        "integrity": "sha512-vCPvzSjpPHEi1siZdlvAlsPxXl7WbOVUBBAowWug4rJHb68Ox8KualB+1ocNvT5fjv6wpkX6o/iEpbDrf68zcg=="
+      },
+      {
+        "name": "@esbuild/android-arm64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:01.831Z",
+        "integrity": "sha512-c0uX9VAUBQ7dTDCjq+wdyGLowMdtR/GoC2U5IYk/7D1H1JYC0qseD7+11iMP2mRLN9RcCMRcjC4YMclCzGwS/A=="
+      },
+      {
+        "name": "@esbuild/android-x64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:04.297Z",
+        "integrity": "sha512-D7aPRUUNHRBwHxzxRvp856rjUHRFW1SdQATKXH2hqA0kAZb1hKmi02OpYRacl0TxIGz/ZmXWlbZgjwWYaCakTA=="
+      },
+      {
+        "name": "@esbuild/darwin-arm64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:13.758Z",
+        "integrity": "sha512-DwqXqZyuk5AiWWf3UfLiRDJ5EDd49zg6O9wclZ7kUMv2WRFr4HKjXp/5t8JZ11QbQfUS6/cRCKGwYhtNAY88kQ=="
+      },
+      {
+        "name": "@esbuild/darwin-x64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:00.976Z",
+        "integrity": "sha512-se/JjF8NlmKVG4kNIuyWMV/22ZaerB+qaSi5MdrXtd6R08kvs2qCN4C09miupktDitvh8jRFflwGFBQcxZRjbw=="
+      },
+      {
+        "name": "@esbuild/freebsd-arm64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:16:52.135Z",
+        "integrity": "sha512-5JcRxxRDUJLX8JXp/wcBCy3pENnCgBR9bN6JsY4OmhfUtIHe3ZW0mawA7+RDAcMLrMIZaf03NlQiX9DGyB8h4g=="
+      },
+      {
+        "name": "@esbuild/freebsd-x64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:16:53.222Z",
+        "integrity": "sha512-J95kNBj1zkbMXtHVH29bBriQygMXqoVQOQYA+ISs0/2l3T9/kj42ow2mpqerRBxDJnmkUDCaQT/dfNXWX/ZZCQ=="
+      },
+      {
+        "name": "@esbuild/linux-arm",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:13.044Z",
+        "integrity": "sha512-bPb5AHZtbeNGjCKVZ9UGqGwo8EUu4cLq68E95A53KlxAPRmUyYv2D6F0uUI65XisGOL1hBP5mTronbgo+0bFcA=="
+      },
+      {
+        "name": "@esbuild/linux-arm64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:23.384Z",
+        "integrity": "sha512-ibKvmyYzKsBeX8d8I7MH/TMfWDXBF3db4qM6sy+7re0YXya+K1cem3on9XgdT2EQGMu4hQyZhan7TeQ8XkGp4Q=="
+      },
+      {
+        "name": "@esbuild/linux-ia32",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:14.861Z",
+        "integrity": "sha512-YvjXDqLRqPDl2dvRODYmmhz4rPeVKYvppfGYKSNGdyZkA01046pLWyRKKI3ax8fbJoK5QbxblURkwK/MWY18Tg=="
+      },
+      {
+        "name": "@esbuild/linux-loong64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:23.246Z",
+        "integrity": "sha512-uHf1BmMG8qEvzdrzAqg2SIG/02+4/DHB6a9Kbya0XDvwDEKCoC8ZRWI5JJvNdUjtciBGFQ5PuBlpEOXQj+JQSg=="
+      },
+      {
+        "name": "@esbuild/linux-mips64el",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:24.155Z",
+        "integrity": "sha512-IajOmO+KJK23bj52dFSNCMsz1QP1DqM6cwLUv3W1QwyxkyIWecfafnI555fvSGqEKwjMXVLokcV5ygHW5b3Jbg=="
+      },
+      {
+        "name": "@esbuild/linux-ppc64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:31.268Z",
+        "integrity": "sha512-1hHV/Z4OEfMwpLO8rp7CvlhBDnjsC3CttJXIhBi+5Aj5r+MBvy4egg7wCbe//hSsT+RvDAG7s81tAvpL2XAE4w=="
+      },
+      {
+        "name": "@esbuild/linux-riscv64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:24.348Z",
+        "integrity": "sha512-2HdXDMd9GMgTGrPWnJzP2ALSokE/0O5HhTUvWIbD3YdjME8JwvSCnNGBnTThKGEB91OZhzrJ4qIIxk/SBmyDDA=="
+      },
+      {
+        "name": "@esbuild/linux-s390x",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:31.872Z",
+        "integrity": "sha512-zus5sxzqBJD3eXxwvjN1yQkRepANgxE9lgOW2qLnmr8ikMTphkjgXu1HR01K4FJg8h1kEEDAqDcZQtbrRnB41A=="
+      },
+      {
+        "name": "@esbuild/linux-x64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:15.111Z",
+        "integrity": "sha512-1rYdTpyv03iycF1+BhzrzQJCdOuAOtaqHTWJZCWvijKD2N5Xu0TtVC8/+1faWqcP9iBCWOmjmhoH94dH82BxPQ=="
+      },
+      {
+        "name": "@esbuild/netbsd-x64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:16:52.583Z",
+        "integrity": "sha512-Woi2MXzXjMULccIwMnLciyZH4nCIMpWQAs049KEeMvOcNADVxo0UBIQPfSmxB3CWKedngg7sWZdLvLczpe0tLg=="
+      },
+      {
+        "name": "@esbuild/openbsd-x64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:16:52.735Z",
+        "integrity": "sha512-HLNNw99xsvx12lFBUwoT8EVCsSvRNDVxNpjZ7bPn947b8gJPzeHWyNVhFsaerc0n3TsbOINvRP2byTZ5LKezow=="
+      },
+      {
+        "name": "@esbuild/sunos-x64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:16:44.204Z",
+        "integrity": "sha512-6+gjmFpfy0BHU5Tpptkuh8+uw3mnrvgs+dSPQXQOv3ekbordwnzTVEb4qnIvQcYXq6gzkyTnoZ9dZG+D4garKg=="
+      },
+      {
+        "name": "@esbuild/win32-arm64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:16:42.857Z",
+        "integrity": "sha512-Z0gOTd75VvXqyq7nsl93zwahcTROgqvuAcYDUr+vOv8uHhNSKROyU961kgtCD1e95IqPKSQKH7tBTslnS3tA8A=="
+      },
+      {
+        "name": "@esbuild/win32-ia32",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:16:42.815Z",
+        "integrity": "sha512-SWXFF1CL2RVNMaVs+BBClwtfZSvDgtL//G/smwAc5oVK/UPu2Gu9tIaRgFmYFFKrmg3SyAjSrElf0TiJ1v8fYA=="
+      },
+      {
+        "name": "@esbuild/win32-x64",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:16:43.519Z",
+        "integrity": "sha512-tQd/1efJuzPC6rCFwEvLtci/xNFcTZknmXs98FYDfGE4wP9ClFV98nyKrzJKVPMhdDnjzLhdUyMX4PsQAPjwIw=="
+      },
+      {
+        "name": "@rollup/rollup-android-arm-eabi",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:13.176Z",
+        "integrity": "sha512-ssKhA8RNltTZLpG6/QNkCSge+7mBQGUqJRisZ2MDQcEGaK93QESEgWK2iOpIDZ7k9zPVkG5AS3ksvD5ZWxmItw=="
+      },
+      {
+        "name": "@rollup/rollup-android-arm64",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:00.320Z",
+        "integrity": "sha512-CaRfrV0cd+NIIcVVN/jx+hVLN+VRqnuzLRmfmlzpOzB87ajixsN/+9L5xNmkaUUvEbI5BmIKS+XTwXsHEb65Ew=="
+      },
+      {
+        "name": "@rollup/rollup-darwin-arm64",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:15:57.673Z",
+        "integrity": "sha512-2ORr7T31Y0Mnk6qNuwtyNmy14MunTAMx06VAPI6/Ju52W10zk1i7i5U3vlDRWjhOI5quBcrvhkCHyF76bI7kEw=="
+      },
+      {
+        "name": "@rollup/rollup-darwin-x64",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:34.484Z",
+        "integrity": "sha512-j/Ej1oanzPjmN0tirRd5K2/nncAhS9W6ICzgxV+9Y5ZsP0hiGhHJXZ2JQ53iSSjj8m6cRY6oB1GMzNn2EUt6Ng=="
+      },
+      {
+        "name": "@rollup/rollup-freebsd-arm64",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:05.691Z",
+        "integrity": "sha512-91C//G6Dm/cv724tpt7nTyP+JdN12iqeXGFM1SqnljCmi5yTXriH7B1r8AD9dAZByHpKAumqP1Qy2vVNIdLZqw=="
+      },
+      {
+        "name": "@rollup/rollup-freebsd-x64",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:39.898Z",
+        "integrity": "sha512-hEioiEQ9Dec2nIRoeHUP6hr1PSkXzQaCUyqBDQ9I9ik4gCXQZjJMIVzoNLBRGet+hIUb3CISMh9KXuCcWVW/8w=="
+      },
+      {
+        "name": "@rollup/rollup-linux-arm-gnueabihf",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:15.831Z",
+        "integrity": "sha512-Py5vFd5HWYN9zxBv3WMrLAXY3yYJ6Q/aVERoeUFwiDGiMOWsMs7FokXihSOaT/PMWUty/Pj60XDQndK3eAfE6A=="
+      },
+      {
+        "name": "@rollup/rollup-linux-arm-musleabihf",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:18.381Z",
+        "integrity": "sha512-RiWpGgbayf7LUcuSNIbahr0ys2YnEERD4gYdISA06wa0i8RALrnzflh9Wxii7zQJEB2/Eh74dX4y/sHKLWp5uQ=="
+      },
+      {
+        "name": "@rollup/rollup-linux-arm64-gnu",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:08.376Z",
+        "integrity": "sha512-Z80O+taYxTQITWMjm/YqNoe9d10OX6kDh8X5/rFCMuPqsKsSyDilvfg+vd3iXIqtfmp+cnfL1UrYirkaF8SBZA=="
+      },
+      {
+        "name": "@rollup/rollup-linux-arm64-musl",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:10.600Z",
+        "integrity": "sha512-fOHRtF9gahwJk3QVp01a/GqS4hBEZCV1oKglVVq13kcK3NeVlS4BwIFzOHDbmKzt3i0OuHG4zfRP0YoG5OF/rA=="
+      },
+      {
+        "name": "@rollup/rollup-linux-loongarch64-gnu",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:23.633Z",
+        "integrity": "sha512-5a7q3tnlbcg0OodyxcAdrrCxFi0DgXJSoOuidFUzHZ2GixZXQs6Tc3CHmlvqKAmOs5eRde+JJxeIf9DonkmYkw=="
+      },
+      {
+        "name": "@rollup/rollup-linux-powerpc64le-gnu",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:29.193Z",
+        "integrity": "sha512-9b4Mg5Yfz6mRnlSPIdROcfw1BU22FQxmfjlp/CShWwO3LilKQuMISMTtAu/bxmmrE6A902W2cZJuzx8+gJ8e9w=="
+      },
+      {
+        "name": "@rollup/rollup-linux-riscv64-gnu",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:26.527Z",
+        "integrity": "sha512-G5pn0NChlbRM8OJWpJFMX4/i8OEU538uiSv0P6roZcbpe/WfhEO+AT8SHVKfp8qhDQzaz7Q+1/ixMy7hBRidnQ=="
+      },
+      {
+        "name": "@rollup/rollup-linux-s390x-gnu",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:31.881Z",
+        "integrity": "sha512-WM9lIkNdkhVwiArmLxFXpWndFGuOka4oJOZh8EP3Vb8q5lzdSCBuhjavJsw68Q9AKDGeOOIHYzYm4ZFvmWez5g=="
+      },
+      {
+        "name": "@rollup/rollup-linux-x64-gnu",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:42.451Z",
+        "integrity": "sha512-87xYCwb0cPGZFoGiErT1eDcssByaLX4fc0z2nRM6eMtV9njAfEE6OW3UniAoDhX4Iq5xQVpE6qO9aJbCFumKYQ=="
+      },
+      {
+        "name": "@rollup/rollup-linux-x64-musl",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:44.887Z",
+        "integrity": "sha512-xufkSNppNOdVRCEC4WKvlR1FBDyqCSCpQeMMgv9ZyXqqtKBfkw1yfGMTUTs9Qsl6WQbJnsGboWCp7pJGkeMhKA=="
+      },
+      {
+        "name": "@rollup/rollup-win32-arm64-msvc",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:02.859Z",
+        "integrity": "sha512-F2OiJ42m77lSkizZQLuC+jiZ2cgueWQL5YC9tjo3AgaEw+KJmVxHGSyQfDUoYR9cci0lAywv2Clmckzulcq6ig=="
+      },
+      {
+        "name": "@rollup/rollup-win32-ia32-msvc",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:21.157Z",
+        "integrity": "sha512-rYRe5S0FcjlOBZQHgbTKNrqxCBUmgDJem/VQTCcTnA2KCabYSWQDrytOzX7avb79cAAweNmMUb/Zw18RNd4mng=="
+      },
+      {
+        "name": "@rollup/rollup-win32-x64-msvc",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:37.178Z",
+        "integrity": "sha512-+10CMg9vt1MoHj6x1pxyjPSMjHTIlqs8/tBztXvPAx24SKs9jwVnKqHJumlH/IzhaPUaj3T6T6wfZr8okdXaIg=="
+      },
+      {
+        "name": "@types/estree",
+        "version": "1.0.6",
+        "published": "2024-09-18T09:37:01.060Z",
+        "integrity": "sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw=="
+      },
+      {
+        "name": "esbuild",
+        "version": "0.21.5",
+        "published": "2024-06-09T21:17:41.628Z",
+        "integrity": "sha512-mg3OPMV4hXywwpoDxu3Qda5xCKQi+vCTZq8S9J/EpkhB2HzKXq4SNFZE3+NK93JYxc8VMSep+lOUSC/RVKaBqw=="
+      },
+      {
+        "name": "fsevents",
+        "version": "2.3.3",
+        "published": "2023-08-21T16:24:22.854Z",
+        "integrity": "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw=="
+      },
+      {
+        "name": "js-tokens",
+        "version": "4.0.0",
+        "published": "2018-01-28T11:58:58.170Z",
+        "integrity": "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="
+      },
+      {
+        "name": "loose-envify",
+        "version": "1.4.0",
+        "published": "2018-07-10T11:09:45.917Z",
+        "integrity": "sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q=="
+      },
+      {
+        "name": "nanoid",
+        "version": "3.3.8",
+        "published": "2024-11-26T11:55:05.967Z",
+        "integrity": "sha512-WNLf5Sd8oZxOm+TzppcYk8gVOgP+l58xNy58D0nbUnOxOWRWvlcCV4kUF7ltmI6PsrLl/BgKEyS4mqsGChFN0w=="
+      },
+      {
+        "name": "picocolors",
+        "version": "1.1.1",
+        "published": "2024-10-16T18:20:03.921Z",
+        "integrity": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA=="
+      },
+      {
+        "name": "postcss",
+        "version": "8.4.49",
+        "published": "2024-11-11T19:59:09.131Z",
+        "integrity": "sha512-OCVPnIObs4N29kxTjzLfUryOkvZEq+pf8jTF0lg8E7uETuWHA+v7j3c/xJmiqpX450191LlmZfUKkXxkTry7nA=="
+      },
+      {
+        "name": "react",
+        "version": "18.3.1",
+        "published": "2024-04-26T16:42:26.496Z",
+        "integrity": "sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ=="
+      },
+      {
+        "name": "react-dom",
+        "version": "18.3.1",
+        "published": "2024-04-26T16:42:49.931Z",
+        "integrity": "sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw=="
+      },
+      {
+        "name": "rollup",
+        "version": "4.29.1",
+        "published": "2024-12-21T07:16:47.735Z",
+        "integrity": "sha512-RaJ45M/kmJUzSWDs1Nnd5DdV4eerC98idtUOVr6FfKcgxqvjwHmxc5upLF9qZU9EpsVzzhleFahrT3shLuJzIw=="
+      },
+      {
+        "name": "scheduler",
+        "version": "0.23.2",
+        "published": "2024-04-26T16:45:42.436Z",
+        "integrity": "sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ=="
+      },
+      {
+        "name": "source-map-js",
+        "version": "1.2.1",
+        "published": "2024-09-08T16:22:55.645Z",
+        "integrity": "sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA=="
+      },
+      {
+        "name": "vite",
+        "version": "5.4.11",
+        "published": "2024-11-11T09:38:08.835Z",
+        "integrity": "sha512-c7jFQRklXua0mTzneGW9QVyxFjUgwcihC4bXEtujIo2ouWCe1Ajt/amn2PCxYnhYfd5k09JX3SB7OYWFKYqj8Q=="
+      }
+    ]
+  },
+  "playwright_mcp": {
+    "earliest_date": "2025-03-26",
+    "packages": [
+      {
+        "name": "@modelcontextprotocol/sdk",
+        "version": "1.6.1",
+        "published": "2025-02-28T11:57:49.193Z",
+        "integrity": "sha512-oxzMzYCkZHMntzuyerehK3fV6A2Kwh5BD6CGEJSVDU2QNEhfLOptf2X7esQgaHZXHZY0oHmMsOtIDLP71UJXgA=="
+      },
+      {
+        "name": "cors",
+        "version": "2.8.5",
+        "published": "2018-11-04T21:00:13.277Z",
+        "integrity": "sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g=="
+      },
+      {
+        "name": "iconv-lite",
+        "version": "0.6.3",
+        "published": "2021-05-24T03:00:17.928Z",
+        "integrity": "sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw=="
+      },
+      {
+        "name": "raw-body",
+        "version": "3.0.0",
+        "published": "2024-07-25T22:18:40.020Z",
+        "integrity": "sha512-RmkhL8CAyCRPXCE28MMH0z2PNWQBNk2Q09ZdxM9IOOXwxwZbN+qbWaatPkdkWIKL2ZVDImrN/pK5HTRz2PcS4g=="
+      },
+      {
+        "name": "@playwright/mcp",
+        "version": "0.0.3",
+        "published": "2025-03-25T20:08:49.906Z",
+        "integrity": "sha512-YrSqhbTj+xVzuyBDeSjo35HTE8zpd7sjciFFWGRMO9SL1g22qiFAJ5VqB4Oorm13GEInWx4RLd7CtJdYoShttg=="
+      },
+      {
+        "name": "accepts",
+        "version": "2.0.0",
+        "published": "2024-08-31T15:50:05.694Z",
+        "integrity": "sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng=="
+      },
+      {
+        "name": "mime-types",
+        "version": "3.0.0",
+        "published": "2024-08-31T13:57:14.134Z",
+        "integrity": "sha512-XqoSHeCGjVClAmoGFG3lVFqQFRIrTVw2OH3axRqAcfaw+gHWIfnASS92AV+Rl/mk0MupgZTRHQOjxY6YVnzK5w=="
+      },
+      {
+        "name": "negotiator",
+        "version": "1.0.0",
+        "published": "2024-08-31T15:42:18.280Z",
+        "integrity": "sha512-8Ofs/AUQh8MaEcrlq5xOX0CQ9ypTF5dl78mjlMNfOK08fzpgTHQRQPBxcPlEtIw0yRpws+Zo/3r+5WRby7u3Gg=="
+      },
+      {
+        "name": "bytes",
+        "version": "3.1.2",
+        "published": "2022-01-28T05:02:37.661Z",
+        "integrity": "sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg=="
+      },
+      {
+        "name": "call-bind-apply-helpers",
+        "version": "1.0.2",
+        "published": "2025-02-12T19:24:56.950Z",
+        "integrity": "sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ=="
+      },
+      {
+        "name": "call-bound",
+        "version": "1.0.4",
+        "published": "2025-03-03T17:50:03.505Z",
+        "integrity": "sha512-+ys997U96po4Kx/ABpBCqhA9EuxJaQWDQg7295H4hBphv3IZg0boBKuwYpt4YXp6MZ5AmZQnU/tyMTlRpaSejg=="
+      },
+      {
+        "name": "commander",
+        "version": "13.1.0",
+        "published": "2025-01-20T23:29:10.201Z",
+        "integrity": "sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw=="
+      },
+      {
+        "name": "content-type",
+        "version": "1.0.5",
+        "published": "2023-01-29T19:25:59.622Z",
+        "integrity": "sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA=="
+      },
+      {
+        "name": "cookie",
+        "version": "0.7.1",
+        "published": "2024-10-03T18:17:17.990Z",
+        "integrity": "sha512-6DnInpx7SJ2AK3+CTUE/ZM0vWTUboZCegxhC2xiIydHR9jNuTAASBrfEpHhiGOZw/nX51bHt6YQl8jsGo4y/0w=="
+      },
+      {
+        "name": "cookie-signature",
+        "version": "1.2.2",
+        "published": "2024-10-29T19:39:47.642Z",
+        "integrity": "sha512-D76uU73ulSXrD1UXF4KE2TMxVVwhsnCgfAyTg9k8P6KGZjlXKrOLe4dJQKI3Bxi5wjesZoFXJWElNWBjPZMbhg=="
+      },
+      {
+        "name": "debug",
+        "version": "4.4.0",
+        "published": "2024-12-06T12:32:46.280Z",
+        "integrity": "sha512-6WTZ/IxCY/T6BALoZHaE4ctp9xm+Z5kY/pzYaCHRFeyVhojxlrm+46y68HA6hr0TcwEssoxNiDEUJQjfPZ/RYA=="
+      },
+      {
+        "name": "depd",
+        "version": "2.0.0",
+        "published": "2018-10-26T17:52:55.936Z",
+        "integrity": "sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw=="
+      },
+      {
+        "name": "destroy",
+        "version": "1.2.0",
+        "published": "2022-03-20T19:03:12.452Z",
+        "integrity": "sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg=="
+      },
+      {
+        "name": "dunder-proto",
+        "version": "1.0.1",
+        "published": "2024-12-17T02:12:47.047Z",
+        "integrity": "sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A=="
+      },
+      {
+        "name": "ee-first",
+        "version": "1.1.1",
+        "published": "2015-05-25T19:18:28.732Z",
+        "integrity": "sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow=="
+      },
+      {
+        "name": "encodeurl",
+        "version": "2.0.0",
+        "published": "2024-03-29T00:03:42.135Z",
+        "integrity": "sha512-Q0n9HRi4m6JuGIV1eFlmvJB7ZEVxu93IrMyiMsGC0lrMJMWzRgx6WGquyfQgZVb31vhGgXnfmPNNXmxnOkRBrg=="
+      },
+      {
+        "name": "es-define-property",
+        "version": "1.0.1",
+        "published": "2024-12-06T18:16:02.148Z",
+        "integrity": "sha512-e3nRfgfUZ4rNGL232gUgX06QNyyez04KdjFrF+LTRoOXmrOgFKDg4BCdsjW8EnT69eqdYGmRpJwiPVYNrCaW3g=="
+      },
+      {
+        "name": "es-errors",
+        "version": "1.3.0",
+        "published": "2024-02-05T08:05:51.479Z",
+        "integrity": "sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw=="
+      },
+      {
+        "name": "escape-html",
+        "version": "1.0.3",
+        "published": "2015-09-01T04:47:22.713Z",
+        "integrity": "sha512-NiSupZ4OeuGwr68lGIeym/ksIZMJodUGOSCZ/FSnTxcrekbvqrgdUxlJOMpijaKZVjAJrWrGs/6Jy8OMuyj9ow=="
+      },
+      {
+        "name": "etag",
+        "version": "1.8.1",
+        "published": "2017-09-13T02:43:44.422Z",
+        "integrity": "sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg=="
+      },
+      {
+        "name": "eventsource",
+        "version": "3.0.5",
+        "published": "2025-01-28T00:54:24.939Z",
+        "integrity": "sha512-LT/5J605bx5SNyE+ITBDiM3FxffBiq9un7Vx0EwMDM3vg8sWKx/tO2zC+LMqZ+smAM0F2hblaDZUVZF0te2pSw=="
+      },
+      {
+        "name": "eventsource-parser",
+        "version": "3.0.0",
+        "published": "2024-10-19T22:09:19.682Z",
+        "integrity": "sha512-T1C0XCUimhxVQzW4zFipdx0SficT651NnkR0ZSH3yQwh+mFMdLfgjABVi4YtMTtaL4s168593DaoaRLMqryavA=="
+      },
+      {
+        "name": "express",
+        "version": "5.0.1",
+        "published": "2024-10-08T19:42:44.129Z",
+        "integrity": "sha512-ORF7g6qGnD+YtUG9yx4DFoqCShNMmUKiXuT5oWMHiOvt/4WFbHC6yCwQMTSBMno7AqntNCAzzcnnjowRkTL9eQ=="
+      },
+      {
+        "name": "express-rate-limit",
+        "version": "7.5.0",
+        "published": "2024-12-15T05:04:55.384Z",
+        "integrity": "sha512-eB5zbQh5h+VenMPM3fh+nw1YExi5nMr6HUCR62ELSP11huvxm/Uir1H1QEyTkk5QX6A58pX6NmaTMceKZ0Eodg=="
+      },
+      {
+        "name": "body-parser",
+        "version": "2.1.0",
+        "published": "2025-02-10T20:12:39.065Z",
+        "integrity": "sha512-/hPxh61E+ll0Ujp24Ilm64cykicul1ypfwjVttduAiEdtnJFvLePSrIPk+HMImtNv5270wOGCb1Tns2rybMkoQ=="
+      },
+      {
+        "name": "content-disposition",
+        "version": "1.0.0",
+        "published": "2024-08-31T18:06:17.899Z",
+        "integrity": "sha512-Au9nRL8VNUut/XSzbQA38+M78dzP4D+eqg3gfJHMIHHYa3bg067xj1KxMUWj+VULbiZMowKngFFbKczUrNJ1mg=="
+      },
+      {
+        "name": "finalhandler",
+        "version": "2.1.0",
+        "published": "2025-03-05T14:49:40.649Z",
+        "integrity": "sha512-/t88Ty3d5JWQbWYgaOGCCYfXRwV1+be02WqYYlL6h0lEiUAMPM8o8qKGO01YIkOHzka2up08wvgYD0mDiI+q3Q=="
+      },
+      {
+        "name": "iconv-lite",
+        "version": "0.6.3",
+        "published": "2021-05-24T03:00:17.928Z",
+        "integrity": "sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw=="
+      },
+      {
+        "name": "media-typer",
+        "version": "1.1.0",
+        "published": "2019-04-25T03:16:05.379Z",
+        "integrity": "sha512-aisnrDP4GNe06UcKFnV5bfMNPBUw4jsLGaWwWfnH3v02GnBuXX2MCVn5RbrWo0j3pczUilYblq7fQ7Nw2t5XKw=="
+      },
+      {
+        "name": "mime-types",
+        "version": "3.0.0",
+        "published": "2024-08-31T13:57:14.134Z",
+        "integrity": "sha512-XqoSHeCGjVClAmoGFG3lVFqQFRIrTVw2OH3axRqAcfaw+gHWIfnASS92AV+Rl/mk0MupgZTRHQOjxY6YVnzK5w=="
+      },
+      {
+        "name": "path-to-regexp",
+        "version": "8.2.0",
+        "published": "2024-09-26T03:26:13.535Z",
+        "integrity": "sha512-TdrF7fW9Rphjq4RjrW0Kp2AW0Ahwu9sRGTkS6bvDi0SCwZlEZYmcfDbEsTz8RVk0EHIS/Vd1bv3JhG+1xZuAyQ=="
+      },
+      {
+        "name": "proxy-addr",
+        "version": "2.0.7",
+        "published": "2021-06-01T00:57:28.507Z",
+        "integrity": "sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg=="
+      },
+      {
+        "name": "raw-body",
+        "version": "3.0.0",
+        "published": "2024-07-25T22:18:40.020Z",
+        "integrity": "sha512-RmkhL8CAyCRPXCE28MMH0z2PNWQBNk2Q09ZdxM9IOOXwxwZbN+qbWaatPkdkWIKL2ZVDImrN/pK5HTRz2PcS4g=="
+      },
+      {
+        "name": "router",
+        "version": "2.1.0",
+        "published": "2025-02-10T20:00:53.824Z",
+        "integrity": "sha512-/m/NSLxeYEgWNtyC+WtNHCF7jbGxOibVWKnn+1Psff4dJGOfoXP+MuC/f2CwSmyiHdOIzYnYFp4W6GxWfekaLA=="
+      },
+      {
+        "name": "send",
+        "version": "1.1.0",
+        "published": "2024-09-10T00:38:06.394Z",
+        "integrity": "sha512-v67WcEouB5GxbTWL/4NeToqcZiAWEq90N888fczVArY8A79J0L4FD7vj5hm3eUMua5EpoQ59wa/oovY6TLvRUA=="
+      },
+      {
+        "name": "fresh",
+        "version": "0.5.2",
+        "published": "2017-09-14T05:03:12.205Z",
+        "integrity": "sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q=="
+      },
+      {
+        "name": "serve-static",
+        "version": "2.1.0",
+        "published": "2024-09-10T01:17:27.648Z",
+        "integrity": "sha512-A3We5UfEjG8Z7VkDv6uItWw6HY2bBSBJT1KtVESn6EOoOr2jAxNhxWCLY3jDE2WcuHXByWju74ck3ZgLwL8xmA=="
+      },
+      {
+        "name": "type-is",
+        "version": "2.0.0",
+        "published": "2024-08-31T17:28:08.399Z",
+        "integrity": "sha512-gd0sGezQYCbWSbkZr75mln4YBidWUN60+devscpLF5mtRDUpiaTvKpBNrdaCvel1NdR2k6vclXybU5fBd2i+nw=="
+      },
+      {
+        "name": "forwarded",
+        "version": "0.2.0",
+        "published": "2021-05-31T23:23:02.495Z",
+        "integrity": "sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow=="
+      },
+      {
+        "name": "fresh",
+        "version": "2.0.0",
+        "published": "2024-09-04T23:24:48.361Z",
+        "integrity": "sha512-Rx/WycZ60HOaqLKAi6cHRKKI7zxWbJ31MhntmtwMoaTeF7XFH9hhBp8vITaMidfljRQ6eYWCKkaTK+ykVJHP2A=="
+      },
+      {
+        "name": "fsevents",
+        "version": "2.3.2",
+        "published": "2021-02-05T14:46:33.925Z",
+        "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
+      },
+      {
+        "name": "function-bind",
+        "version": "1.1.2",
+        "published": "2023-10-12T19:08:19.687Z",
+        "integrity": "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA=="
+      },
+      {
+        "name": "get-intrinsic",
+        "version": "1.3.0",
+        "published": "2025-02-22T20:54:20.619Z",
+        "integrity": "sha512-9fSjSaos/fRIVIp+xSJlE6lfwhES7LNtKaCBIamHsjr2na1BiABJPo0mOjjz8GJDURarmCPGqaiVg5mfjb98CQ=="
+      },
+      {
+        "name": "es-object-atoms",
+        "version": "1.1.1",
+        "published": "2025-01-15T00:42:43.342Z",
+        "integrity": "sha512-FGgH2h8zKNim9ljj7dankFPcICIK9Cp5bm+c2gQSYePhpaG5+esrLODihIorn+Pe6FGJzWhXQotPv73jTaldXA=="
+      },
+      {
+        "name": "hasown",
+        "version": "2.0.2",
+        "published": "2024-03-10T17:38:25.117Z",
+        "integrity": "sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ=="
+      },
+      {
+        "name": "get-proto",
+        "version": "1.0.1",
+        "published": "2025-01-02T20:08:02.949Z",
+        "integrity": "sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g=="
+      },
+      {
+        "name": "es-object-atoms",
+        "version": "1.1.1",
+        "published": "2025-01-15T00:42:43.342Z",
+        "integrity": "sha512-FGgH2h8zKNim9ljj7dankFPcICIK9Cp5bm+c2gQSYePhpaG5+esrLODihIorn+Pe6FGJzWhXQotPv73jTaldXA=="
+      },
+      {
+        "name": "gopd",
+        "version": "1.2.0",
+        "published": "2024-12-04T16:21:52.727Z",
+        "integrity": "sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg=="
+      },
+      {
+        "name": "has-symbols",
+        "version": "1.1.0",
+        "published": "2024-12-02T16:34:17.679Z",
+        "integrity": "sha512-1cDNdwJ2Jaohmb3sg4OmKaMBwuC48sYni5HUw2DvsC8LjGTLK9h+eb1X6RyuOHe4hT0ULCW68iomhjUoKUqlPQ=="
+      },
+      {
+        "name": "http-errors",
+        "version": "2.0.0",
+        "published": "2021-12-18T03:30:42.140Z",
+        "integrity": "sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ=="
+      },
+      {
+        "name": "inherits",
+        "version": "2.0.4",
+        "published": "2019-06-19T20:18:52.465Z",
+        "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ=="
+      },
+      {
+        "name": "ipaddr.js",
+        "version": "1.9.1",
+        "published": "2019-07-17T02:28:19.618Z",
+        "integrity": "sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g=="
+      },
+      {
+        "name": "is-promise",
+        "version": "4.0.0",
+        "published": "2020-04-27T15:34:23.345Z",
+        "integrity": "sha512-hvpoI6korhJMnej285dSg6nu1+e6uxs7zG3BYAm5byqDsgJNWwxzM6z6iZiAgQR4TJ30JmBTOwqZUw3WlyH3AQ=="
+      },
+      {
+        "name": "math-intrinsics",
+        "version": "1.1.0",
+        "published": "2024-12-19T05:58:09.877Z",
+        "integrity": "sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g=="
+      },
+      {
+        "name": "merge-descriptors",
+        "version": "2.0.0",
+        "published": "2023-11-16T18:49:20.714Z",
+        "integrity": "sha512-Snk314V5ayFLhp3fkUREub6WtjBfPdCPY1Ln8/8munuLuiYhsABgBVWsozAG+MWMbVEvcdcpbi9R7ww22l9Q3g=="
+      },
+      {
+        "name": "methods",
+        "version": "1.1.2",
+        "published": "2016-01-18T02:53:56.364Z",
+        "integrity": "sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w=="
+      },
+      {
+        "name": "mime-db",
+        "version": "1.54.0",
+        "published": "2025-03-18T15:06:44.354Z",
+        "integrity": "sha512-aU5EJuIN2WDemCcAp2vFBfp/m4EAhWJnUNSSw0ixs7/kXbd6Pg64EmwJkNdFhB8aWt1sH2CTXrLxo/iAGV3oPQ=="
+      },
+      {
+        "name": "ms",
+        "version": "2.1.3",
+        "published": "2020-12-08T13:54:35.223Z",
+        "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="
+      },
+      {
+        "name": "object-assign",
+        "version": "4.1.1",
+        "published": "2017-01-16T15:35:15.282Z",
+        "integrity": "sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg=="
+      },
+      {
+        "name": "object-inspect",
+        "version": "1.13.4",
+        "published": "2025-02-05T01:26:10.272Z",
+        "integrity": "sha512-W67iLl4J2EXEGTbfeHCffrjDfitvLANg0UlX3wFUUSTx92KXRFegMHUVgSqE+wvhAbi4WqjGg9czysTV2Epbew=="
+      },
+      {
+        "name": "on-finished",
+        "version": "2.4.1",
+        "published": "2022-02-22T16:10:48.714Z",
+        "integrity": "sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg=="
+      },
+      {
+        "name": "once",
+        "version": "1.4.0",
+        "published": "2016-09-06T21:11:09.367Z",
+        "integrity": "sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w=="
+      },
+      {
+        "name": "parseurl",
+        "version": "1.3.3",
+        "published": "2019-04-16T04:16:26.547Z",
+        "integrity": "sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ=="
+      },
+      {
+        "name": "pkce-challenge",
+        "version": "4.1.0",
+        "published": "2024-01-26T00:04:31.136Z",
+        "integrity": "sha512-ZBmhE1C9LcPoH9XZSdwiPtbPHZROwAnMy+kIFQVrnMCxY4Cudlz3gBOpzilgc0jOgRaiT3sIWfpMomW2ar2orQ=="
+      },
+      {
+        "name": "playwright",
+        "version": "1.52.0-alpha-2025-03-21",
+        "published": "2025-03-21T00:36:25.476Z",
+        "integrity": "sha512-KPF+1SS3V8/jmejyFRjx3PqXm0nbxI6ya+fVNpC4eWXA+TTmo3Oia52ZT6scEbmqDGG8S+YUXbmhTQMpfyL0Ow=="
+      },
+      {
+        "name": "playwright-core",
+        "version": "1.52.0-alpha-2025-03-21",
+        "published": "2025-03-21T00:36:32.129Z",
+        "integrity": "sha512-T7lqGZ1I8TZXuVTBz1dwE5yrwBimlIXlE88kiq9Rgub3jM8xaGtVKSlspeyozFZYS/GhCqPU6fG1oC8ndYvmGw=="
+      },
+      {
+        "name": "qs",
+        "version": "6.14.0",
+        "published": "2025-01-14T18:02:18.697Z",
+        "integrity": "sha512-YWWTjgABSKcvs/nWBi9PycY/JiPJqOD4JA6o9Sej2AtvSGarXxKC3OQSk4pAarbdQlKAh5D4FCQkJNkW+GAn3w=="
+      },
+      {
+        "name": "range-parser",
+        "version": "1.2.1",
+        "published": "2019-05-11T00:27:37.805Z",
+        "integrity": "sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg=="
+      },
+      {
+        "name": "safe-buffer",
+        "version": "5.2.1",
+        "published": "2020-05-10T16:37:30.776Z",
+        "integrity": "sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ=="
+      },
+      {
+        "name": "safer-buffer",
+        "version": "2.1.2",
+        "published": "2018-04-08T10:42:42.130Z",
+        "integrity": "sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg=="
+      },
+      {
+        "name": "setprototypeof",
+        "version": "1.2.0",
+        "published": "2019-07-18T04:49:56.614Z",
+        "integrity": "sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw=="
+      },
+      {
+        "name": "side-channel",
+        "version": "1.1.0",
+        "published": "2024-12-11T17:00:33.553Z",
+        "integrity": "sha512-ZX99e6tRweoUXqR+VBrslhda51Nh5MTQwou5tnUDgbtyM0dBgmhEDtWGP/xbKn6hqfPRHujUNwz5fy/wbbhnpw=="
+      },
+      {
+        "name": "side-channel-map",
+        "version": "1.0.1",
+        "published": "2024-12-11T04:53:18.943Z",
+        "integrity": "sha512-VCjCNfgMsby3tTdo02nbjtM/ewra6jPHmpThenkTYh8pG9ucZ/1P8So4u4FGBek/BjpOVsDCMoLA/iuBKIFXRA=="
+      },
+      {
+        "name": "side-channel-weakmap",
+        "version": "1.0.2",
+        "published": "2024-12-11T05:39:11.495Z",
+        "integrity": "sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A=="
+      },
+      {
+        "name": "side-channel-list",
+        "version": "1.0.0",
+        "published": "2024-12-10T20:20:25.133Z",
+        "integrity": "sha512-FCLHtRD/gnpCiCHEiJLOwdmFP+wzCmDEkc9y7NsYxeF4u7Btsn1ZuwgwJGxImImHicJArLP4R0yX4c2KCrMrTA=="
+      },
+      {
+        "name": "statuses",
+        "version": "2.0.1",
+        "published": "2021-01-03T06:37:47.488Z",
+        "integrity": "sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ=="
+      },
+      {
+        "name": "toidentifier",
+        "version": "1.0.1",
+        "published": "2021-11-14T22:19:09.631Z",
+        "integrity": "sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA=="
+      },
+      {
+        "name": "unpipe",
+        "version": "1.0.0",
+        "published": "2015-06-14T20:30:19.934Z",
+        "integrity": "sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ=="
+      },
+      {
+        "name": "utils-merge",
+        "version": "1.0.1",
+        "published": "2017-09-20T00:18:39.692Z",
+        "integrity": "sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA=="
+      },
+      {
+        "name": "vary",
+        "version": "1.1.2",
+        "published": "2017-09-24T01:47:11.325Z",
+        "integrity": "sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg=="
+      },
+      {
+        "name": "wrappy",
+        "version": "1.0.2",
+        "published": "2016-05-17T23:30:52.415Z",
+        "integrity": "sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ=="
+      },
+      {
+        "name": "zod",
+        "version": "3.24.2",
+        "published": "2025-02-11T22:53:53.801Z",
+        "integrity": "sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ=="
+      },
+      {
+        "name": "zod-to-json-schema",
+        "version": "3.24.4",
+        "published": "2025-03-15T08:14:19.760Z",
+        "integrity": "sha512-0uNlcvgabyrni9Ag8Vghj21drk7+7tp7VTwwR7KxxXXc/3pbXz2PHlDgj3cICahgF1kHm4dExBFj7BXrZJXzig=="
+      }
+    ]
+  }
+}

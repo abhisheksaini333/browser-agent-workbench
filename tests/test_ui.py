@@ -48,12 +48,26 @@ class UITests(unittest.TestCase):
                             "button", name="Download evidence", exact=True
                         ).click(timeout=3000)
                     self.assertTrue(download.value.suggested_filename.endswith(".json"))
+                    evidence_dir = os.environ.get("WORKBENCH_EVIDENCE_DIR")
+                    if evidence_dir:
+                        from pathlib import Path
+
+                        Path(evidence_dir).mkdir(parents=True, exist_ok=True)
+                        page.screenshot(
+                            path=str(Path(evidence_dir) / "workspace-desktop.png"),
+                            full_page=True,
+                        )
                     page.set_viewport_size({"width": 390, "height": 844})
                     self.assertTrue(
                         page.evaluate(
                             "document.documentElement.scrollWidth <= innerWidth"
                         )
                     )
+                    if evidence_dir:
+                        page.screenshot(
+                            path=str(Path(evidence_dir) / "workspace-mobile.png"),
+                            full_page=True,
+                        )
                     browser.close()
             finally:
                 server.shutdown()
