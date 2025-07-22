@@ -1,4 +1,5 @@
 import os
+import re
 import tempfile
 import threading
 import unittest
@@ -43,6 +44,22 @@ class UITests(unittest.TestCase):
                         "Receipt confirmed", exact=True
                     ).wait_for(timeout=20000)
                     self.assertEqual(server.store.snapshot("WIDGET")["available"], 18)
+                    page.get_by_text("Selection evidence", exact=True).click()
+                    self.assertIn(
+                        '"model": "deterministic baseline"',
+                        page.locator("details pre").inner_text(),
+                    )
+                    page.reload()
+                    page.get_by_label("Operator key").fill("ui-fixture")
+                    page.get_by_role("button", name="Open workspace").click()
+                    page.get_by_role(
+                        "button", name=re.compile("purchase.*WIDGET")
+                    ).click()
+                    page.get_by_text("Selection evidence", exact=True).click()
+                    self.assertIn(
+                        '"model": "deterministic baseline"',
+                        page.locator("details pre").inner_text(),
+                    )
                     with page.expect_download(timeout=5000) as download:
                         page.get_by_role(
                             "button", name="Download evidence", exact=True

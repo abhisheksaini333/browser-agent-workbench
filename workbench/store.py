@@ -25,6 +25,7 @@ class Store:
                 """
             CREATE TABLE IF NOT EXISTS resources(sku TEXT PRIMARY KEY,available INTEGER NOT NULL,version INTEGER NOT NULL);
             CREATE TABLE IF NOT EXISTS actions(id TEXT PRIMARY KEY,owner TEXT NOT NULL,kind TEXT NOT NULL,args TEXT NOT NULL,precondition TEXT NOT NULL,status TEXT NOT NULL,approval TEXT,expires REAL,dispatch TEXT,receipt TEXT,created REAL NOT NULL);
+            CREATE TABLE IF NOT EXISTS decisions(action_id TEXT PRIMARY KEY,body TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS receipts(action_id TEXT PRIMARY KEY,kind TEXT NOT NULL,args TEXT NOT NULL,created REAL NOT NULL);
             CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY AUTOINCREMENT,action_id TEXT NOT NULL,event TEXT NOT NULL,created REAL NOT NULL);
             """
@@ -62,6 +63,11 @@ class Store:
         result = dict(row)
         for key in ("args", "precondition", "receipt"):
             result[key] = json.loads(result[key]) if result[key] is not None else None
+        result["decision"] = (
+            json.loads(result["decision"])
+            if result.get("decision") is not None
+            else None
+        )
         result.pop("approval", None)
         result.pop("dispatch", None)
         return result
@@ -69,17 +75,22 @@ class Store:
     def get(self, action_id, owner):
         with self.connection() as db:
             row = db.execute(
-                "SELECT * FROM actions WHERE id=? AND owner=?", (action_id, owner)
+                "SELECT a.*, d.body AS decision FROM actions a LEFT JOIN decisions d ON d.action_id=a.id WHERE a.id=? AND a.owner=?",
+                (action_id, owner),
             ).fetchone()
             if row is None:
                 raise Forbidden("action not found")
             return self.public(row)
 
-    def propose(self, owner, kind, args):
+    def propose(self, owner, kind, args, decision=None):
         args = validate_arguments(kind, args)
         snapshot = self.snapshot(args["sku"])
         action_id = uuid.uuid4().hex
+        evidence = canonical(decision) if decision is not None else None
+        if evidence is not None and len(evidence) > 16000:
+            raise ValueError("selection evidence too large")
         with self.connection() as db:
+            db.execute("BEGIN IMMEDIATE")
             db.execute(
                 "INSERT INTO actions(id,owner,kind,args,precondition,status,created) VALUES(?,?,?,?,?,?,?)",
                 (
@@ -92,6 +103,9 @@ class Store:
                     time.time(),
                 ),
             )
+            if evidence is not None:
+                db.execute("INSERT INTO decisions VALUES(?,?)", (action_id, evidence))
+            db.commit()
         return self.get(action_id, owner)
 
     @staticmethod
@@ -274,7 +288,7 @@ class Store:
             return [
                 self.public(x)
                 for x in db.execute(
-                    "SELECT * FROM actions WHERE owner=? ORDER BY created DESC LIMIT 200",
+                    "SELECT a.*, d.body AS decision FROM actions a LEFT JOIN decisions d ON d.action_id=a.id WHERE a.owner=? ORDER BY a.created DESC LIMIT 200",
                     (owner,),
                 ).fetchall()
             ]

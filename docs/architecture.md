@@ -31,7 +31,7 @@ An `outcome_unknown` action is never re-dispatched. A failed or expired approval
 
 ## Database boundary
 
-Resources, actions, receipts and events share one database. Each receipt has a unique action ID. SQLite uses WAL and `BEGIN IMMEDIATE`. PostgreSQL takes an exclusive lock over the resource/action tables for the critical transaction; this deliberately trades throughput for clear cross-process correctness. A worker crash before commit rolls back inventory. A crash after commit leaves a receipt that reconciliation can find. This coarse locking is appropriate for a single operator reference environment; it is not a capacity claim.
+Resources, actions, model decision evidence, receipts and events share one database. Decision evidence is bound to its action in the proposal transaction and survives service or workspace restarts. Each receipt has a unique action ID. SQLite uses WAL and `BEGIN IMMEDIATE`. PostgreSQL takes an exclusive lock over the resource/action tables for the critical transaction; this deliberately trades throughput for clear cross-process correctness. A worker crash before commit rolls back inventory. A crash after commit leaves a receipt that reconciliation can find. This coarse locking is appropriate for a single operator reference environment; it is not a capacity claim.
 
 Purchase and reservation both reduce the fixture's available quantity; inventory adds stock. These are synthetic operations on seeded WIDGET, DESK and ROOM resources. Purchase does not charge money, and reservation has no external calendar integration.
 

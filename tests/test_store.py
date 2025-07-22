@@ -170,3 +170,21 @@ class StoreTests(unittest.TestCase):
         token = self.store.dispatch(a["id"], "alice")
         with self.assertRaises(ValueError):
             self.store.execute(a["id"], token, {"sku": "WIDGET", "quantity": True})
+
+    def test_selection_evidence_remains_bound_to_its_action_after_restart(self):
+        decision = {
+            "model": "fixture-model",
+            "selection": {"kind": "purchase", "args": {"sku": "WIDGET", "quantity": 1}},
+            "raw_output": "bounded fixture",
+        }
+        first = self.store.propose(
+            "alice", "purchase", {"sku": "WIDGET", "quantity": 1}, decision=decision
+        )
+        second = self.store.propose(
+            "alice", "inventory", {"sku": "DESK", "quantity": 2}
+        )
+        reopened = Store(str(self.path))
+        self.assertEqual(reopened.get(first["id"], "alice")["decision"], decision)
+        self.assertIsNone(reopened.get(second["id"], "alice")["decision"])
+        by_id = {a["id"]: a for a in reopened.list_actions("alice")}
+        self.assertEqual(by_id[first["id"]]["decision"], decision)

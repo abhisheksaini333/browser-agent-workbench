@@ -180,7 +180,9 @@ def create_server(host, port, database, key):
                     else:
                         raise ValueError("select baseline or model mode")
                     choice = decision["selection"]
-                    action = store.propose("operator", choice["kind"], choice["args"])
+                    action = store.propose(
+                        "operator", choice["kind"], choice["args"], decision=decision
+                    )
                     return self.reply(201, {"action": action, "decision": decision})
                 if method == "GET" and path.startswith("/api/resources/"):
                     return self.reply(200, store.snapshot(path.rsplit("/", 1)[-1]))

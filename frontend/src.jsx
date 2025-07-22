@@ -19,8 +19,8 @@ function App() {
     [adapter, setAdapter] = useState("playwright"),
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
-    [events, setEvents] = useState([]),
-    [decision, setDecision] = useState(null);
+    [events, setEvents] = useState([]);
+  const decision = selected?.decision;
   async function api(path, data) {
     const r = await fetch("/api" + path, {
       method: data === undefined ? "GET" : "POST",
@@ -58,7 +58,6 @@ function App() {
     event.preventDefault();
     await work(async () => {
       const result = await api("/tasks", { task, mode });
-      setDecision(result.decision);
       await refresh(result.action.id);
     });
   }
