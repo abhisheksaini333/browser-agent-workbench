@@ -1,0 +1,29 @@
+services:
+  workbench:
+    image: browser-agent-workbench:verified
+    build: .
+    ports: ["127.0.0.1:18120:18120"]
+    environment:
+      WORKBENCH_KEY: ${WORKBENCH_KEY:?Set a strong local operator key}
+      # Compatibility container only. Native execution keeps the Chromium sandbox.
+      WORKBENCH_UNSANDBOXED_CONTAINER: "1"
+    command: ["python", "-m", "workbench.server", "--host", "0.0.0.0", "--port", "18120", "--database", "postgresql://browser:browser-local-fixture@database:5432/workbench"]
+    depends_on:
+      database: {condition: service_healthy}
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    shm_size: "256mb"
+  database:
+    image: postgres:16.4-alpine@sha256:5660c2cbfea50c7a9127d17dc4e48543eedd3d7a41a595a2dfa572471e37e64c
+    environment:
+      POSTGRES_USER: browser
+      POSTGRES_PASSWORD: browser-local-fixture
+      POSTGRES_DB: workbench
+    volumes: ["journal:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U browser -d workbench"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+volumes:
+  journal:
