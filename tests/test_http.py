@@ -152,3 +152,37 @@ class HTTPTests(unittest.TestCase):
         finally:
             for connection in sockets:
                 connection.close()
+
+    def test_active_body_drip_cannot_extend_absolute_read_deadline(self):
+        import socket, time
+
+        self.server.read_timeout = 0.2
+        sock = socket.create_connection(
+            ("127.0.0.1", self.server.server_port), timeout=1
+        )
+        sock.sendall(
+            (
+                "POST /api/actions HTTP/1.1\r\nHost: 127.0.0.1:"
+                + str(self.server.server_port)
+                + "\r\nAuthorization: Bearer test-key\r\nContent-Length: 100\r\n\r\n{"
+            ).encode()
+        )
+        started = time.monotonic()
+
+        def drip():
+            for _ in range(15):
+                try:
+                    sock.sendall(b" ")
+                except OSError:
+                    return
+                time.sleep(0.05)
+
+        thread = threading.Thread(target=drip, daemon=True)
+        thread.start()
+        try:
+            response = sock.recv(4096)
+            self.assertIn(b"408", response)
+            self.assertLess(time.monotonic() - started, 0.6)
+        finally:
+            sock.close()
+            thread.join(1)

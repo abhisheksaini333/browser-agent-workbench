@@ -45,6 +45,6 @@ The same transactional receipt gate is the final authority for every adapter. A 
 
 ## Bounds
 
-One browser action executes per API process. HTTP admission is capped at 16 concurrent connections, request bodies at 16 KiB, and socket reads at three seconds. Browser actions use bounded waits; local inference uses a 90-second request timeout and 180 generation tokens. These are reference defaults rather than production sizing results. Horizontal workers remain serialized at the database transaction boundary.
+One browser action executes per API process. HTTP admission is capped at 16 concurrent connections, request bodies at 16 KiB, and request-header/body reads at an absolute three-second deadline. Browser actions use bounded waits; local inference uses a 90-second request timeout and 180 generation tokens. These are reference defaults rather than production sizing results. Horizontal workers remain serialized at the database transaction boundary.
 
 The API is a single-operator service with one local bearer key. Store-level ownership is enforced, but a full multi-tenant identity provider, role administration and external approval delegation are outside this implementation.

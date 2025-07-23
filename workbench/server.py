@@ -7,6 +7,7 @@ import json
 import os
 import pathlib
 import secrets
+import socket
 import threading
 import urllib.error
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -60,6 +61,26 @@ def create_server(host, port, database, key):
     store = Store(database)
 
     class Handler(BaseHTTPRequestHandler):
+        def setup(self):
+            super().setup()
+            self.read_expired = threading.Event()
+            self.read_deadline = threading.Timer(
+                self.server.read_timeout, self.expire_read
+            )
+            self.read_deadline.daemon = True
+            self.read_deadline.start()
+
+        def expire_read(self):
+            self.read_expired.set()
+            try:
+                self.connection.shutdown(socket.SHUT_RD)
+            except OSError:
+                pass
+
+        def finish(self):
+            self.read_deadline.cancel()
+            super().finish()
+
         def handle(self):
             try:
                 super().handle()
@@ -101,12 +122,17 @@ def create_server(host, port, database, key):
                 raw = self.rfile.read(size)
             except TimeoutError as exc:
                 raise RequestDeadline("request body deadline exceeded") from exc
+            self.read_deadline.cancel()
+            if self.read_expired.is_set():
+                raise RequestDeadline("absolute request body deadline exceeded")
             data = json.loads(raw or b"{}")
             if not isinstance(data, dict):
                 raise ValueError("object required")
             return data
 
         def handle_request(self, method):
+            if method == "GET":
+                self.read_deadline.cancel()
             path = urlparse(self.path).path
             authorities = {
                 "127.0.0.1:" + str(self.server.server_port),
