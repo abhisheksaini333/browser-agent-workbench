@@ -186,3 +186,47 @@ class HTTPTests(unittest.TestCase):
         finally:
             sock.close()
             thread.join(1)
+
+    def test_non_ascii_credentials_return_unauthorized_without_disconnect(self):
+        with self.assertRaises(urllib.error.HTTPError) as error:
+            self.request("/api/actions", key="café")
+        self.assertEqual(error.exception.code, 401)
+
+    def test_incomplete_valid_json_body_does_not_create_an_action(self):
+        import socket
+
+        body = json.dumps(
+            {"kind": "purchase", "args": {"sku": "WIDGET", "quantity": 2}}
+        ).encode()
+        with socket.create_connection(self.server.server_address, timeout=2) as client:
+            client.sendall(
+                (
+                    f"POST /api/actions HTTP/1.1\r\nHost: 127.0.0.1:{self.server.server_port}\r\nAuthorization: Bearer test-key\r\nContent-Length: {len(body) + 10}\r\n\r\n"
+                ).encode()
+                + body
+            )
+            client.shutdown(socket.SHUT_WR)
+            self.assertIn(b"400", client.recv(1024))
+        self.assertEqual(self.server.store.list_actions("operator"), [])
+
+    def test_duplicate_credentials_and_ambiguous_body_framing_are_rejected(self):
+        import socket
+
+        for additional in [
+            "Authorization: Bearer invalid\r\n",
+            "Content-Length: 10\r\nContent-Length: 20\r\n",
+            "Transfer-Encoding: chunked\r\n",
+            "X-Dispatch-Token: one\r\nX-Dispatch-Token: two\r\n",
+            "Origin: http://evil.test\r\nOrigin: http://localhost\r\n",
+        ]:
+            with socket.create_connection(
+                self.server.server_address, timeout=2
+            ) as client:
+                client.sendall(
+                    (
+                        f"GET /api/actions HTTP/1.1\r\nHost: 127.0.0.1:{self.server.server_port}\r\nAuthorization: Bearer test-key\r\n"
+                        + additional
+                        + "\r\n"
+                    ).encode()
+                )
+                self.assertIn(b"400", client.recv(1024))

@@ -112,7 +112,9 @@ def create_server(host, port, database, key):
 
         def authenticated(self):
             value = self.headers.get("Authorization", "")
-            return hmac.compare_digest(value, "Bearer " + key)
+            return value.isascii() and hmac.compare_digest(
+                value.encode(), ("Bearer " + key).encode()
+            )
 
         def body(self):
             size = int(self.headers.get("Content-Length", "0"))
@@ -125,6 +127,8 @@ def create_server(host, port, database, key):
             self.read_deadline.cancel()
             if self.read_expired.is_set():
                 raise RequestDeadline("absolute request body deadline exceeded")
+            if len(raw) != size:
+                raise ValueError("incomplete request body")
             data = json.loads(raw or b"{}")
             if not isinstance(data, dict):
                 raise ValueError("object required")
@@ -133,6 +137,20 @@ def create_server(host, port, database, key):
         def handle_request(self, method):
             if method == "GET":
                 self.read_deadline.cancel()
+            if (
+                len(self.headers.get_all("Host", [])) != 1
+                or any(
+                    len(self.headers.get_all(name, [])) > 1
+                    for name in [
+                        "Authorization",
+                        "Origin",
+                        "Content-Length",
+                        "X-Dispatch-Token",
+                    ]
+                )
+                or self.headers.get_all("Transfer-Encoding", [])
+            ):
+                return self.reply(400, {"error": "ambiguous request headers"})
             path = urlparse(self.path).path
             authorities = {
                 "127.0.0.1:" + str(self.server.server_port),
@@ -202,6 +220,7 @@ def create_server(host, port, database, key):
                             data["task"],
                             os.environ.get("MODEL_ENDPOINT", "http://127.0.0.1:18100"),
                             no_think=os.environ.get("MODEL_NO_THINK") == "1",
+                            timeout=os.environ.get("MODEL_TIMEOUT_SECONDS", "10"),
                         )
                     else:
                         raise ValueError("select baseline or model mode")
