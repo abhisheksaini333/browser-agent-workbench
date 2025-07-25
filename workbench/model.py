@@ -3,7 +3,12 @@
 import json
 import re
 import time
-import urllib.request
+import urllib.error
+import http.client
+import math
+import socket
+import threading
+from urllib.parse import urlsplit
 from .domain import validate_arguments
 from .browser import exact_origin
 
@@ -55,31 +60,96 @@ def messages_for(task, page_text, no_think=False):
     return [{"role": "system", "content": SYSTEM}, {"role": "user", "content": content}]
 
 
-class NoRedirect(urllib.request.HTTPRedirectHandler):
-    def redirect_request(self, request, fp, code, message, headers, new_url):
-        return None
+def model_reply(endpoint, payload, timeout):
+    target = urlsplit(endpoint.rstrip("/") + "/v1/chat/completions")
+    connection_type = (
+        http.client.HTTPSConnection
+        if target.scheme == "https"
+        else http.client.HTTPConnection
+    )
+    connection = connection_type(target.hostname, target.port, timeout=timeout)
+    started = time.monotonic()
+    timer = None
+    try:
+        connection.connect()
+        transport = connection.sock
+        remaining = max(0.001, timeout - (time.monotonic() - started))
+        transport.settimeout(remaining)
+
+        expired = threading.Event()
+
+        def expire():
+            expired.set()
+            try:
+                transport.shutdown(socket.SHUT_RDWR)
+            except OSError:
+                pass
+
+        timer = threading.Timer(remaining, expire)
+        timer.daemon = True
+        timer.start()
+        connection.request(
+            "POST",
+            target.path,
+            body=json.dumps(payload).encode(),
+            headers={"Content-Type": "application/json"},
+        )
+        with connection.getresponse() as response:
+            if response.status != 200:
+                raise urllib.error.HTTPError(
+                    endpoint,
+                    response.status,
+                    "Local model response rejected",
+                    response.headers,
+                    None,
+                )
+            raw = response.read(65537)
+            if expired.is_set():
+                raise urllib.error.URLError("local model response deadline exceeded")
+            if len(raw) > 65536:
+                raise ValueError("model response exceeds the size limit")
+            try:
+                data = json.loads(raw)
+                content = data["choices"][0]["message"]["content"]
+                if not isinstance(content, str) or len(content) > 12000:
+                    raise ValueError("invalid model content")
+                return data
+            except (ValueError, KeyError, IndexError, TypeError) as exc:
+                raise ValueError(
+                    "model response does not match the generation contract"
+                ) from exc
+    except (OSError, http.client.HTTPException) as exc:
+        if isinstance(exc, urllib.error.HTTPError):
+            raise
+        raise urllib.error.URLError(
+            "local model response deadline or connection failed"
+        ) from exc
+    finally:
+        if timer:
+            timer.cancel()
+        connection.close()
 
 
-def select_action(task, endpoint, model="default_model", page_text="", no_think=False):
+def select_action(
+    task, endpoint, model="default_model", page_text="", no_think=False, timeout=10
+):
     if not isinstance(task, str) or not 1 <= len(task) <= 1000:
         raise ValueError("task must contain 1 to 1000 characters")
     exact_origin(endpoint)
+    try:
+        timeout = float(timeout)
+    except (ValueError, TypeError) as exc:
+        raise ValueError("model timeout must be between 0.05 and 10 seconds") from exc
+    if not math.isfinite(timeout) or not 0.05 <= timeout <= 10:
+        raise ValueError("model timeout must be between 0.05 and 10 seconds")
     payload = {
         "model": model,
         "temperature": 0,
         "max_tokens": 180,
         "messages": messages_for(task, page_text, no_think),
     }
-    request = urllib.request.Request(
-        endpoint.rstrip("/") + "/v1/chat/completions",
-        data=json.dumps(payload).encode(),
-        headers={"Content-Type": "application/json"},
-    )
     start = time.monotonic()
-    with urllib.request.build_opener(NoRedirect()).open(
-        request, timeout=90
-    ) as response:
-        data = json.loads(response.read(1000000))
+    data = model_reply(endpoint, payload, timeout)
     content = data["choices"][0]["message"]["content"]
     # Preserve strict JSON; malformed output is a measured model failure.
     try:
