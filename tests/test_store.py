@@ -188,3 +188,22 @@ class StoreTests(unittest.TestCase):
         self.assertIsNone(reopened.get(second["id"], "alice")["decision"])
         by_id = {a["id"]: a for a in reopened.list_actions("alice")}
         self.assertEqual(by_id[first["id"]]["decision"], decision)
+
+
+    def test_invalid_ttl_does_not_mutate_the_proposal(self):
+        for ttl in (True, False, -1, float("nan"), float("inf"), -float("inf"), "30", None):
+            with self.subTest(ttl=ttl):
+                action = self.store.propose("alice", "purchase", {"sku": "WIDGET", "quantity": 1})
+                with self.assertRaises(ValueError):
+                    self.store.approve(action["id"], "alice", action["args"], action["precondition"], ttl=ttl)
+                self.assertEqual(self.store.get(action["id"], "alice")["status"], "proposed")
+                self.assertEqual(self.store.history(action["id"], "alice"), [])
+
+    def test_fractional_and_capped_lifetimes_remain_supported(self):
+        from unittest.mock import patch
+        for ttl, duration in ((0, 0), (0.5, 0.5), (30, 30), (900, 300)):
+            with self.subTest(ttl=ttl):
+                action = self.store.propose("alice", "purchase", {"sku": "WIDGET", "quantity": 1})
+                with patch("workbench.store.time.time", return_value=1000):
+                    approved = self.store.approve(action["id"], "alice", action["args"], action["precondition"], ttl=ttl)
+                self.assertEqual(approved["expires"], 1000 + duration)

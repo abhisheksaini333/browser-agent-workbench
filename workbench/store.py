@@ -2,6 +2,7 @@
 
 import contextlib
 import json
+import math
 import secrets
 import sqlite3
 import time
@@ -122,6 +123,12 @@ class Store:
         )
 
     def approve(self, action_id, owner, args, precondition, ttl=300):
+        if (
+            type(ttl) not in (int, float)
+            or (type(ttl) is float and not math.isfinite(ttl))
+            or ttl < 0
+        ):
+            raise ValueError("approval lifetime must be a finite nonnegative number")
         action = self.get(action_id, owner)
         validate_arguments(action["kind"], args)
         if canonical(action["args"]) != canonical(args) or canonical(
