@@ -150,6 +150,10 @@ class Store:
             db.commit()
         return self.get(action_id, owner)
 
+    @staticmethod
+    def unexpired(expires):
+        return type(expires) in (int, float) and math.isfinite(expires) and expires > time.time()
+
     def dispatch(self, action_id, owner):
         with self.connection() as db:
             db.execute("BEGIN IMMEDIATE")
@@ -161,7 +165,7 @@ class Store:
             action = self.public(row)
             if (
                 row["status"] != "approved"
-                or row["expires"] < time.time()
+                or not self.unexpired(row["expires"])
                 or row["approval"] != self.binding(action)
             ):
                 raise Conflict("fresh exact approval required")
@@ -199,7 +203,7 @@ class Store:
                 return action["receipt"]
             if row["status"] != "dispatched":
                 raise Conflict("action is not dispatched")
-            if row["expires"] < time.time():
+            if not self.unexpired(row["expires"]):
                 raise Forbidden("browser session expired")
             snapshot = dict(
                 db.execute(
@@ -308,7 +312,7 @@ class Store:
             if (
                 row is None
                 or not secrets.compare_digest(row["dispatch"] or "", digest(token))
-                or row["expires"] < time.time()
+                or not self.unexpired(row["expires"])
             ):
                 raise Forbidden("expired or invalid browser session")
             return self.public(row)

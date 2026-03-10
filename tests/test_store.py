@@ -207,3 +207,50 @@ class StoreTests(unittest.TestCase):
                 with patch("workbench.store.time.time", return_value=1000):
                     approved = self.store.approve(action["id"], "alice", action["args"], action["precondition"], ttl=ttl)
                 self.assertEqual(approved["expires"], 1000 + duration)
+
+
+    def test_expiry_boundary_is_closed_for_every_capability_entrypoint(self):
+        from unittest.mock import patch
+        for operation in ("dispatch", "portal", "execute"):
+            with self.subTest(operation=operation):
+                with patch("workbench.store.time.time", return_value=1000):
+                    action = self.store.propose("alice", "purchase", {"sku": "WIDGET", "quantity": 1})
+                    self.store.approve(action["id"], "alice", action["args"], action["precondition"], ttl=10)
+                    token = self.store.dispatch(action["id"], "alice") if operation != "dispatch" else None
+                with patch("workbench.store.time.time", return_value=1010):
+                    with self.assertRaises(ValueError):
+                        if operation == "dispatch":
+                            self.store.dispatch(action["id"], "alice")
+                        elif operation == "portal":
+                            self.store.portal_action(action["id"], token)
+                        else:
+                            self.store.execute(action["id"], token, action["args"])
+                self.assertEqual(self.store.snapshot("WIDGET")["available"], 20)
+                self.assertIsNone(self.store.get(action["id"], "alice")["receipt"])
+
+    def test_malformed_persisted_expiry_is_rejected_without_type_errors(self):
+        from unittest.mock import patch
+        for expires in (None, float("inf"), "not-a-clock"):
+            for operation in ("dispatch", "portal", "execute"):
+                with self.subTest(expires=expires, operation=operation):
+                    action = self.store.propose("alice", "purchase", {"sku": "WIDGET", "quantity": 1})
+                    self.store.approve(action["id"], "alice", action["args"], action["precondition"])
+                    token = self.store.dispatch(action["id"], "alice") if operation != "dispatch" else None
+                    with self.store.connection() as db:
+                        db.execute("UPDATE actions SET expires=? WHERE id=?", (expires, action["id"]))
+                    with self.assertRaises(ValueError):
+                        if operation == "dispatch":
+                            self.store.dispatch(action["id"], "alice")
+                        elif operation == "portal":
+                            self.store.portal_action(action["id"], token)
+                        else:
+                            self.store.execute(action["id"], token, action["args"])
+                    self.assertEqual(self.store.snapshot("WIDGET")["available"], 20)
+
+    def test_recorded_receipt_remains_replayable_after_expiry_without_effect(self):
+        from unittest.mock import patch
+        action, token = self.ready()
+        receipt = self.store.execute(action["id"], token, action["args"])
+        with patch("workbench.store.time.time", return_value=10**12):
+            self.assertEqual(self.store.execute(action["id"], token, action["args"]), receipt)
+        self.assertEqual(self.store.snapshot("WIDGET")["available"], 18)
