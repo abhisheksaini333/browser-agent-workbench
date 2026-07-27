@@ -248,12 +248,12 @@ class Store:
             row = db.execute(
                 "SELECT status,receipt FROM actions WHERE id=?", (action_id,)
             ).fetchone()
-            if row["receipt"] is not None:
+            if row["receipt"] is not None and row["status"] != "completed":
                 db.execute(
                     "UPDATE actions SET status='completed' WHERE id=?", (action_id,)
                 )
                 self.event(db, action_id, "receipt_reconciled")
-            elif row["status"] in ("dispatched", "outcome_unknown"):
+            elif row["receipt"] is None and row["status"] == "dispatched":
                 db.execute(
                     "UPDATE actions SET status='outcome_unknown' WHERE id=?",
                     (action_id,),
@@ -274,12 +274,13 @@ class Store:
                 if status in ("proposed", "approved")
                 else "outcome_unknown" if status == "dispatched" else status
             )
-            db.execute("UPDATE actions SET status=? WHERE id=?", (target, action_id))
-            self.event(
-                db,
-                action_id,
-                "cancelled" if target == "cancelled" else "cancellation_requested",
-            )
+            if target != status:
+                db.execute("UPDATE actions SET status=? WHERE id=?", (target, action_id))
+                self.event(
+                    db,
+                    action_id,
+                    "cancelled" if target == "cancelled" else "cancellation_requested",
+                )
             db.commit()
         return self.get(action_id, owner)
 

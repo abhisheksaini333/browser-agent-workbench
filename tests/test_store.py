@@ -254,3 +254,28 @@ class StoreTests(unittest.TestCase):
         with patch("workbench.store.time.time", return_value=10**12):
             self.assertEqual(self.store.execute(action["id"], token, action["args"]), receipt)
         self.assertEqual(self.store.snapshot("WIDGET")["available"], 18)
+
+    def test_repeated_cancellation_and_reconciliation_do_not_duplicate_events(self):
+        action = self.store.propose("alice", "purchase", {"sku": "WIDGET", "quantity": 2})
+        self.store.cancel(action["id"], "alice")
+        history = self.store.history(action["id"], "alice")
+        self.store.cancel(action["id"], "alice")
+        self.store.reconcile(action["id"], "alice")
+        self.assertEqual(self.store.history(action["id"], "alice"), history)
+        dispatched, token = self.ready()
+        self.store.reconcile(dispatched["id"], "alice")
+        unknown_history = self.store.history(dispatched["id"], "alice")
+        self.store.reconcile(dispatched["id"], "alice")
+        self.store.cancel(dispatched["id"], "alice")
+        self.assertEqual(self.store.history(dispatched["id"], "alice"), unknown_history)
+        self.assertEqual(self.store.get(dispatched["id"], "alice")["status"], "outcome_unknown")
+        self.assertEqual(self.store.snapshot("WIDGET")["available"], 20)
+
+    def test_completed_receipt_is_not_given_spurious_cancel_or_reconcile_events(self):
+        action, token = self.ready()
+        receipt = self.store.execute(action["id"], token, action["args"])
+        history = self.store.history(action["id"], "alice")
+        self.store.cancel(action["id"], "alice")
+        self.store.reconcile(action["id"], "alice")
+        self.assertEqual(self.store.history(action["id"], "alice"), history)
+        self.assertEqual(self.store.get(action["id"], "alice")["receipt"], receipt)
