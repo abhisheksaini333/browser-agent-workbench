@@ -6,7 +6,7 @@ KINDS = {"purchase", "reservation", "inventory"}
 
 
 def canonical(value):
-    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False)
 
 
 def digest(value):

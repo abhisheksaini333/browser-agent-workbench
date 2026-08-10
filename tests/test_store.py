@@ -279,3 +279,16 @@ class StoreTests(unittest.TestCase):
         self.store.reconcile(action["id"], "alice")
         self.assertEqual(self.store.history(action["id"], "alice"), history)
         self.assertEqual(self.store.get(action["id"], "alice")["receipt"], receipt)
+
+    def test_nonfinite_decision_evidence_is_rejected_before_persisting_action(self):
+        for value in (float("nan"), float("inf"), -float("inf")):
+            with self.subTest(value=value):
+                with self.assertRaises(ValueError):
+                    self.store.propose("alice", "purchase", {"sku": "WIDGET", "quantity": 2}, decision={"nested": [value]})
+                self.assertEqual(self.store.list_actions("alice"), [])
+                self.assertEqual(self.store.snapshot("WIDGET")["available"], 20)
+
+    def test_finite_decision_evidence_keeps_stable_fingerprint(self):
+        from workbench.domain import canonical, digest
+        self.assertEqual(canonical({"b": 1.5, "a": "ok"}), '{"a":"ok","b":1.5}')
+        self.assertEqual(digest({"b": 1.5, "a": "ok"}), digest({"a": "ok", "b": 1.5}))
