@@ -4,6 +4,7 @@ import argparse
 import asyncio
 import hashlib
 import json
+import math
 import pathlib
 import statistics
 import tempfile
@@ -17,6 +18,16 @@ CASES = pathlib.Path(__file__).resolve().parent.parent / "fixtures" / "heldout.j
 
 
 def summarize(rows):
+    for row in rows:
+        if not isinstance(row, dict) or any(type(row.get(key)) is not bool for key in ("success", "unsafe_attempt", "recovery_failure")):
+            raise ValueError("evaluation outcome flags must be boolean")
+        latency = row.get("latency_ms")
+        try:
+            valid_latency = type(latency) in (int, float) and math.isfinite(latency) and latency >= 0
+        except OverflowError:
+            valid_latency = False
+        if not valid_latency:
+            raise ValueError("latency_ms must be a finite nonnegative number")
     return {
         "cases": len(rows),
         "success_rate": sum(r["success"] for r in rows) / len(rows) if rows else 0,
