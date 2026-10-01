@@ -73,7 +73,23 @@ class Store:
         result.pop("dispatch", None)
         return result
 
+    @staticmethod
+    def validate_owner(owner):
+        if (
+            not isinstance(owner, str)
+            or not owner.strip()
+            or len(owner) > 128
+            or any(
+                ord(c) < 32 or ord(c) == 127 or 0xD800 <= ord(c) <= 0xDFFF
+                for c in owner
+            )
+        ):
+            raise ValueError(
+                "operator identity must be nonblank text of at most 128 characters without controls"
+            )
+
     def get(self, action_id, owner):
+        self.validate_owner(owner)
         with self.connection() as db:
             row = db.execute(
                 "SELECT a.*, d.body AS decision FROM actions a LEFT JOIN decisions d ON d.action_id=a.id WHERE a.id=? AND a.owner=?",
@@ -84,6 +100,7 @@ class Store:
             return self.public(row)
 
     def propose(self, owner, kind, args, decision=None):
+        self.validate_owner(owner)
         args = validate_arguments(kind, args)
         snapshot = self.snapshot(args["sku"])
         action_id = uuid.uuid4().hex
@@ -152,9 +169,14 @@ class Store:
 
     @staticmethod
     def unexpired(expires):
-        return type(expires) in (int, float) and math.isfinite(expires) and expires > time.time()
+        return (
+            type(expires) in (int, float)
+            and math.isfinite(expires)
+            and expires > time.time()
+        )
 
     def dispatch(self, action_id, owner):
+        self.validate_owner(owner)
         with self.connection() as db:
             db.execute("BEGIN IMMEDIATE")
             row = db.execute(
@@ -275,7 +297,9 @@ class Store:
                 else "outcome_unknown" if status == "dispatched" else status
             )
             if target != status:
-                db.execute("UPDATE actions SET status=? WHERE id=?", (target, action_id))
+                db.execute(
+                    "UPDATE actions SET status=? WHERE id=?", (target, action_id)
+                )
                 self.event(
                     db,
                     action_id,
@@ -296,6 +320,7 @@ class Store:
             ]
 
     def list_actions(self, owner):
+        self.validate_owner(owner)
         with self.connection() as db:
             return [
                 self.public(x)

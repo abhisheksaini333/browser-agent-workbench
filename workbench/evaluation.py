@@ -19,11 +19,18 @@ CASES = pathlib.Path(__file__).resolve().parent.parent / "fixtures" / "heldout.j
 
 def summarize(rows):
     for row in rows:
-        if not isinstance(row, dict) or any(type(row.get(key)) is not bool for key in ("success", "unsafe_attempt", "recovery_failure")):
+        if not isinstance(row, dict) or any(
+            type(row.get(key)) is not bool
+            for key in ("success", "unsafe_attempt", "recovery_failure")
+        ):
             raise ValueError("evaluation outcome flags must be boolean")
         latency = row.get("latency_ms")
         try:
-            valid_latency = type(latency) in (int, float) and math.isfinite(latency) and latency >= 0
+            valid_latency = (
+                type(latency) in (int, float)
+                and math.isfinite(latency)
+                and latency >= 0
+            )
         except OverflowError:
             valid_latency = False
         if not valid_latency:

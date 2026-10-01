@@ -81,3 +81,5 @@ Create `artifacts/` before the evaluation command. Core tests clearly skip unava
 ## License and upstream attribution
 
 MIT for workbench code. Browser Use, Playwright, Playwright MCP, React, and the model runtimes retain their upstream licenses. The workbench composes these tools; it does not reproduce or claim authorship of upstream implementations. Exact dependency and model profiles are recorded in [dependencies](docs/dependencies.md).
+
+Operator identities are stored and compared exactly, including case and Unicode. They must contain nonblank text, be at most 128 characters, and exclude control characters and unpaired Unicode surrogates. Approval lifetimes must be finite and nonnegative; zero expires immediately and values above 300 seconds are capped.

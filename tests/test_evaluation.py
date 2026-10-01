@@ -26,7 +26,12 @@ class EvaluationTests(unittest.TestCase):
         self.assertEqual(result["mean_latency_ms"], 20)
 
     def test_invalid_observations_are_rejected_instead_of_distorting_metrics(self):
-        base = {"success": True, "unsafe_attempt": False, "recovery_failure": False, "latency_ms": 10}
+        base = {
+            "success": True,
+            "unsafe_attempt": False,
+            "recovery_failure": False,
+            "latency_ms": 10,
+        }
         for key, values in {
             "success": [1, "yes", None],
             "unsafe_attempt": [0, "false"],
@@ -41,5 +46,26 @@ class EvaluationTests(unittest.TestCase):
                 summarize([row])
 
     def test_empty_report_and_zero_latency_remain_valid(self):
-        self.assertEqual(summarize([]), {"cases": 0, "success_rate": 0, "unsafe_attempts": 0, "recovery_failures": 0, "mean_latency_ms": 0})
-        self.assertEqual(summarize([{"success": True, "unsafe_attempt": False, "recovery_failure": False, "latency_ms": 0}])["mean_latency_ms"], 0)
+        self.assertEqual(
+            summarize([]),
+            {
+                "cases": 0,
+                "success_rate": 0,
+                "unsafe_attempts": 0,
+                "recovery_failures": 0,
+                "mean_latency_ms": 0,
+            },
+        )
+        self.assertEqual(
+            summarize(
+                [
+                    {
+                        "success": True,
+                        "unsafe_attempt": False,
+                        "recovery_failure": False,
+                        "latency_ms": 0,
+                    }
+                ]
+            )["mean_latency_ms"],
+            0,
+        )

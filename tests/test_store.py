@@ -189,34 +189,73 @@ class StoreTests(unittest.TestCase):
         by_id = {a["id"]: a for a in reopened.list_actions("alice")}
         self.assertEqual(by_id[first["id"]]["decision"], decision)
 
-
     def test_invalid_ttl_does_not_mutate_the_proposal(self):
-        for ttl in (True, False, -1, float("nan"), float("inf"), -float("inf"), "30", None):
+        for ttl in (
+            True,
+            False,
+            -1,
+            float("nan"),
+            float("inf"),
+            -float("inf"),
+            "30",
+            None,
+        ):
             with self.subTest(ttl=ttl):
-                action = self.store.propose("alice", "purchase", {"sku": "WIDGET", "quantity": 1})
+                action = self.store.propose(
+                    "alice", "purchase", {"sku": "WIDGET", "quantity": 1}
+                )
                 with self.assertRaises(ValueError):
-                    self.store.approve(action["id"], "alice", action["args"], action["precondition"], ttl=ttl)
-                self.assertEqual(self.store.get(action["id"], "alice")["status"], "proposed")
+                    self.store.approve(
+                        action["id"],
+                        "alice",
+                        action["args"],
+                        action["precondition"],
+                        ttl=ttl,
+                    )
+                self.assertEqual(
+                    self.store.get(action["id"], "alice")["status"], "proposed"
+                )
                 self.assertEqual(self.store.history(action["id"], "alice"), [])
 
     def test_fractional_and_capped_lifetimes_remain_supported(self):
         from unittest.mock import patch
+
         for ttl, duration in ((0, 0), (0.5, 0.5), (30, 30), (900, 300)):
             with self.subTest(ttl=ttl):
-                action = self.store.propose("alice", "purchase", {"sku": "WIDGET", "quantity": 1})
+                action = self.store.propose(
+                    "alice", "purchase", {"sku": "WIDGET", "quantity": 1}
+                )
                 with patch("workbench.store.time.time", return_value=1000):
-                    approved = self.store.approve(action["id"], "alice", action["args"], action["precondition"], ttl=ttl)
+                    approved = self.store.approve(
+                        action["id"],
+                        "alice",
+                        action["args"],
+                        action["precondition"],
+                        ttl=ttl,
+                    )
                 self.assertEqual(approved["expires"], 1000 + duration)
-
 
     def test_expiry_boundary_is_closed_for_every_capability_entrypoint(self):
         from unittest.mock import patch
+
         for operation in ("dispatch", "portal", "execute"):
             with self.subTest(operation=operation):
                 with patch("workbench.store.time.time", return_value=1000):
-                    action = self.store.propose("alice", "purchase", {"sku": "WIDGET", "quantity": 1})
-                    self.store.approve(action["id"], "alice", action["args"], action["precondition"], ttl=10)
-                    token = self.store.dispatch(action["id"], "alice") if operation != "dispatch" else None
+                    action = self.store.propose(
+                        "alice", "purchase", {"sku": "WIDGET", "quantity": 1}
+                    )
+                    self.store.approve(
+                        action["id"],
+                        "alice",
+                        action["args"],
+                        action["precondition"],
+                        ttl=10,
+                    )
+                    token = (
+                        self.store.dispatch(action["id"], "alice")
+                        if operation != "dispatch"
+                        else None
+                    )
                 with patch("workbench.store.time.time", return_value=1010):
                     with self.assertRaises(ValueError):
                         if operation == "dispatch":
@@ -230,14 +269,26 @@ class StoreTests(unittest.TestCase):
 
     def test_malformed_persisted_expiry_is_rejected_without_type_errors(self):
         from unittest.mock import patch
+
         for expires in (None, float("inf"), "not-a-clock"):
             for operation in ("dispatch", "portal", "execute"):
                 with self.subTest(expires=expires, operation=operation):
-                    action = self.store.propose("alice", "purchase", {"sku": "WIDGET", "quantity": 1})
-                    self.store.approve(action["id"], "alice", action["args"], action["precondition"])
-                    token = self.store.dispatch(action["id"], "alice") if operation != "dispatch" else None
+                    action = self.store.propose(
+                        "alice", "purchase", {"sku": "WIDGET", "quantity": 1}
+                    )
+                    self.store.approve(
+                        action["id"], "alice", action["args"], action["precondition"]
+                    )
+                    token = (
+                        self.store.dispatch(action["id"], "alice")
+                        if operation != "dispatch"
+                        else None
+                    )
                     with self.store.connection() as db:
-                        db.execute("UPDATE actions SET expires=? WHERE id=?", (expires, action["id"]))
+                        db.execute(
+                            "UPDATE actions SET expires=? WHERE id=?",
+                            (expires, action["id"]),
+                        )
                     with self.assertRaises(ValueError):
                         if operation == "dispatch":
                             self.store.dispatch(action["id"], "alice")
@@ -249,14 +300,19 @@ class StoreTests(unittest.TestCase):
 
     def test_recorded_receipt_remains_replayable_after_expiry_without_effect(self):
         from unittest.mock import patch
+
         action, token = self.ready()
         receipt = self.store.execute(action["id"], token, action["args"])
         with patch("workbench.store.time.time", return_value=10**12):
-            self.assertEqual(self.store.execute(action["id"], token, action["args"]), receipt)
+            self.assertEqual(
+                self.store.execute(action["id"], token, action["args"]), receipt
+            )
         self.assertEqual(self.store.snapshot("WIDGET")["available"], 18)
 
     def test_repeated_cancellation_and_reconciliation_do_not_duplicate_events(self):
-        action = self.store.propose("alice", "purchase", {"sku": "WIDGET", "quantity": 2})
+        action = self.store.propose(
+            "alice", "purchase", {"sku": "WIDGET", "quantity": 2}
+        )
         self.store.cancel(action["id"], "alice")
         history = self.store.history(action["id"], "alice")
         self.store.cancel(action["id"], "alice")
@@ -268,7 +324,9 @@ class StoreTests(unittest.TestCase):
         self.store.reconcile(dispatched["id"], "alice")
         self.store.cancel(dispatched["id"], "alice")
         self.assertEqual(self.store.history(dispatched["id"], "alice"), unknown_history)
-        self.assertEqual(self.store.get(dispatched["id"], "alice")["status"], "outcome_unknown")
+        self.assertEqual(
+            self.store.get(dispatched["id"], "alice")["status"], "outcome_unknown"
+        )
         self.assertEqual(self.store.snapshot("WIDGET")["available"], 20)
 
     def test_completed_receipt_is_not_given_spurious_cancel_or_reconcile_events(self):
@@ -284,11 +342,57 @@ class StoreTests(unittest.TestCase):
         for value in (float("nan"), float("inf"), -float("inf")):
             with self.subTest(value=value):
                 with self.assertRaises(ValueError):
-                    self.store.propose("alice", "purchase", {"sku": "WIDGET", "quantity": 2}, decision={"nested": [value]})
+                    self.store.propose(
+                        "alice",
+                        "purchase",
+                        {"sku": "WIDGET", "quantity": 2},
+                        decision={"nested": [value]},
+                    )
                 self.assertEqual(self.store.list_actions("alice"), [])
                 self.assertEqual(self.store.snapshot("WIDGET")["available"], 20)
 
     def test_finite_decision_evidence_keeps_stable_fingerprint(self):
         from workbench.domain import canonical, digest
+
         self.assertEqual(canonical({"b": 1.5, "a": "ok"}), '{"a":"ok","b":1.5}')
         self.assertEqual(digest({"b": 1.5, "a": "ok"}), digest({"a": "ok", "b": 1.5}))
+
+    def test_invalid_operator_identity_is_rejected_at_every_journal_entry(self):
+        for owner in (
+            None,
+            12,
+            True,
+            "",
+            "  ",
+            "a" * 129,
+            "alice\n",
+            "alice\x00",
+            "alice\x7f",
+            "\ud800",
+        ):
+            for operation in ("propose", "get", "dispatch", "list"):
+                with (
+                    self.subTest(owner=owner, operation=operation),
+                    self.assertRaises(ValueError),
+                ):
+                    if operation == "propose":
+                        self.store.propose(
+                            owner, "purchase", {"sku": "WIDGET", "quantity": 1}
+                        )
+                    elif operation == "get":
+                        self.store.get("missing", owner)
+                    elif operation == "dispatch":
+                        self.store.dispatch("missing", owner)
+                    else:
+                        self.store.list_actions(owner)
+        with self.store.connection() as db:
+            self.assertEqual(
+                db.execute("SELECT COUNT(*) FROM actions").fetchone()[0], 0
+            )
+
+    def test_operator_identity_preserves_valid_unicode_and_exact_case(self):
+        owner = "अभिषेक Saini"
+        action = self.store.propose(owner, "purchase", {"sku": "WIDGET", "quantity": 1})
+        self.assertEqual(self.store.get(action["id"], owner)["owner"], owner)
+        self.assertEqual(len(self.store.list_actions(owner)), 1)
+        self.assertEqual(self.store.list_actions(owner.lower()), [])
